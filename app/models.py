@@ -12,12 +12,14 @@ class User(db.Model):
 	username = db.Column('username', db.String(64), index = True, unique = True)
 	passwd = db.Column('passwd',db.String(20), index = True)
 	role = db.Column('role', db.SmallInteger, default = ROLE_USER)
+	registered_on = db.Column('registered_on' , db.DateTime)
 	surveys = db.relationship('Survey', backref = 'author', lazy='dynamic')	#db.relationship is a many to 1, probably wont use for finished product
 	
 	def __init__(self, username, passwd, role):
 		self.username = username
 		self.passwd = passwd
 		self.role = role
+		self.registered_on = datetime.estnow()
 
 	def is_authenticated(self):
 		return True
