@@ -15,6 +15,22 @@ def load_user(id):
 def create_acct():
 	return render_template("create_acct.html")
 
+@app.route('/create_acct' , methods=['GET','POST'])
+def register():
+	if request.method == 'GET':
+		return render_template('create_acct.html')
+	user = User(request.form['username'] , request.form['passwd'])
+	db.session.add(user)
+	db.session.commit()
+	flash('User successfully registered')
+	return redirect(url_for('login'))
+ 
+@app.route('/login',methods=['GET','POST'])
+def login():
+	if request.method == 'GET':
+		return render_template('login.html')
+	return redirect(url_for('index'))
+
 @app.route('/')
 @app.route('/index')
 @login_required
@@ -28,20 +44,20 @@ def index():
 def load_user(id):
 	return User.query.get(int(id))
 
-@app.route('/login', methods = ['GET', 'POST'])
-@oid.loginhandler
-def login():
-	if g.user is not None and g.user.is_authenticated():		#if g is not anonymous
-		return redirect(url_for('index'))
-	form = LoginForm()
-	if form.validate_on_submit():
-		flash('Login requested for OpenID="' + form.openid.data + '", remember_me=' + str(form.remember_me.data))
-		session['remember_me'] = form.remember_me.data
-		return oid.try_login(form.openid.data, ask_for = ['username', 'email'])
-	return render_template("login.html",
-		title = "Login",
-		form = form,
-		providers = app.config['OPENID_PROVIDERS'])
+# @app.route('/login', methods = ['GET', 'POST'])
+# @oid.loginhandler
+# def login():
+# 	if g.user is not None and g.user.is_authenticated():		#if g is not anonymous
+# 		return redirect(url_for('index'))
+# 	form = LoginForm()
+# 	if form.validate_on_submit():
+# 		flash('Login requested for OpenID="' + form.openid.data + '", remember_me=' + str(form.remember_me.data))
+# 		session['remember_me'] = form.remember_me.data
+# 		return oid.try_login(form.openid.data, ask_for = ['username', 'email'])
+# 	return render_template("login.html",
+# 		title = "Login",
+# 		form = form,
+# 		providers = app.config['OPENID_PROVIDERS'])
 
 @oid.after_login
 def after_login(resp):		#resp = response from openid
