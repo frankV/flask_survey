@@ -24,6 +24,10 @@ def index():
 		title = "Home", 
 		user = user)
 
+@lm.user_loader
+def load_user(id):
+	return User.query.get(int(id))
+
 @app.route('/login', methods = ['GET', 'POST'])
 @oid.loginhandler
 def login():
