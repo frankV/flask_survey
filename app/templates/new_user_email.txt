@@ -1,0 +1,9 @@
+Dear {{user.username}},
+
+{{user.username}} is now an active user. Click on the following link to return to the Research Survey:
+
+{{url_for('login', _external = True)}}
+
+Regards,
+
+The Research Survey admin
