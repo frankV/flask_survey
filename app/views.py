@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, session, url_for, request, g
+from flask import Flask, render_template, flash, redirect, session, url_for, request, g, abort
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from app import app, db, lm, oid
 from forms import LoginForm#, EditForm
@@ -11,25 +11,33 @@ from models import User, ROLE_USER, ROLE_ADMIN
 def load_user(id):
 	return User.query.get(int(id))
 
-@app.route('/create_acct')
-def create_acct():
-	return render_template("create_acct.html")
+# @app.route('/create_acct')
+# def create_acct():
+# 	return render_template("create_acct.html")
 
 @app.route('/create_acct' , methods=['GET','POST'])
-def register():
+def create_acct():
 	if request.method == 'GET':
 		return render_template('create_acct.html')
 	user = User(request.form['username'] , request.form['passwd'])
 	db.session.add(user)
 	db.session.commit()
-	flash('User successfully registered')
+	flash('You will be sent an email to verify your account')
 	return redirect(url_for('login'))
- 
+
 @app.route('/login',methods=['GET','POST'])
 def login():
-	if request.method == 'GET':
-		return render_template('login.html')
-	return redirect(url_for('index'))
+    if request.method == 'GET':
+        return render_template('login.html')
+    username = request.form['username']
+    passwd = request.form['passwd']
+    registered_user = User.query.filter_by(username=username,passwd=passwd).first()
+    if registered_user is None:
+        flash('Username or Password is invalid' , 'error')
+        return redirect(url_for('login'))
+    login_user(registered_user)
+    flash('Logged in successfully')
+    return redirect(request.args.get('next') or url_for('index'))
 
 @app.route('/')
 @app.route('/index')
@@ -59,7 +67,7 @@ def load_user(id):
 # 		form = form,
 # 		providers = app.config['OPENID_PROVIDERS'])
 
-@oid.after_login
+@lm.after_login
 def after_login(resp):		#resp = response from openid
 	if resp.email is None or resp.email == "":
 		flash('Invalid login. Please try again.')
