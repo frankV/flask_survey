@@ -1,25 +1,23 @@
 {% extends "base.html" %}
-{% block body %}
-  <form action="" method=post class="form-horizontal">
-    <h2>Signin to FlaskLogin(Todo) Application </h2>
-    <div class="control-group">
-        <div class="controls">
-          <input type="text" id="username" name="username" class="input-xlarge"
-            placeholder="Enter Username" required>
-        </div>
-    </div>
- 
-    <div class="control-group">
-        <div class="controls">
-          <input type="password" id="password" name="password" class="input-xlarge"
-            placeholder="Enter Password" required>
-        </div>
-    </div>
- 
-    <div class="control-group">
-        <div class="controls">
-          <button type="submit" class="btn btn-success">Signin</button>
-        </div>
-    </div>
-  </form>
+{% block content%}
+<form action="" method=post class="form-horizontal">
+<h2>Signin to the Research Survey</h2>
+  <br>
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="FSU ID">
+    <span class="input-group-addon">@my.fsu.edu</span>
+  </div>
+  <br>
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Password">
+    <span class="input-group-addon"></span>
+  </div>
+  <br>
+
+  <div class="btn-group btn-group-justified">
+    <div class="btn-group">
+     <button type="button" class="btn btn-default">Submit</button>
+   </div>
+ </div>
+</form>
 {% endblock %}
