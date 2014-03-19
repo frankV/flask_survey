@@ -1,6 +1,5 @@
 # from hashlib import md5
 from app import db
-# from app import app
 # import flask.ext.whooshalchemy as whooshalchemy
 
 ROLE_USER = 0

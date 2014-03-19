@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Hi, {{user.username}}!</h1>
-<h2>Please follow the link to continue to the survey</h2>
+<div class="jumbotron">
+	<h1>Hello, {{user.username}}</h1>
+	<p>Please follow the link below to work on the research survey</p>
+	<p><a class="btn btn-primary btn-lg" href="#" role="button">Research Survey</a></p>
+</div>
 {% endblock %}
