@@ -1,15 +1,15 @@
 {% extends "base.html" %}
 {% block content %}
-<form action="" method=post class="form-horizontal">
-	<h2>Sign up for the Password Research Survey</h2>
+<div class="jumbotron">
+  <h1>Sign Up for the Password Research Survey</h1>
   <br>
   <div class="input-group">
-    <input type="text" class="form-control" placeholder="FSU ID">
-    <span class="input-group-addon">@my.fsu.edu</span>
+  <input type="text" class="form-control" placeholder="my.FSU.edu Email Address" value="{{ request.form.username }}" required>
+    <span class="input-group-addon"></span>
   </div>
   <br>
   <div class="input-group">
-    <input type="text" class="form-control" placeholder="Password">
+    <input type="text" class="form-control" placeholder="Password" value="{{ request.form.passwd }}" required>
     <span class="input-group-addon"></span>
   </div>
   <br>
@@ -18,9 +18,9 @@
     <span class="input-group-addon"></span>
   </div>
   <br>
-  <div class="btn-group btn-group-justified">
+  <div class="btn-group">
    <div class="btn-group">
-     <button type="button" class="btn btn-default">Submit</button>
+     <button type="submit" class="btn btn-default"  value="submit">Sign Up</button>
    </div>
  </form>
  {% endblock %}

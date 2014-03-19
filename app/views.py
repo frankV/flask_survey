@@ -34,6 +34,10 @@ def login():
     registered_user = User.query.filter_by(username=username,passwd=passwd).first()
     if registered_user is None:
         flash('Username or Password is invalid' , 'error')
+        #add attempt to a log organized by time
+        #userid passwd event time  event = failed, success, retrieve passwd
+        #retrieve passwd as event
+        #login attempts, failed
         return redirect(url_for('login'))
     login_user(registered_user)
     flash('Logged in successfully')
@@ -41,7 +45,7 @@ def login():
 
 @app.route('/')
 @app.route('/index')
-@login_required
+# @login_required
 def index():
 	user = g.user
 	return render_template ("index.html",
@@ -67,7 +71,7 @@ def load_user(id):
 # 		form = form,
 # 		providers = app.config['OPENID_PROVIDERS'])
 
-@lm.after_login
+@oid.after_login
 def after_login(resp):		#resp = response from openid
 	if resp.email is None or resp.email == "":
 		flash('Invalid login. Please try again.')
@@ -94,8 +98,9 @@ def before_request():
 
 @app.route('/logout')
 def logout():
-    logout_user()
-    return redirect(url_for('index'))
+	#double check if the 
+	logout_user()
+	return redirect(url_for('index'))
 
 @app.errorhandler(404)
 def internal_error(error):
