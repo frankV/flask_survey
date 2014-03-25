@@ -1,5 +1,6 @@
 from flask import Flask
 from flask.ext.assets import Environment, Bundle
+from flask_oauthlib.client import OAuth
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from flask.ext.openid import OpenID
@@ -18,5 +19,8 @@ lm.login_view = 'login'
 oid = OpenID(app, os.path.join(basedir, 'tmp'))
 
 mail = Mail(app)
+
+
+
 
 from app import views, models

@@ -28,8 +28,11 @@
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			<ul class="nav navbar-nav">
 				<li><a href="{{ url_for('index') }}">Home</a></li>
+				<li><a href="{{ url_for('about') }}">About</a></li>
+				{% if not g.user.is_authenticated() %}
 				<li><a href="{{ url_for('create_acct') }}">Create Account</a></li>
 				<li><a href="{{ url_for('login') }}">Login</a></li>
+				{% endif %}
 				
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
