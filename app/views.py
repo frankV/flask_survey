@@ -52,6 +52,11 @@ def index():
 		title = "Home", 
 		user = user)
 
+@app.route('/about')
+def about():
+	return render_template("about.html",
+		title = "About")
+
 @lm.user_loader
 def load_user(id):
 	return User.query.get(int(id))
