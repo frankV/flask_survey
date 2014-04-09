@@ -1,27 +1,23 @@
 {% extends "base.html" %}
-{% block content %}
+{% block content%}
 <div class="jumbotron">
-  <h1>Sign Up for the Password Research Survey</h1>
+  {% from "macro.html" import render_field %}
+  <h1>Sign In to the Research Survey</h1>
   <br>
-  <div class="input-group">
-    <input type="text" id="username" class="form-control" placeholder="my.FSU.edu Email Address" value="{{ request.form.username }}" required>
-    <span class="input-group-addon"></span>
-  </div>
-  <br>
-  <div class="input-group">
-  <input type="text" id="passwd" class="form-control" placeholder="Password" value="{{ request.form.passwd }}" required>
-    <span class="input-group-addon"></span>
-  </div>
-  <br>
-<!--   <div class="input-group">
-    <input type="text" class="form-control" placeholder="Repeat Password">
-    <span class="input-group-addon"></span>
-  </div> -->
-  <br>
-  <div class="control-group">
-        <div class="controls">
-          <button type="submit" class="btn btn-success">Signup</button>
-        </div>
-    </div>
- </form>
+  <form method="POST" action="." class="form form-horizontal">
+    {{ form.csrf_token }}
+    {{ render_field(form.name, class="input-xlarge",placeholder="username") }}
+    {{ render_field(form.email, class="input-xlarge", placeholder="email")}}
+    {{ render_field(form.password, class="input-xlarge", placeholder="password") }}
+    {{ render_field(form.confirm, class="input-xlarge", placeholder="confirm password")}}
+    
+    <div class="control-group">
+      <label class="control-label"></label>
+      <div class="controls">
+        <button type="submit" id="sign_in" class="btn btn-primary">Create Account</button>
+      </div>
+      <a href="/login" style="float:right;margin-right: 120px;">Already registered?</a>
+      </div>
+      </form>
+      </div>
  {% endblock %}

@@ -1,0 +1,28 @@
+{% macro render_field(field) %}
+        
+    {% if field.errors %}
+        <div class="control-group error">
+            {{ field.label(class="control-label", for=field.name) }}
+            
+            <div class="controls">
+                {{ field(**kwargs) }}
+            </div>
+        
+            {% for error in field.errors %}
+                <span class="help-inline">{{ error|e }}</span>
+            {% endfor %}
+        </div>
+    {% else %}
+
+    <div class="control-group">
+        {{ field.label(class="control-label", for=field.name) }}
+    
+        <div class="controls">
+            {{ field(**kwargs) }}
+        </div>
+
+    </div>
+
+    {% endif %}
+
+{% endmacro %}

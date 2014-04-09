@@ -1,9 +1,24 @@
 {% extends "base.html" %}
 {% block content%}
 <div class="jumbotron">
-<h1>Sign In to the Research Survey</h1>
+  {% from "macro.html" import render_field %}
+  <h1>Sign In to the Research Survey</h1>
   <br>
-  <div class="input-group">
+  <form method="POST" action="." class="form form-horizontal">
+    {{ form.csrf_token }}
+    {{ render_field(form.name, class="input-xlarge",placeholder="username") }}
+    {{ render_field(form.password, class="input-xlarge", placeholder="password") }}
+    
+    <div class="control-group">
+      <label class="control-label"></label>
+      <div class="controls">
+        <button type="submit" id="sign_in" class="btn btn-primary">Log In</button>
+      </div>
+      </div>
+      </form>
+      </div>
+
+  <!-- <div class="input-group">
     <input type="text" class="form-control" placeholder="my.FSU.edu email address">
     <span class="input-group-addon"</span>
     </div>
@@ -19,25 +34,5 @@
        <button type="submit" class="btn btn-default" value="submit">Sign In</button>
        <button type="forgot"  class="btn btn-default" href="#" value="forgot">Forgot Password</button>
      </div>
-   </div>
-<!-- <form action="" method=post class="form-horizontal">
-<h2>Signin to the Research Survey</h2>
-  <br>
-  <div class="input-group">
-    <input type="text" class="form-control" placeholder="my.FSU.edu email address">
-    <span class="input-group-addon"</span>
-  </div>
-  <br>
-  <div class="input-group">
-    <input type="text" class="form-control" placeholder="Password">
-    <span class="input-group-addon"></span>
-  </div>
-  <br>
-
-  <div class="btn-group">
-   <div class="btn-group">
-     <button type="submit" class="btn btn-default" value="submit">Submit</button>
-     <button type="forgot"  class="btn btn-default" href="#" value="forgot">Forgot Password</button>
-   </div>
- </form> -->
- {% endblock %}
+   </div> -->
+   {% endblock %}
