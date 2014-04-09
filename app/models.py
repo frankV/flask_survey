@@ -11,8 +11,7 @@ ROLE_ADMIN = 1
 class User(UserMixin, CRUDMixin,  db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(64), unique = True)
-    email = db.Column(db.String(120), unique = True)
+    name = db.Column(db.String(120), unique = True)
     password = db.Column(db.String(120))
     
     role = db.Column(db.SmallInteger, default = ROLE_USER)
@@ -20,7 +19,6 @@ class User(UserMixin, CRUDMixin,  db.Model):
 
     def __init__(self, name=None, email=None, password=None):
         self.name = name
-        self.email = email
         self.password = password
 
     def is_active(self):

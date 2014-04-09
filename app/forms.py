@@ -5,9 +5,12 @@ from app import db
 
 def validate_login(form, field):
     user = form.get_user()
-
+    
     if user is None:
         raise validators.ValidationError('Invalid user')
+
+    # if user.consent is False:
+    #     raise validators.ValidationError('Registration cannot be completed withouth consent')
 
     if user.password != form.password.data:
         raise validators.ValidationError('Invalid password')
@@ -22,8 +25,9 @@ class LoginForm(Form):
 
 
 class RegistrationForm(Form):
-    name = fields.TextField(validators=[Required()])
-    email = fields.TextField(validators=[Email()])
+    name = fields.TextField('Email Address', validators=[Required(), Email()])
+    # email = fields.TextField(validators=[Email()])
+    consent = fields.BooleanField(validators=[Required()])
     password = fields.PasswordField('New Password', [
         validators.Required(),
         validators.EqualTo('confirm', message='Passwords must match')
