@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content%}
+<div class="jumbotron">
+  {% from "macro.html" import render_field %}
+  <h1>Survey</h1>
+  <br>
+  <form method="POST" action="." class="form form-horizontal">
+    {{ form.csrf_token }}
+    {{ render_field(form.major) }}
+    {{ render_field(form.department) }}
+    {{ render_field(form.count)}}
+    {{ render_field(form.unique)}}
+    
+    <div class="control-group">
+      <label class="control-label"></label>
+      <div class="controls">
+        <button type="submit" id="submit" class="btn btn-primary">Log In</button>
+        <a href="/forgot_passwd" style="float:right;margin-right: 120px;">Forgot Password?</a>
+      </div>
+      </div>
+      </form>
+      </div>
+{% endblock %}
