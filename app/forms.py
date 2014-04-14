@@ -15,14 +15,12 @@ def validate_login(form, field):
     if user.password != form.password.data:
         raise validators.ValidationError('Invalid password')
 
-
 class LoginForm(Form):
     name = fields.TextField(validators=[Required()])
     password = fields.PasswordField(validators=[Required(), validate_login])
 
     def get_user(self):
         return db.session.query(User).filter_by(name=self.name.data).first()
-
 
 class RegistrationForm(Form):
     name = fields.TextField('Email Address', validators=[Required(), Email()])
@@ -42,47 +40,65 @@ class RegistrationForm(Form):
         if db.session.query(User).filter_by(email=self.email.data).count() > 0:
             raise validators.ValidationError('Duplicate email')
 
-# from flask.ext.wtf import Form
-# from wtforms import TextField, BooleanField, TextAreaField
-# from wtforms.validators import Required, Length
+class Survey1(Form):
+    gender = fields.RadioField('What is your gender?', choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], validators = [Required()])
+    age = fields.RadioField('What is your age?', choices=[('lt18', 'Younger than 18'), ('18-24', '18 to 24'), ('25-34', '25 to 34'), 
+        ('35-44', '35 to 44'), ('45-54', '45 to 54'), ('55-64', '55 to 64'), ('65-74', '65 to 74'), ('75oa', '75 or above')], validators=[Required()])
+    education = fields.RadioField('Which of the following best describes your highest education level?', choices=[('Hsg', 'High school graduate'), 
+        ('Scnd', 'Some college, no degree'), ('Assoc', 'Associates Degree'), ('Bach', 'Bachelors degree'), ('Grad', 'Graduate degree (Masters, Doctorate, etc.)'), ('O', 'Other')], 
+        validators=[Required()])
+    language = fields.TextField('Native Language', validators=[Required()])
 
-# class LoginForm(Form):
-# 	username = TextField('username', validators = [Required()])
-# 	passwd = TextField('passwd', validators = [Required()])
-# 	# openid = TextField('openid', validators = [Required()])
-# 	# remember_me = BooleanField('remember_me', default = False)
+class Survey2(Form):
+    major = fields.RadioField('Are you majoring in or do you have a degree or job in computer science, computer engineering, information technology, or a related field?', 
+        choices=[('Y', 'yes'), ('N', 'No'), ('O','I prefer not to answer')], validators = [Required()])
+    department = fields.TextField('In what department are you majoring?', validators=[Required()])
+    count = fields.RadioField('How many website username and passwords do you have, approximately?', choices=[('lt5', 'Less than 5 accounts'), 
+        ('5-10', '5 to 10 Accounts'), ('11-20', '11 to 20 Accounts'), ('gt20', 'More Than 20 Accounts') ])
+    unique = fields.RadioField('Do you try to create unique passwords for each different account?', choices=[
+        ('Y', 'Yes, I create a new password every time I create a new account or every time I have to change my password'), 
+        ('N', 'No, I use my old passwords that I have already created for my other accounts'), 
+        ('O', 'I mostly create a new password, but sometimes use old passwords')], validators=[Required()])
 
-# class CreateAcctForm(Form):
-# 	username = TextField('username', validators = [Required()])
-# 	passwd = TextField('passwd', validators = [Required()])
+class Survey3(Form):
+    choose = fields.SelectMultipleField('How did you choose your new password? Were you influenced by any of the following? (Please check all that apply.)', 
+        choices = [('names', 'Names of family members, relatives, close friends'), ('numbers', 'Familiar numbers (birth date, telephone number, street address, employee number, etc.)'),
+        ('songs', 'Songs, movies, television shows, books, poetry or games'), ('mnemonic', 'Scientific or other educational mnemonics'), 
+        ('sports', 'Sports teams and players'), ('famous', 'Names of famous people or characters'), ('words', 'Words in a language other than English')])
+    secure = fields.SelectMultipleField('When creating your new password, did you consider any of the following policies to make your password more secure? (Please check all that apply.)', 
+        choices = [('numbers', 'Include numbers'), ('upper case', 'Include upper case letters'), ('symbols', 'Include symbols'), 
+        ('8 chars', 'Have 8 or more characters'), ('no dict', 'Not contain dictionary words'), 
+        ('adjacent', 'Not containing a sequence of adjacent or repeated characters on your keyboard (e.g. qwerty)'), 
+        ('nothing', 'I did not consider any policy')])
+    modify = fields.RadioField('Did you create your new password by slightly changing your old password for this website?', choices=[
+        ('Y', 'Yes'), ('N', 'No')], validators=[Required()])
+    usedPassword = fields.RadioField('Is the password that you have just created one that you have used in the past?', choices=[
+        ('Y', 'Yes'), ('N', 'No'), ('O', 'Password has similarities to another password that I have used before')], validators=[Required()])
+    wordPart = fields.SelectMultipleField('If you created your new password based on one of your old passwords, did you consider changing the word part in one of the following ways?',
+        choices=[('N', 'Not applicable'), ('Changed completely', 'Changed completely'), ('Changed slightly', 'Changed slightly'), 
+        ('Capitalized letters', 'Capitalized letters'), ('O', 'Other')], validators=[Required()])
+    numberPart = fields.SelectMultipleField('If you created your new password based on one of your old passwords, did you consider changing the number part in one of the following ways?', 
+        choices=[('N', 'Not applicable'), ('Added digits', 'Added digits'), ('Deleted digits', 'Deleted digits'), ('Substituted digits', 'Substituted digits'), 
+        ('O', 'Other')], validators=[Required()])
+    charPart = fields.SelectMultipleField('If you created your new password based on one of your old passwords, did you consider changing the special character part in one of the following ways?', 
+        choices=[('N', 'Not applicable'), ('Added symbols', 'Added symbols'), ('Deleted symbols', 'Deleted symbols'), ('Substituted symbols', 'Substituted symbols'),
+        'O', 'Other'], validators=[Required()])
 
-# 	def validate(self):
-# 		if not Form.validate(self):
-# 			return False
-# 		if self.username.data == self.original_username:
-# 			return True
-# 		user = User.query.filter_by(username = self.username.data).first()
-# 		if user != None:
-# 			self.username.errors.append('This email is already in use. Please choose another one.')
-# 			return False
-# 		return True
-
-
-# # class EditForm(Form):
-# #     nickname = TextField('nickname', validators = [Required()])
-# #     about_me = TextAreaField('about_me', validators = [Length(min = 0, max = 140)])
+class Survey4(Form):
+    computerTime = fields.RadioField('How long have you been using a computer?', choices=[
+        ('0-2', '0 to 2 Years'), ('3-5', '3 to 5 Years'), ('6-10', '6 to 10 Years'), ('mt10', 'More than 10 years')], validators=[Required()])
+    passwordCreation = fields.SelectMultipleField('How do you usually create passwords for your accounts? (Please check all that apply.)', choices=[
+        ('random', 'Randomly generate a password using special software or apps'), ('reuse', 'Reuse a password that is used for another account'),
+        ('modify', 'Modify a password that is used for another account'), ('new', 'Create a new password using a familiar number or a name of a family member'),
+        ('substitute', 'Choose a word and substitute some letters with numbers of symbols (for example @ for a)'), 
+        ('multiword', 'Use a pass-phrase consisting of several words'), ('phrase', 'Choose a phrase and use the first letters of each word'),('O', 'Other')], 
+        validators=[Required()])
+    storePasswords = fields.RadioField('Do you store your passwords?', choices=[('Y', 'Yes I store my passwords (go to question 4)'), ('N', 'No, I do not store my passwords')], 
+        validators=[Required()])
+    howStored = fields.SelectMultipleField('How do you store your passwords? Check all that apply.', 
+        choices=[('regular file', 'I store my passwords in a regular file / document on my computer.'), 
+        ('encrypted', 'I store my passwords in an encrypted computer file'), ('software', 'I use password management software to securely store my passwords'),
+        ('cellphone', 'I store my passwords on my cellphone / smartphone'), ('browser', 'I save my passwords in the browser'), 
+        ('write down', 'I write down my password on a piece of paper')])
+    comments = fields.TextAreaField('If you have any additional feedback about passwords or this survey, please enter your comments here.')
     
-# #     def __init__(self, original_nickname, *args, **kwargs):
-# #         Form.__init__(self, *args, **kwargs)
-# #         self.original_nickname = original_nickname
-        
-# #     def validate(self):
-# #         if not Form.validate(self):
-# #             return False
-# #         if self.nickname.data == self.original_nickname:
-# #             return True
-# #         user = User.query.filter_by(nickname = self.nickname.data).first()
-# #         if user != None:
-# #             self.nickname.errors.append('This nickname is already in use. Please choose another one.')
-# #             return False
-# #         return True

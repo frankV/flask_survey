@@ -36,7 +36,6 @@ class User(UserMixin, CRUDMixin,  db.Model):
     def __repr__(self):
         return '<User %r>' % (self.nickname)
 
-
 class Database(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
@@ -48,42 +47,7 @@ class Database(db.Model):
     def __repr__(self):
         return '%r' % (self.name)
 
-# class User(db.Model):
-# 	__tablename__ = "users"
-# 	id = db.Column('user_id', db.Integer, primary_key = True)
-# 	username = db.Column('username', db.String(64), index = True, unique = True)
-# 	passwd = db.Column('passwd',db.String(20), index = True)
-# 	role = db.Column('role', db.SmallInteger, default = ROLE_USER)
-# 	registered_on = db.Column('registered_on' , db.DateTime)
-# 	surveys = db.relationship('Survey', backref = 'author', lazy='dynamic')	#db.relationship is a many to 1, probably wont use for finished product
-	
-# 	def __init__(self, username, passwd, role):
-# 		self.username = username
-# 		self.passwd = passwd
-# 		self.role = role
-# 		self.registered_on = datetime.estnow()
+# class Survey1(db.Model):
 
-# 	def is_authenticated(self):
-# 		return True
-
-# 	def is_active(self):
-# 		return True
-
-# 	def is_anonymous(self):
-# 		return False
-
-# 	def get_id(self):
-# 		return unicode(self.id)
-
-# 	def __repr__(self):				#printing, for purposes of debugging
-# 		return '<User %r>' % (self.username)
-
-# class Survey(db.Model):
-# 	id = db.Column(db.Integer, primary_key = True)
-#     	body = db.Column(db.String(140))
-#     	timestamp = db.Column(db.DateTime)
-#     	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
-# 	def __repr__(self):
-# 		return '<Survey %r>' % (self.body)
-
+#     id = db.Column(db.Integer, primary_key = True)
+#     gender = db.Column(db.)
