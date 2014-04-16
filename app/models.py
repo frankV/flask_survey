@@ -47,7 +47,28 @@ class Database(db.Model):
     def __repr__(self):
         return '%r' % (self.name)
 
-# class Survey1(db.Model):
+class Survey1(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    gender = db.Column(db.Integer)
+    age = db.Column(db.Integer)
+    education = db.Column(db.Integer)
+    language = db.Column(db.String(20))
 
-#     id = db.Column(db.Integer, primary_key = True)
-#     gender = db.Column(db.)
+class Survey2(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    major = db.Column(db.Integer)
+    department = db.Column(db.String(30))
+    count = db.Column(db.Integer)
+    unique = db.Column(db.Integer)
+
+class Survey3(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    #select multiple field
+    #select multiple field
+    modify = db.Column(db.Integer)
+    usedPassword = db.Column(db.Integer)
+    #select multiple field
+    #select multiple field
+    #select multiple field
+        
+
