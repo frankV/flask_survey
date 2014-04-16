@@ -3,6 +3,11 @@
 <div class="jumbotron">
 	<h1>Hello, {{user.name}}</h1>
 	<p>Please follow the link below to work on the research survey</p>
-	<p><a class="btn btn-primary btn-lg" href="#" role="button">Research Survey</a></p>
+	<!-- Place these inside Jinja2 if conditional based on DB -->
+	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_1')}}" role="button">Research Survey 1</a></p>
+	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_2')}}" role="button">Research Survey 2</a></p>
+	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_3')}}" role="button">Research Survey 3</a></p>
+	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_4')}}" role="button">Research Survey 4</a></p>
+	<!-- End if conditional -->
 </div>
 {% endblock %}
