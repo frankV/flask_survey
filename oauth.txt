@@ -1,4 +1,0 @@
-Redirect URI: 	kuhl.ngrok.com
-API: 		SurveyMonkey Public API: Basic
-Key:		z8jwkqgrq7yamb658axrus55
-Secret:		86S6CdaMGmxbFrMWAVsuqvnhBTurafph
