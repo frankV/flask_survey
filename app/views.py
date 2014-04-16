@@ -4,39 +4,44 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 from models import User, ROLE_USER, ROLE_ADMIN
 from forms import LoginForm, RegistrationForm, Survey1, Survey2, Survey3, Survey4
 from flask_oauthlib.client import OAuth
-from app import app, db, lm
+from flask.ext.mail import Mail
+from app import app, db, lm, mail
 
-oauth = OAuth()
-SurveyMonkey = oauth.remote_app(
-	'surveymonkey',
-	base_url = SM_API_BASE,
-	request_token_url = None,
-	access_token_url = ACCESS_TOKEN_ENDPOINT,
-	authorize_url = AUTH_CODE_ENDPOINT,
-	consumer_key = api_key,
-	consumer_secret = client_secret
-	)
+# oauth = OAuth()
+# SurveyMonkey = oauth.remote_app(
+# 	'surveymonkey',
+# 	base_url = SM_API_BASE,
+# 	request_token_url = None,
+# 	access_token_url = ACCESS_TOKEN_ENDPOINT,
+# 	authorize_url = AUTH_CODE_ENDPOINT,
+# 	consumer_key = api_key,
+# 	consumer_secret = client_secret
+# 	)
 
 @lm.user_loader
 def load_user(id):
 	return User.query.get(int(id))
 
 @app.route('/survey_1/', methods=['GET','POST'])
+@login_required
 def survey_1():
 	form = Survey1(request.form)
 	return render_template('Survey1.html', title='Survey', form=form)
 
 @app.route('/survey_2/', methods=['GET','POST'])
+@login_required
 def survey_2():
 	form = Survey2(request.form)
 	return render_template('Survey2.html', title='Survey', form=form)
 
 @app.route('/survey_3/', methods=['GET','POST'])
+@login_required
 def survey_3():
 	form = Survey3(request.form)
 	return render_template('Survey3.html', title='Survey', form=form)
 
 @app.route('/survey_4/', methods=['GET','POST'])
+@login_required
 def survey_4():
 	form = Survey4(request.form)
 	return render_template('Survey4.html', title='Survey', form=form)
