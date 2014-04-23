@@ -34,18 +34,23 @@ class User(UserMixin, CRUDMixin,  db.Model):
             return False
 
     def __repr__(self):
-        return '<User %r>' % (self.nickname)
+        return '<User %r>' % (self.name)
 
 class Database(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    survey1_id = db.Column(db.Integer, db.ForeignKey('survey1.id'))
+    survey2_id = db.Column(db.Integer, db.ForeignKey('survey2.id'))
+    survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
+    survey4_id = db.Column(db.Integer, db.ForeignKey('survey4.id'))
+
     name = db.Column(db.String(255), unique = True)
 
     def get_id(self):
         return unicode(self.id)
 
     def __repr__(self):
-        return '%r' % (self.name)
+        return '<User %r>' % (self.name)
 
 class Survey1(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -53,6 +58,7 @@ class Survey1(db.Model):
     age = db.Column(db.Integer)
     education = db.Column(db.Integer)
     language = db.Column(db.String(20))
+    db = db.relationship('Database', backref='survey1', lazy='dynamic')
 
 class Survey2(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -60,6 +66,7 @@ class Survey2(db.Model):
     department = db.Column(db.String(30))
     count = db.Column(db.Integer)
     unique = db.Column(db.Integer)
+    db = db.relationship('Database', backref='survey2', lazy='dynamic')
 
 class Survey3(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -70,5 +77,13 @@ class Survey3(db.Model):
     #select multiple field
     #select multiple field
     #select multiple field
-        
+    db = db.relationship('Database', backref='survey3', lazy='dynamic')
+
+class Survey4(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    computerTime = db.Column(db.Integer)
+    # passwordCreation = db.Column()
+    storePasswords = db.Column(db.Integer)
+    # howStored
+    comments = db.Column(db.String)
 
