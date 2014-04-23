@@ -1,0 +1,14 @@
+Dear {{user.name}},
+
+The password for account {{user.name}} was requested through the "Forgot Password" page on the research survey website. 
+Below is the current password for username {{user.name}}
+
+{{user.password}}
+
+Please log in with the aforementioned password at the website:
+
+{{url_for('login', _external = True)}}
+
+Regards,
+
+The Research Survey Admin Team
