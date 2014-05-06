@@ -20,16 +20,5 @@ MAIL_USE_SSL = True
 MAIL_USERNAME = 'rkk09c'
 MAIL_PASSWORD = pw
 
-SM_API_BASE = "https://api.surveymonkey.net"
-AUTH_CODE_ENDPOINT = "/oauth/authorize"
-ACCESS_TOKEN_ENDPOINT = "/oauth/token"
-REDIRECT_URI = "http://kuhl.ngrok.com:80"#:8000
-HOST_NAME = 'kuhl.ngrok.com'
-PORT_NUMBER = 80
-
-api_key = 'z8jwkqgrq7yamb658axrus55'
-# client_id = 'kuhl'
-client_secret = '86S6CdaMGmxbFrMWAVsuqvnhBTurafph'
-
 # administrator list
 ADMINS = ['rkk09c@gmail.com']

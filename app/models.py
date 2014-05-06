@@ -11,8 +11,8 @@ ROLE_ADMIN = 1
 class User(UserMixin, CRUDMixin,  db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(120), unique = True)
-    password = db.Column(db.String(120))
+    name = db.Column(db.String(20), unique = True)
+    password = db.Column(db.String(20))
     
     role = db.Column(db.SmallInteger, default = ROLE_USER)
     db = db.relationship('Database', backref='user', lazy='dynamic')
@@ -50,7 +50,7 @@ class Database(db.Model):
         return unicode(self.id)
 
     def __repr__(self):
-        return '<User %r>' % (self.name)
+        return '<Database %r>' % (self.name)
 
 class Survey1(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -60,6 +60,18 @@ class Survey1(db.Model):
     language = db.Column(db.String(20))
     db = db.relationship('Database', backref='survey1', lazy='dynamic')
 
+    def __init__(self, gender=None, age=None, education=None, language=None):
+        self.gender=gender
+        self.age=age
+        self.education=education
+        self.language=language
+
+    def get_id(self):
+        return unicode(self.id)
+
+    # def __repr__(self):
+    #     return '<Survey1 %r>' % (self.gender)
+
 class Survey2(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     major = db.Column(db.Integer)
@@ -67,6 +79,15 @@ class Survey2(db.Model):
     count = db.Column(db.Integer)
     unique = db.Column(db.Integer)
     db = db.relationship('Database', backref='survey2', lazy='dynamic')
+
+    def __init__(self, major=None, department=None, count=None, unique=None):
+        self.major=major
+        self.department=department
+        self.count=count
+        self.unique=unique
+
+    def get_id(self):
+        return unicode(self.id)
 
 class Survey3(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -79,6 +100,13 @@ class Survey3(db.Model):
     #select multiple field
     db = db.relationship('Database', backref='survey3', lazy='dynamic')
 
+    def __init__(self, modify=None, usedPassword=None):
+        self.modify=modify
+        self.usedPassword=usedPassword
+
+    def get_id(self):
+        return unicode(self.id)
+
 class Survey4(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     computerTime = db.Column(db.Integer)
@@ -87,3 +115,10 @@ class Survey4(db.Model):
     # howStored
     comments = db.Column(db.String)
 
+    def __init__(self, computerTime=None, storePasswords=None, comments=None):
+        self.computerTime=computerTime
+        self.storePasswords=storePasswords
+        self.comments=comments
+
+    def get_id(self):
+        return unicode(self.id)

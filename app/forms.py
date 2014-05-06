@@ -1,4 +1,4 @@
-from flask.ext.wtf import Form, fields, validators
+from flask.ext.wtf import Form, fields, validators, widgets
 from flask.ext.wtf import Required, Email, ValidationError
 from models import User
 from app import db
@@ -16,7 +16,7 @@ def validate_login(form, field):
         raise validators.ValidationError('Invalid password')
 
 class LoginForm(Form):
-    name = fields.TextField(validators=[Required()])
+    name = fields.TextField(validators=[Required(), Email()])
     password = fields.PasswordField(validators=[Required(), validate_login])
 
     def get_user(self):
@@ -53,7 +53,7 @@ class Survey2(Form):
     major = fields.RadioField('Are you majoring in or do you have a degree or job in computer science, computer engineering, information technology, or a related field?', 
         choices=[('Y', 'yes'), ('N', 'No'), ('O','I prefer not to answer')], validators = [Required()])
     department = fields.TextField('In what department are you majoring?', validators=[Required()])
-    count = fields.RadioField('How many website username and passwords do you have, approximately?', choices=[('lt5', 'Less than 5 accounts'), 
+    count = fields.RadioField('How many website user-names and passwords do you have, approximately?', choices=[('lt5', 'Less than 5 accounts'), 
         ('5-10', '5 to 10 Accounts'), ('11-20', '11 to 20 Accounts'), ('gt20', 'More Than 20 Accounts') ])
     unique = fields.RadioField('Do you try to create unique passwords for each different account?', choices=[
         ('Y', 'Yes, I create a new password every time I create a new account or every time I have to change my password'), 
@@ -82,7 +82,7 @@ class Survey3(Form):
         ('O', 'Other')], validators=[Required()])
     charPart = fields.SelectMultipleField('If you created your new password based on one of your old passwords, did you consider changing the special character part in one of the following ways?', 
         choices=[('N', 'Not applicable'), ('Added symbols', 'Added symbols'), ('Deleted symbols', 'Deleted symbols'), ('Substituted symbols', 'Substituted symbols'),
-        'O', 'Other'], validators=[Required()])
+        ('O', 'Other')], validators=[Required()])
 
 class Survey4(Form):
     computerTime = fields.RadioField('How long have you been using a computer?', choices=[
@@ -101,4 +101,3 @@ class Survey4(Form):
         ('cellphone', 'I store my passwords on my cellphone / smartphone'), ('browser', 'I save my passwords in the browser'), 
         ('write down', 'I write down my password on a piece of paper')])
     comments = fields.TextAreaField('If you have any additional feedback about passwords or this survey, please enter your comments here.')
-    
