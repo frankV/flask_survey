@@ -6,14 +6,77 @@
   <br>
   <form method="POST" action="." class="form form-horizontal">
     {{ form.csrf_token }}
-    {{ render_field(form.choose) }}
+<!--     {{ render_field(form.choose) }}
     {{ render_field(form.secure) }}
+ -->    
+    <form action=""> 
+      <b>How did you choose your new password? Were you influenced by any of the following? (Please check all that apply.)</b>
+      <ul>
+      <input type="checkbox" ><b>Names of family members, relatives, close friends</b><br>
+      <input type="checkbox" ><b>Familiar numbers (birth date, telephone number, street address, employee number, etc.)</b><br>
+      <input type="checkbox" ><b>Songs, movies, television shows, books, poetry or games</b><br>
+      <input type="checkbox" ><b>Scientific or other educational mnemonics</b><br>
+      <input type="checkbox" ><b>Sports teams and players</b><br>
+      <input type="checkbox" ><b>Names of famous people or characters</b><br>
+      <input type="checkbox" ><b>Words in a language other than English</b><br>
+      </ul>
+    </form>
+
+    <form action=""> 
+    <b>When creating your new password, did you consider any of the following policies to make your password more secure? (Please check all that apply.)</b>
+    <ul>
+    <input type="checkbox" ><b>Include numbers</b><br>
+    <input type="checkbox" ><b>Include upper case letters</b><br>
+    <input type="checkbox" ><b>Include symbols</b><br>
+    <input type="checkbox" ><b>Have 8 or more characters</b><br>
+    <input type="checkbox" ><b>Not contain dictionary words</b><br>
+    <input type="checkbox" ><b>Not containing a sequence of adjacent or repeated characters on your keyboard (e.g. qwerty)</b><br>
+    <input type="checkbox" ><b>I did not consider any policy</b><br>
+    </ul>
+    </form>
+
+
     {{ render_field(form.modify) }}
     {{ render_field(form.usedPassword) }}
-    {{ render_field(form.wordPart) }}
+
+
+<!--     {{ render_field(form.wordPart) }}
     {{ render_field(form.numberPart) }}
     {{ render_field(form.charPart) }}
-    <div class="control-group">
+ -->    
+
+      <form action=""> 
+      <b>If you created your new password based on one of your old passwords, did you consider changing the word part in one of the following ways?</b>
+      <ul>
+      <input type="checkbox" ><b>Not applicable</b><br>
+      <input type="checkbox" ><b>Changed completely</b><br>
+      <input type="checkbox" ><b>Changed slightly</b><br>
+      <input type="checkbox" ><b>Capitalized letters</b><br>
+      <input type="checkbox" ><b>Other</b><br>
+      </ul>
+      </form>
+      <form action=""> 
+      <b>If you created your new password based on one of your old passwords, did you consider changing the number part in one of the following ways?</b>
+      <ul>
+      <input type="checkbox" ><b>Not applicable</b><br>
+      <input type="checkbox" ><b>Added digits</b><br>
+      <input type="checkbox" ><b>Deleted digits</b><br>
+      <input type="checkbox" ><b>Substituted digits</b><br>
+      <input type="checkbox" ><b>Other</b><br>
+      </ul>
+      </form>
+      <form action=""> 
+      <b>If you created your new password based on one of your old passwords, did you consider changing the special character part in one of the following ways?</b>
+      <ul>
+      <input type="checkbox" ><b>Not applicable</b><br>
+      <input type="checkbox" ><b>Added symbols</b><br>
+      <input type="checkbox" ><b>Deleted symbols</b><br>
+      <input type="checkbox" ><b>Substituted symbols</b><br>
+      <input type="checkbox" ><b>Other</b><br>
+
+      </ul>
+      </form>
+      <div class="control-group">
       <label class="control-label"></label>
       <div class="controls">
         <button type="submit" id="submit" class="btn btn-primary">Submit</button>

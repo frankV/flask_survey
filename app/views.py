@@ -1,22 +1,9 @@
-from config import SM_API_BASE, AUTH_CODE_ENDPOINT, ACCESS_TOKEN_ENDPOINT, REDIRECT_URI, HOST_NAME, PORT_NUMBER, api_key, client_secret #, client_id
 from flask import abort, render_template, Response, flash, redirect, session, url_for, g, request, send_from_directory
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from models import User, ROLE_USER, ROLE_ADMIN
 from forms import LoginForm, RegistrationForm, Survey1, Survey2, Survey3, Survey4
-from flask_oauthlib.client import OAuth
 from flask.ext.mail import Mail
 from app import app, db, lm, mail
-
-# oauth = OAuth()
-# SurveyMonkey = oauth.remote_app(
-# 	'surveymonkey',
-# 	base_url = SM_API_BASE,
-# 	request_token_url = None,
-# 	access_token_url = ACCESS_TOKEN_ENDPOINT,
-# 	authorize_url = AUTH_CODE_ENDPOINT,
-# 	consumer_key = api_key,
-# 	consumer_secret = client_secret
-# 	)
 
 @lm.user_loader
 def load_user(id):
@@ -26,6 +13,17 @@ def load_user(id):
 @login_required
 def survey_1():
 	form = Survey1(request.form)
+	if form.validate_on_submit():
+		print form
+		surveyOne = SO(
+			form.gender.data,
+			form.age.data,
+			form.education.data,
+			form.language.data
+			) 
+		db.session.add(surveyOne)
+		db.session.commit()
+		return redirect(url_for('index'))
 	return render_template('Survey1.html', title='Survey', form=form)
 
 @app.route('/survey_2/', methods=['GET','POST'])
