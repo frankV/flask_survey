@@ -10,6 +10,7 @@ if sys.platform == 'win32':
     subprocess.call([os.path.join('flask', bin, 'pip'), 'install', '--no-deps', 'lamson', 'chardet', 'flask-mail'])
 else:
     subprocess.call([os.path.join('flask', bin, 'pip'), 'install', 'Flask-Mail==0.9.0'])
+subprocess.call([os.path.join('flask', bin, 'pip'), 'install', 'flup==1.0.2'])
 subprocess.call([os.path.join('flask', bin, 'pip'), 'install', 'Babel==1.3'])
 subprocess.call([os.path.join('flask', bin, 'pip'), 'install', 'Flask-Assets==0.9'])
 subprocess.call([os.path.join('flask', bin, 'pip'), 'install', 'Flask-Babel==0.9'])

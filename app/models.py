@@ -54,9 +54,9 @@ class Database(db.Model):
 
 class Survey1(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    gender = db.Column(db.Integer)
-    age = db.Column(db.Integer)
-    education = db.Column(db.Integer)
+    gender = db.Column(db.String)
+    age = db.Column(db.String)
+    education = db.Column(db.String)
     language = db.Column(db.String(20))
     db = db.relationship('Database', backref='survey1', lazy='dynamic')
 
