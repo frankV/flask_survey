@@ -1,8 +1,14 @@
+#FLASK
 from flask import abort, render_template, Response, flash, redirect, session, url_for, g, request, send_from_directory
+#FLASK EXTENSIONS
 from flask.ext.login import login_user, logout_user, current_user, login_required
+from flask.ext.sqlalchemy import get_debug_queries
+from flask.ext.mail import Mail
+#LOCAL
 from models import User, ROLE_USER, ROLE_ADMIN
 from forms import LoginForm, RegistrationForm, Survey1, Survey2, Survey3, Survey4
-from flask.ext.mail import Mail
+from email import user_notification
+from config import DATABASE_QUERY_TIMEOUT
 from app import app, db, lm, mail
 
 @lm.user_loader
@@ -15,13 +21,8 @@ def survey_1():
 	form = Survey1(request.form)
 	if form.validate_on_submit():
 		print form
-		surveyOne = SO(
-			form.gender.data,
-			form.age.data,
-			form.education.data,
-			form.language.data
-			) 
-		db.session.add(surveyOne)
+		# form.populate_obj(survey3)
+		db.session.add(form)
 		db.session.commit()
 		return redirect(url_for('index'))
 	return render_template('Survey1.html', title='Survey', form=form)
@@ -30,18 +31,36 @@ def survey_1():
 @login_required
 def survey_2():
 	form = Survey2(request.form)
+	if form.validate_on_submit():
+		print form
+		# form.populate_obj(survey3)
+		db.session.add(form)
+		db.session.commit()
+		return redirect(url_for('index'))
 	return render_template('Survey2.html', title='Survey', form=form)
 
 @app.route('/survey_3/', methods=['GET','POST'])
 @login_required
 def survey_3():
 	form = Survey3(request.form)
+	if form.validate_on_submit():
+		print form
+		# form.populate_obj(survey3)
+		db.session.add(form)
+		db.session.commit()
+		return redirect(url_for('index'))
 	return render_template('Survey3.html', title='Survey', form=form)
 
 @app.route('/survey_4/', methods=['GET','POST'])
 @login_required
 def survey_4():
 	form = Survey4(request.form)
+	if form.validate_on_submit():
+		print form
+		# form.populate_obj(survey3)
+		db.session.add(form)
+		db.session.commit()
+		return redirect(url_for('index'))
 	return render_template('Survey4.html', title='Survey', form=form)
 
 @app.route('/create_acct/' , methods=['GET','POST'])
@@ -54,6 +73,8 @@ def create_acct():
 		db.session.add(user)
 		db.session.commit()
 		login_user(user)
+		user_notification(user
+			)
 		return redirect(url_for('index'))
 	return render_template('create_acct.html', title = "Create Account", form=form)
 
@@ -69,7 +90,10 @@ def login():
 
 @app.route('/forgot_passwd')
 def forgot_passwd():
-	user = g.user
+	form = ForgotPassword(request.form)
+	if form.validate_on_submit():
+		user = form.get_user()
+
 	return render_template ("forgot_passwd.html", title="Forgot Password")
 
 @app.route('/')
@@ -104,12 +128,9 @@ def internal_error(error):
     # db.session.rollback()
     return render_template('500.html'), 500
 
-# @app.route('/about')
-# def about():
-# 	return render_template("about.html",
-# 		title = "About")
-
-# ============================================================
-# 				OAuth Code
-# ============================================================
-
+@app.after_request
+def after_request(response):
+	for query in get_debug_queries():
+		if query.duration >= DATABASE_QUERY_TIMEOUT:
+			app.logger.warning("SLOW QUERY: %s\nParameters: %s\nDuration: %fs\nContext: %s\n" % (query.statement, query.parameters, query.duration, query.context))
+	return response
