@@ -22,6 +22,12 @@ class LoginForm(Form):
     def get_user(self):
         return db.session.query(User).filter_by(name=self.name.data).first()
 
+class ForgotPassword(Form):
+    name = fields.TextField(validators=[Required(), Email()])
+
+    def get_user(self):
+        return db.session.query(User).filter_by(name=self.name.data).first()
+
 class RegistrationForm(Form):
     name = fields.TextField('Email Address', validators=[Required(), Email()])
     # email = fields.TextField(validators=[Email()])
