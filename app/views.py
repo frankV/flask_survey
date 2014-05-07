@@ -20,9 +20,9 @@ def load_user(id):
 def survey_1():
 	form = Survey1(request.form)
 	if form.validate_on_submit():
-		print form
-		# form.populate_obj(survey3)
-		db.session.add(form)
+		model = models.Survey1()
+		form.populate_obj(model)
+		db.session.add(model)
 		db.session.commit()
 		return redirect(url_for('index'))
 	return render_template('Survey1.html', title='Survey', form=form)
@@ -32,9 +32,9 @@ def survey_1():
 def survey_2():
 	form = Survey2(request.form)
 	if form.validate_on_submit():
-		print form
-		# form.populate_obj(survey3)
-		db.session.add(form)
+		model = models.Survey2()
+		form.populate_obj(model)
+		db.session.add(model)
 		db.session.commit()
 		return redirect(url_for('index'))
 	return render_template('Survey2.html', title='Survey', form=form)
@@ -44,9 +44,9 @@ def survey_2():
 def survey_3():
 	form = Survey3(request.form)
 	if form.validate_on_submit():
-		print form
-		# form.populate_obj(survey3)
-		db.session.add(form)
+		model = models.Survey3()
+		form.populate_obj(model)
+		db.session.add(model)
 		db.session.commit()
 		return redirect(url_for('index'))
 	return render_template('Survey3.html', title='Survey', form=form)
@@ -56,9 +56,9 @@ def survey_3():
 def survey_4():
 	form = Survey4(request.form)
 	if form.validate_on_submit():
-		print form
-		# form.populate_obj(survey3)
-		db.session.add(form)
+		model = models.Survey4()
+		form.populate_obj(model)
+		db.session.add(model)
 		db.session.commit()
 		return redirect(url_for('index'))
 	return render_template('Survey4.html', title='Survey', form=form)

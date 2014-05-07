@@ -42,7 +42,8 @@
 		</div><!-- /.navbar-collapse -->
 		<div class="row">
 			<hr>
-			<div class="span12">	{% with messages = get_flashed_messages() %}
+			<div class="span12">	
+				{% with messages = get_flashed_messages() %}
 				{% if messages %}
 				<ul>
 					{% for message in messages %}
