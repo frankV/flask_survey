@@ -22,7 +22,7 @@ class LoginForm(Form):
     def get_user(self):
         return db.session.query(User).filter_by(name=self.name.data).first()
 
-class ForgotPassword(Form):
+class ForgotPasswordForm(Form):
     name = fields.TextField(validators=[Required(), Email()])
 
     def get_user(self):
@@ -46,7 +46,7 @@ class RegistrationForm(Form):
         if db.session.query(User).filter_by(email=self.email.data).count() > 0:
             raise validators.ValidationError('Duplicate email')
 
-class Survey1(Form):
+class Survey1Form(Form):
     gender = fields.RadioField('What is your gender?', choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], validators = [Required()])
     age = fields.RadioField('What is your age?', choices=[('lt18', 'Younger than 18'), ('18-24', '18 to 24'), ('25-34', '25 to 34'), 
         ('35-44', '35 to 44'), ('45-54', '45 to 54'), ('55-64', '55 to 64'), ('65-74', '65 to 74'), ('75oa', '75 or above')], validators=[Required()])
@@ -55,7 +55,7 @@ class Survey1(Form):
         validators=[Required()])
     language = fields.TextField('Native Language', validators=[Required()])
 
-class Survey2(Form):
+class Survey2Form(Form):
     major = fields.RadioField('Are you majoring in or do you have a degree or job in computer science, computer engineering, information technology, or a related field?', 
         choices=[('Y', 'yes'), ('N', 'No'), ('O','I prefer not to answer')], validators = [Required()])
     department = fields.TextField('In what department are you majoring?', validators=[Required()])
@@ -66,7 +66,7 @@ class Survey2(Form):
         ('N', 'No, I use my old passwords that I have already created for my other accounts'), 
         ('O', 'I mostly create a new password, but sometimes use old passwords')], validators=[Required()])
 
-class Survey3(Form):
+class Survey3Form(Form):
     choose = fields.SelectMultipleField('How did you choose your new password? Were you influenced by any of the following? (Please check all that apply.)', 
         choices = [('names', 'Names of family members, relatives, close friends'), ('numbers', 'Familiar numbers (birth date, telephone number, street address, employee number, etc.)'),
         ('songs', 'Songs, movies, television shows, books, poetry or games'), ('mnemonic', 'Scientific or other educational mnemonics'), 
@@ -90,7 +90,7 @@ class Survey3(Form):
         choices=[('N', 'Not applicable'), ('Added symbols', 'Added symbols'), ('Deleted symbols', 'Deleted symbols'), ('Substituted symbols', 'Substituted symbols'),
         ('O', 'Other')], validators=[Required()])
 
-class Survey4(Form):
+class Survey4Form(Form):
     computerTime = fields.RadioField('How long have you been using a computer?', choices=[
         ('0-2', '0 to 2 Years'), ('3-5', '3 to 5 Years'), ('6-10', '6 to 10 Years'), ('mt10', 'More than 10 years')], validators=[Required()])
     passwordCreation = fields.SelectMultipleField('How do you usually create passwords for your accounts? (Please check all that apply.)', choices=[
