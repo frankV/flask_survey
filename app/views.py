@@ -10,6 +10,8 @@ from forms import LoginForm, RegistrationForm, Survey1Form, Survey2Form, Survey3
 from email import user_notification
 from config import DATABASE_QUERY_TIMEOUT
 from app import app, db, lm, mail
+#OTHER
+from datetime import datetime
 
 @lm.user_loader
 def load_user(id):
@@ -18,11 +20,16 @@ def load_user(id):
 @app.route('/survey_1/', methods=['GET','POST'])
 @login_required
 def survey_1():
+	g.user = current_user
 	form = Survey1Form(request.form)
 	if form.validate_on_submit():
 		model = Survey1(gender=form.gender.data, age=form.age.data, education=form.education.data, language=form.language.data)
 		form.populate_obj(model)
 		db.session.add(model)
+		db.session.commit()
+		g.user.s1=True
+		g.user.lastSeen=datetime.utcnow()
+		db.session.add(g.user)
 		db.session.commit()
 		return redirect(url_for('index'))
 	return render_template('Survey1.html', title='Survey', form=form)
@@ -30,11 +37,16 @@ def survey_1():
 @app.route('/survey_2/', methods=['GET','POST'])
 @login_required
 def survey_2():
+	g.user = current_user
 	form = Survey2Form(request.form)
 	if form.validate_on_submit():
 		model=Survey2(major=form.major.data, department=form.department.data, count=form.count.data, unique=form.unique.data)
 		form.populate_obj(model)
 		db.session.add(model)
+		db.session.commit()
+		g.user.s2=True
+		g.user.lastSeen=datetime.utcnow()
+		db.session.add(g.user)
 		db.session.commit()
 		return redirect(url_for('index'))
 	return render_template('Survey2.html', title='Survey', form=form)
@@ -42,11 +54,16 @@ def survey_2():
 @app.route('/survey_3/', methods=['GET','POST'])
 @login_required
 def survey_3():
+	g.user = current_user
 	form = Survey3Form(request.form)
 	if form.validate_on_submit():
 		model = Survey3(choose=form.choose.data, secure=form.secure.data, modify=form.modify.data, usedPassword=form.usedPassword.data, wordPart=form.wordPart.data, numberPart=form.numberPart.data, charPart=form.charPart.data)
 		form.populate_obj(model)
 		db.session.add(model)
+		db.session.commit()
+		g.user.s3=True
+		g.user.lastSeen=datetime.utcnow()
+		db.session.add(g.user)
 		db.session.commit()
 		return redirect(url_for('index'))
 	return render_template('Survey3.html', title='Survey', form=form)
@@ -54,11 +71,16 @@ def survey_3():
 @app.route('/survey_4/', methods=['GET','POST'])
 @login_required
 def survey_4():
+	g.user = current_user
 	form = Survey4Form(request.form)
 	if form.validate_on_submit():
 		model = Survey4(computerTime=forms.computerTime.data, passwordCreation=forms.passwordCreation.data, storePasswords=form.storePasswords.data, howStored=forms.howStored.data, comments=form.comments.data)
 		form.populate_obj(model)
 		db.session.add(model)
+		db.session.commit()
+		g.user.s4=True
+		g.user.lastSeen=datetime.utcnow()
+		db.session.add(g.user)
 		db.session.commit()
 		return redirect(url_for('index'))
 	return render_template('Survey4.html', title='Survey', form=form)
@@ -73,8 +95,7 @@ def create_acct():
 		db.session.add(user)
 		db.session.commit()
 		login_user(user)
-		user_notification(user
-			)
+		user_notification(user)
 		return redirect(url_for('index'))
 	return render_template('create_acct.html', title = "Create Account", form=form)
 

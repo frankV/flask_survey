@@ -1,5 +1,5 @@
-from flask.ext.wtf import Form, fields, validators, widgets
-from flask.ext.wtf import Required, Email, ValidationError
+from flask.ext.wtf import Form, fields, validators, Required, Email, ValidationError
+from wtforms import widgets
 from models import User
 from app import db
 
@@ -30,7 +30,6 @@ class ForgotPasswordForm(Form):
 
 class RegistrationForm(Form):
     name = fields.TextField('Email Address', validators=[Required(), Email()])
-    # email = fields.TextField(validators=[Email()])
     consent = fields.BooleanField(validators=[Required()])
     password = fields.PasswordField('New Password', [
         validators.Required(),
@@ -70,25 +69,36 @@ class Survey3Form(Form):
     choose = fields.SelectMultipleField('How did you choose your new password? Were you influenced by any of the following? (Please check all that apply.)', 
         choices = [('names', 'Names of family members, relatives, close friends'), ('numbers', 'Familiar numbers (birth date, telephone number, street address, employee number, etc.)'),
         ('songs', 'Songs, movies, television shows, books, poetry or games'), ('mnemonic', 'Scientific or other educational mnemonics'), 
-        ('sports', 'Sports teams and players'), ('famous', 'Names of famous people or characters'), ('words', 'Words in a language other than English')])
+        ('sports', 'Sports teams and players'), ('famous', 'Names of famous people or characters'), ('words', 'Words in a language other than English')], 
+        option_widget=widgets.CheckboxInput(),
+        widget=widgets.ListWidget(prefix_label=False))
+
     secure = fields.SelectMultipleField('When creating your new password, did you consider any of the following policies to make your password more secure? (Please check all that apply.)', 
         choices = [('numbers', 'Include numbers'), ('upper case', 'Include upper case letters'), ('symbols', 'Include symbols'), 
         ('8 chars', 'Have 8 or more characters'), ('no dict', 'Not contain dictionary words'), 
         ('adjacent', 'Not containing a sequence of adjacent or repeated characters on your keyboard (e.g. qwerty)'), 
-        ('nothing', 'I did not consider any policy')])
+        ('nothing', 'I did not consider any policy')],
+        option_widget=widgets.CheckboxInput(),
+        widget=widgets.ListWidget(prefix_label=False))
     modify = fields.RadioField('Did you create your new password by slightly changing your old password for this website?', choices=[
         ('Y', 'Yes'), ('N', 'No')], validators=[Required()])
     usedPassword = fields.RadioField('Is the password that you have just created one that you have used in the past?', choices=[
         ('Y', 'Yes'), ('N', 'No'), ('O', 'Password has similarities to another password that I have used before')], validators=[Required()])
     wordPart = fields.SelectMultipleField('If you created your new password based on one of your old passwords, did you consider changing the word part in one of the following ways?',
         choices=[('N', 'Not applicable'), ('Changed completely', 'Changed completely'), ('Changed slightly', 'Changed slightly'), 
-        ('Capitalized letters', 'Capitalized letters'), ('O', 'Other')], validators=[Required()])
+        ('Capitalized letters', 'Capitalized letters'), ('O', 'Other')], validators=[Required()], 
+        option_widget=widgets.CheckboxInput(),
+        widget=widgets.ListWidget(prefix_label=False))
     numberPart = fields.SelectMultipleField('If you created your new password based on one of your old passwords, did you consider changing the number part in one of the following ways?', 
         choices=[('N', 'Not applicable'), ('Added digits', 'Added digits'), ('Deleted digits', 'Deleted digits'), ('Substituted digits', 'Substituted digits'), 
-        ('O', 'Other')], validators=[Required()])
+        ('O', 'Other')], validators=[Required()], 
+        option_widget=widgets.CheckboxInput(),
+        widget=widgets.ListWidget(prefix_label=False))
     charPart = fields.SelectMultipleField('If you created your new password based on one of your old passwords, did you consider changing the special character part in one of the following ways?', 
         choices=[('N', 'Not applicable'), ('Added symbols', 'Added symbols'), ('Deleted symbols', 'Deleted symbols'), ('Substituted symbols', 'Substituted symbols'),
-        ('O', 'Other')], validators=[Required()])
+        ('O', 'Other')], validators=[Required()], 
+        option_widget=widgets.CheckboxInput(),
+        widget=widgets.ListWidget(prefix_label=False))
 
 class Survey4Form(Form):
     computerTime = fields.RadioField('How long have you been using a computer?', choices=[
@@ -98,12 +108,16 @@ class Survey4Form(Form):
         ('modify', 'Modify a password that is used for another account'), ('new', 'Create a new password using a familiar number or a name of a family member'),
         ('substitute', 'Choose a word and substitute some letters with numbers of symbols (for example @ for a)'), 
         ('multiword', 'Use a pass-phrase consisting of several words'), ('phrase', 'Choose a phrase and use the first letters of each word'),('O', 'Other')], 
-        validators=[Required()])
+        validators=[Required()], 
+        option_widget=widgets.CheckboxInput(),
+        widget=widgets.ListWidget(prefix_label=False))
     storePasswords = fields.RadioField('Do you store your passwords?', choices=[('Y', 'Yes I store my passwords (go to question 4)'), ('N', 'No, I do not store my passwords')], 
         validators=[Required()])
     howStored = fields.SelectMultipleField('How do you store your passwords? Check all that apply.', 
         choices=[('regular file', 'I store my passwords in a regular file / document on my computer.'), 
         ('encrypted', 'I store my passwords in an encrypted computer file'), ('software', 'I use password management software to securely store my passwords'),
         ('cellphone', 'I store my passwords on my cellphone / smartphone'), ('browser', 'I save my passwords in the browser'), 
-        ('write down', 'I write down my password on a piece of paper')])
+        ('write down', 'I write down my password on a piece of paper')], 
+        option_widget=widgets.CheckboxInput(),
+        widget=widgets.ListWidget(prefix_label=False))
     comments = fields.TextAreaField('If you have any additional feedback about passwords or this survey, please enter your comments here.')

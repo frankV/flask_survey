@@ -2,12 +2,20 @@
 {% block content %}
 <div class="jumbotron">
 	<h1>Hello, {{user.name}}</h1>
-	<p>Please follow the link below to work on the research survey</p>
+	<p>Please follow the link below to work on the ECIT survey</p>
 	<!-- Place these inside Jinja2 if conditional based on DB -->
-	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_1')}}" role="button">Research Survey 1</a></p>
-	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_2')}}" role="button">Research Survey 2</a></p>
-	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_3')}}" role="button">Research Survey 3</a></p>
+	{% if g.user.s3 and not g.user.s4%}
 	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_4')}}" role="button">Research Survey 4</a></p>
+	{% endif %}
+	{% if g.user.s2 and not g.user.s3%}
+	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_3')}}" role="button">Research Survey 3</a></p>
+	{% endif %}
+	{% if g.user.s1 and not g.user.s2%}
+	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_2')}}" role="button">Research Survey 2</a></p>
+	{% endif %}
+	{% if not g.user.s1 %}
+	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_1')}}" role="button">Research Survey 1</a></p>
+	{% endif %}
 	<!-- End if conditional -->
 </div>
 {% endblock %}

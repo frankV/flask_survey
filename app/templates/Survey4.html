@@ -7,38 +7,9 @@
   <form method="POST" action="." class="form form-horizontal">
     {{ form.csrf_token }}
     {{ render_field(form.computerTime) }}
-        <form action="">  
-    <b>How do you usually create passwords for your accounts? (Please check all that apply.)</b><br>
-    <ul>
-    <input type="checkbox" ><b>Randomly generate a password using special software or apps</b><br>
-    <input type="checkbox" ><b>Reuse a password that is used for another account</b><br>
-    <input type="checkbox" ><b>Modify a password that is used for another account</b><br>
-    <input type="checkbox" ><b>Create a new password using a familiar number or a name of a family member')</b><br>
-    <input type="checkbox" ><b>Choose a word and substitute some letters with numbers of symbols (for example @ for a)</b><br>
-    <input type="checkbox" ><b>Use a pass-phrase consisting of several words</b><br>
-    <input type="checkbox" ><b>Choose a phrase and use the first letters of each word</b><br>
-    <input type="checkbox" ><b>Other</b><br>
-    </ul>
-    </form>
-<!--     {{ render_field(form.passwordCreation) }}
- -->    
+    {{ render_field(form.passwordCreation) }}    
     {{ render_field(form.storePasswords)}}
-<!--     {{ render_field(form.howStored)}}
-
- -->   
-   <form action="">  
-  <b>How do you store your passwords? Check all that apply.</b>
-  <ul>
-  <input type="checkbox" ><b>I store my passwords in a regular file / document on my computer</b><br>
-  <input type="checkbox" ><b>I store my passwords in an encrypted computer file</b><br>
-  <input type="checkbox" ><b>I use password management software to securely store my passwords</b><br>
-  <input type="checkbox" ><b>I store my passwords on my cellphone / smartphone</b><br>
-  <input type="checkbox" ><b>save my passwords in the browser</b><br>
-  <input type="checkbox" ><b>I write down my password on a piece of paper</b><br>
-  <input type="checkbox" ><b>Other</b><br>
-  </ul>
-  </form>
-
+    {{ render_field(form.howStored)}}
    {{ render_field(form.comments)}}
     <div class="control-group">
       <label class="control-label"></label>
