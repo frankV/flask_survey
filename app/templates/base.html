@@ -5,9 +5,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	{% if title %}
-	<title>{{title}} - Research Survey</title>
+	<title>{{title}} - ECIT Survey</title>
 	{% else %}
-	<title>Research Survey</title>
+	<title>ECIT Survey</title>
 	{% endif %}
 	<link href="/static/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -15,13 +15,7 @@
 	<div class="container-fluid">
 		<!-- Brand and toggle get grouped for better mobile display -->
 		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="{{ url_for('index')}}">Research Survey</a>
+			<a class="navbar-brand" href="{{ url_for('index')}}">ECIT Survey</a>
 		</div>
 
 		<!-- Collect the nav links, forms, and other content for toggling -->
@@ -43,15 +37,6 @@
 		<div class="row">
 			<hr>
 			<div class="span12">	
-				{% with messages = get_flashed_messages() %}
-				{% if messages %}
-				<ul>
-					{% for message in messages %}
-					<li>{{ message }} </li>
-					{% endfor %}
-				</ul>
-				{% endif %}
-				{% endwith %}
 				{% block content %}{% endblock %}
 				<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 				<script src="/static/js/bootstrap.min.js"></script>
