@@ -5,4 +5,4 @@ workers = 2
 debug = True
 logfile= "logs/error.log"
 loglevel = 'debug'
-proc_name = "ncsi-dev"
+proc_name = "Ecit_Survey-dev"
