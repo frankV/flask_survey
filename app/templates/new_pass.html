@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content%}
+<div class="jumbotron">
+	{% from "macro.html" import render_field %}
+	<form method="POST" action="." class="form form-horizontal">
+
+		{{ form.csrf_token }}
+		{{ render_field(form.password, class="input-xlarge", placeholder="password") }}
+		{{ render_field(form.confirm, class="input-xlarge", placeholder="confirm password")}}
+
+		<div class="control-group">
+			<label class="control-label"></label>
+			<div class="controls">
+			<button type="submit" id="update_pass" class="btn btn-primary">Update Password</button>
+			</div>
+		</div>
+	</form>
+</div>
+{% endblock %}

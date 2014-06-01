@@ -74,7 +74,7 @@ def survey_4():
 	g.user = current_user
 	form = Survey4Form(request.form)
 	if form.validate_on_submit():
-		model = Survey4(computerTime=forms.computerTime.data, passwordCreation=forms.passwordCreation.data, storePasswords=form.storePasswords.data, howStored=forms.howStored.data, comments=form.comments.data)
+		model = Survey4(computerTime=form.computerTime.data, passwordCreation=form.passwordCreation.data, storePasswords=form.storePasswords.data, howStored=form.howStored.data, comments=form.comments.data)
 		form.populate_obj(model)
 		db.session.add(model)
 		db.session.commit()
@@ -90,8 +90,7 @@ def create_acct():
 	form = RegistrationForm(request.form)
 	if form.validate_on_submit():
 		print form
-		user = User()
-		form.populate_obj(user)
+		user = User(name=form.name.data, password=form.password.data, oldPassword=form.password.data)
 		db.session.add(user)
 		db.session.commit()
 		login_user(user)
@@ -99,14 +98,31 @@ def create_acct():
 		return redirect(url_for('index'))
 	return render_template('create_acct.html', title = "Create Account", form=form)
 
+@app.route('/new_pass/' , methods=['GET','POST'])
+def new_pass():
+	form = NewPass(request.form)
+	if form.validate_on_submit():
+		print form
+		updated=User(password=form.password.data)
+		user = User()
+		db.session.add(updated)
+		db.session.commit()
+		login_user(user)
+		return redirect(url_for('index'))
+	return render_template('new_pass', title='Update Password', form=form)
+
 @app.route('/login/',methods=['GET','POST'])
 def login():
 	form = LoginForm(request.form)
 	if form.validate_on_submit():
-		user = form.get_user()
-		login_user(user)
-		flash("Logged in successfully.")
-		return redirect(request.args.get("next") or url_for("index"))
+		user = User()
+		if user.s2 is True:
+			return redirect(request.args.get("next") or url_for("new_pass"))
+		else:
+			user = form.get_user()
+			login_user(user)
+			flash("Logged in successfully.")
+			return redirect(request.args.get("next") or url_for("index"))
 	return render_template('login.html', title = "Login", form=form)
 
 @app.route('/forgot_passwd')
