@@ -121,6 +121,10 @@ class Survey3(db.Model):
     def get_id(self):
         return unicode(self.id)
 
+class ChooseSelectMultiple(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+        
+
 class Survey4(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     computerTime = db.Column(db.String)
