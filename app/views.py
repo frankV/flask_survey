@@ -104,10 +104,11 @@ def new_pass():
 	if form.validate_on_submit():
 		print form
 		updated=User(password=form.password.data)
-		user = User()
 		db.session.add(updated)
 		db.session.commit()
+		user = User()
 		login_user(user)
+		flash("Thanks for updating your password!")
 		return redirect(url_for('index'))
 	return render_template('new_pass', title='Update Password', form=form)
 
@@ -116,7 +117,8 @@ def login():
 	form = LoginForm(request.form)
 	if form.validate_on_submit():
 		user = User()
-		if user.s2 is True:
+		if user.s2 is True and user.s3 is False:
+			flash("Redirect to new password")
 			return redirect(request.args.get("next") or url_for("new_pass"))
 		else:
 			user = form.get_user()
