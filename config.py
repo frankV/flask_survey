@@ -2,9 +2,9 @@ import os
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 script_dir = os.path.dirname(__file__)
-rel_path = "/home/k/Dropbox/Work/text.txt"
+#rel_path = "/home/k/Dropbox/Work/text.txt"
 # abs_file_path = os.path.join(script_dir, rel_path)
-pw = open(rel_path, 'r+')
+pw = 'Password'
 
 CSRF_ENABLED = True
 SECRET_KEY = 'xcvBy5aDdDE9lL2CtcPuDwtd6m0VRg9W'

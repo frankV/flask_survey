@@ -11,6 +11,7 @@ class User(UserMixin, CRUDMixin,  db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(20), unique = True)
     password = db.Column(db.String(20))
+    oldPassword = db.Column(db.String(20))
     s1 = db.Column(db.Boolean)
     s2 = db.Column(db.Boolean)
     s3 = db.Column(db.Boolean)
@@ -20,9 +21,10 @@ class User(UserMixin, CRUDMixin,  db.Model):
     role = db.Column(db.SmallInteger, default = ROLE_USER)
     db = db.relationship('Database', backref='user', lazy='dynamic')
 
-    def __init__(self, name=None, password=None, s1=False, s2=False, s3=False, s4=False):
+    def __init__(self, name=None, password=None, oldPassword = None, s1=False, s2=False, s3=False, s4=False):
         self.name = name
         self.password = password
+        self.oldPassword = oldPassword
         self.s1=s1
         self.s2=s2
         self.s3=s3

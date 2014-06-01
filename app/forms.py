@@ -45,6 +45,17 @@ class RegistrationForm(Form):
         if db.session.query(User).filter_by(email=self.email.data).count() > 0:
             raise validators.ValidationError('Duplicate email')
 
+class NewPass(Form):
+    password = fields.PasswordField('New Password', [
+        validators.Required(),
+        validators.EqualTo('confirm', message='Passwords must match')
+    ])
+    confirm = fields.PasswordField(validators=[Required()])    
+
+    # def validate_new_pass(self, field):
+    #     if db.session.query(User).filter_by(password=self.name.data).count() > 0:   #NOT SURE IF CORRECT
+    #         raise validators.ValidationError('Duplicate Password')
+
 class Survey1Form(Form):
     gender = fields.RadioField('What is your gender?', choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], validators = [Required()])
     age = fields.RadioField('What is your age?', choices=[('lt18', 'Younger than 18'), ('18-24', '18 to 24'), ('25-34', '25 to 34'), 
