@@ -238,3 +238,28 @@ class Survey4(db.Model):
 
     def get_id(self):
         return unicode(self.id)
+
+class PasswordCreation(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    random = db.Column(db.String)
+    reuse = db.Column(db.String)
+    modify = db.Column(db.String)
+    new = db.Column(db.String)
+    substitute = db.Column(db.String)
+    multiword = db.Column(db.String)
+    phrase = db.Column(db.String)
+    O = db.Column(db.String)
+
+    def __init__(self, random=None, reuse=None, modify=None, new=None, substitute=None, multiword=None, phrase=None, O=None):
+        self.random = random
+        self.reuse = reuse
+        self.modify = modify
+        self.new = new
+        self.substitute = substitute
+        self.multiword = multiword
+        self.phrase = phrase
+        self.O = O
+
+    def get_id(self):
+        return unicode(self.id)
+        
