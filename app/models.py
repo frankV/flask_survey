@@ -121,9 +121,105 @@ class Survey3(db.Model):
     def get_id(self):
         return unicode(self.id)
 
+class CharPartSelectMultiple(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    N = db.Column(db.String)
+    added_symbols = db.Column(db.String)
+    deleted_symbols = db.Column(db.String)
+    substituted_symbols = db.Column(db.String)
+    O = db.Column(db.String)
+
+    def __init__(self, N=None, added_symbols=None, deleted_symbols=None, substituted_symbols=None, O=None):
+        self.N = N
+        self.added_symbols = added_symbols
+        self.deleted_symbols = deleted_symbols
+        self.substituted_symbols = substituted_symbols
+        self.O = O
+
+    def get_id(self):
+        return unicode(self.id)
+
+class NumberPartSelectMultiple(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    N = db.Column(db.String)
+    added_digits = db.Column(db.String)
+    deleted_digits = db.Column(db.String)
+    substituted_digits = db.Column(db.String)
+    O = db.Column(db.String)
+
+    def __init__(self, N=None, added_digits=None, deleted_digits=None, substituted_digits=None, O=None):
+        self.N = N
+        self.added_digits = added_digits
+        self.deleted_digits = deleted_digits
+        self.substituted_digits = substituted_digits
+        self.O = O
+
+    def get_id(self):
+        return unicode(self.id)
+
+class WordPartSelectMultiple(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    N = db.Column(db.String)
+    Changed_completely = db.Column(db.String)
+    Changed_slightly = db.Column(db.String)
+    Capitalized_letters = db.Column(db.String)
+    O = db.Column(db.String)
+
+    def __init__(self, N=None, Changed_completely=None, Changed_slightly=None, Capitalized_letters=None, O=None):
+        self.N = N
+        self.Changed_completely = Changed_completely
+        self.Changed_slightly = Changed_slightly
+        self.Capitalized_letters = Capitalized_letters
+        self.O = O
+
+    def get_id(self):
+        return unicode(self.id)
+
+
+class SecureSelectMultiple(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    numbers = db.Column(db.String)
+    upper_case = db.Column(db.String)
+    symbols = db.Column(db.String)
+    eight_chars = db.Column(db.String)
+    no_dict = db.Column(db.String)
+    adjacent = db.Column(db.String)
+    nothing = db.Column(db.String)
+
+    def __init__(self, numbers=None, upper_case=None, symbols=None, eight_chars=None, no_dict=None, adjacent=None, nothing=None):
+        self.numbers = numbers
+        self.upper_case = upper_case
+        self.symbols = symbols
+        self.eight_chars = eight_chars
+        self.no_dict = no_dict
+        self.adjacent = adjacent
+        self.nothing=nothing
+
+    def get_id(self):
+        return unicode(self.id)
+        
 class ChooseSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-        
+    names = db.Column(db.String)
+    numbers = db.Column(db.String)
+    songs = db.Column(db.String)
+    mnemonic = db.Column(db.String)
+    sports = db.Column(db.String)
+    famous = db.Column(db.String)
+    words = db.Column(db.String)
+
+    def __init__(self, names=None, numbers=None, song=None, mnemonic=None, sports=None, famous=None, words=None):
+        self.names = names
+        self.numbers = numbers
+        self.song = song
+        self.mnemonic = mnemonic
+        self.sports = sports
+        self.famous = famous
+        self.words = words
+
+    def get_id(self):
+        return unicode(self.id)
+
 
 class Survey4(db.Model):
     id = db.Column(db.Integer, primary_key = True)

@@ -85,8 +85,8 @@ class Survey3Form(Form):
         widget=widgets.ListWidget(prefix_label=False))
 
     secure = fields.SelectMultipleField('When creating your new password, did you consider any of the following policies to make your password more secure? (Please check all that apply.)', 
-        choices = [('numbers', 'Include numbers'), ('upper case', 'Include upper case letters'), ('symbols', 'Include symbols'), 
-        ('8 chars', 'Have 8 or more characters'), ('no dict', 'Not contain dictionary words'), 
+        choices = [('numbers', 'Include numbers'), ('upper_case', 'Include upper case letters'), ('symbols', 'Include symbols'), 
+        ('eight_chars', 'Have 8 or more characters'), ('no_dict', 'Not contain dictionary words'), 
         ('adjacent', 'Not containing a sequence of adjacent or repeated characters on your keyboard (e.g. qwerty)'), 
         ('nothing', 'I did not consider any policy')],
         option_widget=widgets.CheckboxInput(),
@@ -96,17 +96,17 @@ class Survey3Form(Form):
     usedPassword = fields.RadioField('Is the password that you have just created one that you have used in the past?', choices=[
         ('Y', 'Yes'), ('N', 'No'), ('O', 'Password has similarities to another password that I have used before')], validators=[Required()])
     wordPart = fields.SelectMultipleField('If you created your new password based on one of your old passwords, did you consider changing the word part in one of the following ways?',
-        choices=[('N', 'Not applicable'), ('Changed completely', 'Changed completely'), ('Changed slightly', 'Changed slightly'), 
-        ('Capitalized letters', 'Capitalized letters'), ('O', 'Other')], validators=[Required()], 
+        choices=[('N', 'Not applicable'), ('Changed_completely', 'Changed completely'), ('Changed_slightly', 'Changed slightly'), 
+        ('Capitalized_letters', 'Capitalized letters'), ('O', 'Other')], validators=[Required()], 
         option_widget=widgets.CheckboxInput(),
         widget=widgets.ListWidget(prefix_label=False))
     numberPart = fields.SelectMultipleField('If you created your new password based on one of your old passwords, did you consider changing the number part in one of the following ways?', 
-        choices=[('N', 'Not applicable'), ('Added digits', 'Added digits'), ('Deleted digits', 'Deleted digits'), ('Substituted digits', 'Substituted digits'), 
+        choices=[('N', 'Not applicable'), ('added_digits', 'Added digits'), ('deleted_digits', 'Deleted digits'), ('substituted_digits', 'Substituted digits'), 
         ('O', 'Other')], validators=[Required()], 
         option_widget=widgets.CheckboxInput(),
         widget=widgets.ListWidget(prefix_label=False))
     charPart = fields.SelectMultipleField('If you created your new password based on one of your old passwords, did you consider changing the special character part in one of the following ways?', 
-        choices=[('N', 'Not applicable'), ('Added symbols', 'Added symbols'), ('Deleted symbols', 'Deleted symbols'), ('Substituted symbols', 'Substituted symbols'),
+        choices=[('N', 'Not applicable'), ('added_symbols', 'Added symbols'), ('deleted_symbols', 'Deleted symbols'), ('substituted_symbols', 'Substituted symbols'),
         ('O', 'Other')], validators=[Required()], 
         option_widget=widgets.CheckboxInput(),
         widget=widgets.ListWidget(prefix_label=False))
