@@ -98,6 +98,10 @@ def create_acct():
 		return redirect(url_for('index'))
 	return render_template('create_acct.html', title = "Create Account", form=form)
 
+@app.route('/consent/')
+def consent():
+	return render_template('consent.html', title = "Consent")
+
 @app.route('/new_pass/' , methods=['GET','POST'])
 def new_pass():
 	form = NewPass(request.form)
