@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content%}
+<div class="jumbotron">
+  {% from "macro.html" import render_field %}
+<!--  <h1>Welcome to the ECIT Survey</h1><br><br> -->
+  <h2 style="align:center">Consent Form</h2>
+  <p> 
+    My name is Shiva Houshmand, and I am a graduate student in the Department of Computer Science at the Florida State University. I am conducting a research study to understand how users create and manage their passwords. You have been invited to participate because you have confirmed that you are at least 18 years old. 
+    </p>
+    <p>
+    If you agree to be in this study, you will be then asked to create a username and password to start with. You will be advised to NOT provide a password that you currently use or have previously used for another account. You will be asked a series of demographic questions such as age, education, and gender. You are required to log in once a day for a total of four times during the period of the study. Each time you log in, some multiple-choice questions will be asked related to how you create and manage your passwords. 
+    
+    You may be asked to change your password during the logins. Each login should not take more than 5 minutes.
+    </p>
+    <p>
+    If you finish all four days of this survey, you will be entered into a drawing in which you can win a $50 worth Amazon gift card. A total of 10 winners will be selected. The drawing will be held at the end of the study and the winners will be notified via email.
+    </p>
+    <p>
+    All questionnaire responses and passwords will only be retained for the duration of the study. Only researchers in this study will have access to the data. To maintain the confidentiality of your records, the password or your answers will not be associated with your email address or any other identifiable information. Your email address is only used to send follow up emails for the result of the drawing and will be discarded after the duration of the study. The results of this research study may be published, but only aggregate data will be reported. The records of this study will be kept private and confidential to the extent permitted by law. 
+    </p>
+    <p>
+    There are no known risks if you decide to participate in this research study. Your participation in this study is completely voluntary. Your decision whether or not to participate will not affect your current or future relations with the University. If you choose to participate, you are free to withdraw at any time without penalty or risk. Participating in this research study may not benefit you directly, but what we learn from this study would provide general benefits to the password security area. 
+</p>
+<p>
+    The researchers conducting this study are Shiva Houshmand and her advisor Dr. Sudhir Aggarwal. If you have any questions or concerns about the questionnaire or about being in this study, you may contact them at (850) 644-0164 or at houshman[at]cs.fsu.edu, and sudhir[at]cs.fsu.edu.
+    </p>
+    <p>
+    If you have any questions or concerns regarding this study and would like to talk to someone other than the researchers, you are encouraged to contact the FSU IRB at 2010 Levy Street, Research Building B, Suite 276, Tallahassee, FL 32306-2742, or 850-644-8633, or by email at humansubjects@magnet.fsu.edu.
+    </p>
+
+  <br>
+      </div>
+ {% endblock %}
