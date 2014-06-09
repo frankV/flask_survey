@@ -100,13 +100,13 @@ class Survey2(db.Model):
 
 class Survey3(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    choose = db.Column(db.String)
-    secure = db.Column(db.String)
+    choose = db.relationship('ChooseSelectMultiple', backref='survey3', lazy='dynamic')
+    secure = db.relationship('SecureSelectMultiple', backref='survey3', lazy='dynamic')
     modify = db.Column(db.String)
     usedPassword = db.Column(db.String)
-    wordPart = db.Column(db.String)
-    numberPart = db.Column(db.String)
-    charPart = db.Column(db.String)
+    wordPart = db.relationship('WordPartSelectMultiple', backref='survey3', lazy='dynamic')
+    numberPart = db.relationship('NumberPartSelectMultiple', backref='survey3', lazy='dynamic')
+    charPart = db.relationship('CharPartSelectMultiple', backref='survey3', lazy='dynamic')
     db = db.relationship('Database', backref='survey3', lazy='dynamic')
 
     def __init__(self, choose=None, secure=None, modify=None, usedPassword=None, wordPart=None, numberPart=None, charPart=None,):
@@ -128,6 +128,8 @@ class CharPartSelectMultiple(db.Model):
     deleted_symbols = db.Column(db.String)
     substituted_symbols = db.Column(db.String)
     O = db.Column(db.String)
+    survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
+
 
     def __init__(self, N=None, added_symbols=None, deleted_symbols=None, substituted_symbols=None, O=None):
         self.N = N
@@ -138,7 +140,6 @@ class CharPartSelectMultiple(db.Model):
 
     def get_id(self):
         return unicode(self.id)
-
 class NumberPartSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     N = db.Column(db.String)
@@ -146,6 +147,8 @@ class NumberPartSelectMultiple(db.Model):
     deleted_digits = db.Column(db.String)
     substituted_digits = db.Column(db.String)
     O = db.Column(db.String)
+    survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
+
 
     def __init__(self, N=None, added_digits=None, deleted_digits=None, substituted_digits=None, O=None):
         self.N = N
@@ -156,7 +159,6 @@ class NumberPartSelectMultiple(db.Model):
 
     def get_id(self):
         return unicode(self.id)
-
 class WordPartSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     N = db.Column(db.String)
@@ -164,6 +166,7 @@ class WordPartSelectMultiple(db.Model):
     Changed_slightly = db.Column(db.String)
     Capitalized_letters = db.Column(db.String)
     O = db.Column(db.String)
+    survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
 
     def __init__(self, N=None, Changed_completely=None, Changed_slightly=None, Capitalized_letters=None, O=None):
         self.N = N
@@ -174,8 +177,6 @@ class WordPartSelectMultiple(db.Model):
 
     def get_id(self):
         return unicode(self.id)
-
-
 class SecureSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     numbers = db.Column(db.String)
@@ -185,6 +186,7 @@ class SecureSelectMultiple(db.Model):
     no_dict = db.Column(db.String)
     adjacent = db.Column(db.String)
     nothing = db.Column(db.String)
+    survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
 
     def __init__(self, numbers=None, upper_case=None, symbols=None, eight_chars=None, no_dict=None, adjacent=None, nothing=None):
         self.numbers = numbers
@@ -196,8 +198,7 @@ class SecureSelectMultiple(db.Model):
         self.nothing=nothing
 
     def get_id(self):
-        return unicode(self.id)
-        
+        return unicode(self.id)   
 class ChooseSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     names = db.Column(db.String)
@@ -207,6 +208,7 @@ class ChooseSelectMultiple(db.Model):
     sports = db.Column(db.String)
     famous = db.Column(db.String)
     words = db.Column(db.String)
+    survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
 
     def __init__(self, names=None, numbers=None, song=None, mnemonic=None, sports=None, famous=None, words=None):
         self.names = names
@@ -220,11 +222,10 @@ class ChooseSelectMultiple(db.Model):
     def get_id(self):
         return unicode(self.id)
 
-
 class Survey4(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     computerTime = db.Column(db.String)
-    passwordCreation = db.Column(db.String)
+    passwordCreation = db.relationship('PasswordCreationSelectMultiple', backref='survey4', lazy='dynamic')
     storePasswords = db.Column(db.String)
     howStored = db.Column(db.String)
     comments = db.Column(db.String)
@@ -239,7 +240,7 @@ class Survey4(db.Model):
     def get_id(self):
         return unicode(self.id)
 
-class PasswordCreation(db.Model):
+class PasswordCreationSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     random = db.Column(db.String)
     reuse = db.Column(db.String)
@@ -249,6 +250,7 @@ class PasswordCreation(db.Model):
     multiword = db.Column(db.String)
     phrase = db.Column(db.String)
     O = db.Column(db.String)
+    survey4_id = db.Column(db.Integer, db.ForeignKey('survey4.id'))
 
     def __init__(self, random=None, reuse=None, modify=None, new=None, substitute=None, multiword=None, phrase=None, O=None):
         self.random = random
