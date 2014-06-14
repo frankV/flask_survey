@@ -1,4 +1,4 @@
-from flask.ext.wtf import Form, fields, validators, Required, Email, ValidationError
+from flask.ext.wtf import Form, fields, validators, Required, Email, ValidationError, Length
 from wtforms import widgets
 from models import User
 from app import db
@@ -16,30 +16,30 @@ def validate_login(form, field):
         raise validators.ValidationError('Invalid password')
 
 class LoginForm(Form):
-    name = fields.TextField(validators=[Required(), Email()])
+    email = fields.TextField(validators=[Required(), Email()])
     password = fields.PasswordField(validators=[Required(), validate_login])
 
     def get_user(self):
-        return db.session.query(User).filter_by(name=self.name.data).first()
+        return db.session.query(User).filter_by(email=self.email.data).first()
 
 class ForgotPasswordForm(Form):
-    name = fields.TextField(validators=[Required(), Email()])
+    email = fields.TextField(validators=[Required(), Email()])
 
     def get_user(self):
-        return db.session.query(User).filter_by(name=self.name.data).first()
+        return db.session.query(User).filter_by(email=self.email.data).first()
 
 class RegistrationForm(Form):
-    name = fields.TextField('Email Address', validators=[Required(), Email()])
+    email = fields.TextField('Email Address', validators=[Required(), Email()])
     consent = fields.BooleanField(validators=[Required()])
     password = fields.PasswordField('New Password', [
-        validators.Required(),
+        validators.Required(), validators.Length(min=8),
         validators.EqualTo('confirm', message='Passwords must match')
     ])
     confirm = fields.PasswordField(validators=[Required()])
 
-    def validate_name(self, field):
-        if db.session.query(User).filter_by(name=self.name.data).count() > 0:
-            raise validators.ValidationError('Duplicate name')
+    # def validate_name(self, field):
+    #     if db.session.query(User).filter_by(name=self.name.data).count() > 0:
+    #         raise validators.ValidationError('Duplicate name')
 
     def validate_email(self, field):
         if db.session.query(User).filter_by(email=self.email.data).count() > 0:
@@ -47,7 +47,7 @@ class RegistrationForm(Form):
 
 class NewPass(Form):
     password = fields.PasswordField('New Password', [
-        validators.Required(),
+        validators.Required(), validators.Length(min=8),
         validators.EqualTo('confirm', message='Passwords must match')
     ])
     confirm = fields.PasswordField(validators=[Required()])    

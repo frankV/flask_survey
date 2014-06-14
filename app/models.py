@@ -9,7 +9,7 @@ ROLE_ADMIN = 1
 class User(UserMixin, CRUDMixin,  db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
-    name = db.Column(db.String(20), unique = True)
+    email = db.Column(db.String(20), unique = True)
     password = db.Column(db.String(20))
     oldPassword = db.Column(db.String(20))
     s1 = db.Column(db.Boolean)
@@ -21,8 +21,8 @@ class User(UserMixin, CRUDMixin,  db.Model):
     role = db.Column(db.SmallInteger, default = ROLE_USER)
     db = db.relationship('Database', backref='user', lazy='dynamic')
 
-    def __init__(self, name=None, password=None, oldPassword = None, s1=False, s2=False, s3=False, s4=False):
-        self.name = name
+    def __init__(self, email=None, password=None, oldPassword = None, s1=False, s2=False, s3=False, s4=False):
+        self.email = email
         self.password = password
         self.oldPassword = oldPassword
         self.s1=s1
@@ -43,7 +43,7 @@ class User(UserMixin, CRUDMixin,  db.Model):
             return False
 
     def __repr__(self):
-        return '<User %r>' % (self.name)
+        return '<User %r>' % (self.email)
 
 class Database(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -53,13 +53,11 @@ class Database(db.Model):
     survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
     survey4_id = db.Column(db.Integer, db.ForeignKey('survey4.id'))
 
-    name = db.Column(db.String(255), unique = True)
-
     def get_id(self):
         return unicode(self.id)
 
     def __repr__(self):
-        return '<Database %r>' % (self.name)
+        return '<Database %r>' % (self.id)
 
 class Survey1(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -109,14 +107,9 @@ class Survey3(db.Model):
     charPart = db.relationship('CharPartSelectMultiple', backref='survey3', lazy='dynamic')
     db = db.relationship('Database', backref='survey3', lazy='dynamic')
 
-    def __init__(self, choose=None, secure=None, modify=None, usedPassword=None, wordPart=None, numberPart=None, charPart=None,):
-        self.choose=choose
-        self.secure=secure
+    def __init__(self, modify=None, usedPassword=None):
         self.modify=modify
         self.usedPassword=usedPassword
-        self.wordPart=wordPart
-        self.numberPart=numberPart
-        self.charPart=charPart
 
     def get_id(self):
         return unicode(self.id)
@@ -128,7 +121,6 @@ class CharPartSelectMultiple(db.Model):
     deleted_symbols = db.Column(db.Boolean)
     substituted_symbols = db.Column(db.Boolean)
     O = db.Column(db.String)
-
     survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
 
 
@@ -231,9 +223,8 @@ class Survey4(db.Model):
     howStored = db.Column(db.String)
     comments = db.Column(db.String)
 
-    def __init__(self, computerTime=None, passwordCreation=None, storePasswords=None, howStored=None, comments=None):
+    def __init__(self, computerTime=None, storePasswords=None, howStored=None, comments=None):
         self.computerTime=computerTime
-        self.passwordCreation=passwordCreation
         self.storePasswords=storePasswords
         self.howStored=howStored
         self.comments=comments

@@ -1,12 +1,27 @@
 {% extends "base.html" %}
 {% block content%}
-
 <div class="jumbotron">
-{% from "macro.html" import render_field %}
+  {% from "macro.html" import render_field %}
+  <h1>Password Retrieval</h1>
+  <br>
+  <form method="POST" action="." class="form form-horizontal">
+    {{ form.csrf_token }}
+    {{ render_field(form.email, class="input-xlarge",placeholder="fsu.edu email") }}
+    
+    <div class="control-group">
+      <label class="control-label"></label>
+      <div class="controls">
+        <button type="submit" id="sign_in" class="btn btn-primary">Log In</button>
+        
+        <br><br>
+        <a href="/create_acct">Need an Account?</a>
+        <a href="#" style="float:right;margin-right: 120px;">Forgot Password?</a>
+<!--         <a href="/forgot_passwd" style="float:right;margin-right: 120px;">Forgot Password?</a> 
+ -->
+      </div>
 
-<h2>Please enter user email</h2>
-
-
-
+    </div>
+  </form>
 </div>
-{% endblock %}
+
+   {% endblock %}

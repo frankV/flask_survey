@@ -5,16 +5,16 @@ from flask import render_template
 from config import ADMINS
 
 def user_notification(user):
-    send_email("[Research Survey] %s is now a registered user, please follow the link to return to the Research Survey!" % user.name,
+    send_email("[Research Survey] %s is now a registered user, please follow the link to return to the Research Survey!" % user.email,
         ADMINS[0],
-        [user.name],
+        [user.email],
         render_template("new_user_email.txt", 
             user = user))
 
 def forgot_password(user):
-    send_email("[Research Survey] User %s Forgot Password" % user.name,
+    send_email("[Research Survey] User %s Forgot Password" % user.email,
         ADMINS[0],
-        [user.name],
+        [user.email],
         render_template("forgot_passwd.txt", 
             user=user))
 
