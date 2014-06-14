@@ -11,7 +11,7 @@ from email import user_notification
 from config import DATABASE_QUERY_TIMEOUT
 from app import app, db, lm, mail
 #OTHER
-from datetime import datetime
+import datetime
 
 @lm.user_loader
 def load_user(id):
@@ -28,10 +28,11 @@ def survey_1():
 		db.session.add(model)
 		db.session.commit()
 		g.user.s1=True
-		g.user.lastSeen=datetime.utcnow()
+		g.user.lastSeen=datetime.date.today()
 		db.session.add(g.user)
 		db.session.commit()
-		return redirect(url_for('index'))
+		logout_user()
+		return redirect(url_for('logouthtml'))
 	return render_template('Survey1.html', title='Survey', form=form)
 
 @app.route('/survey_2/', methods=['GET','POST'])
@@ -45,10 +46,11 @@ def survey_2():
 		db.session.add(model)
 		db.session.commit()
 		g.user.s2=True
-		g.user.lastSeen=datetime.utcnow()
+		g.user.lastSeen=datetime.date.today()
 		db.session.add(g.user)
 		db.session.commit()
-		return redirect(url_for('index'))
+		logout_user()
+		return redirect(url_for('logouthtml'))
 	return render_template('Survey2.html', title='Survey', form=form)
 
 @app.route('/survey_3/', methods=['GET','POST'])
@@ -57,15 +59,36 @@ def survey_3():
 	g.user = current_user
 	form = Survey3Form(request.form)
 	if form.validate_on_submit():
-		model = Survey3(choose=form.choose.data, secure=form.secure.data, modify=form.modify.data, usedPassword=form.usedPassword.data, wordPart=form.wordPart.data, numberPart=form.numberPart.data, charPart=form.charPart.data)
+		model = Survey3(modify=form.modify.data, usedPassword=form.usedPassword.data)
+		charPart = CharPartSelectMultiple(N=form.N.data, added_symbols = form.added_symbols.data, 
+			deleted_symbols=form.deleted_symbols.data, substituted_symbols=form.substituted_symbols.data, 
+			O = form.O.data)
+		numPart = NumberPartSelectMultiple(N=form.N.data, added_digits=form.added_digits.data, 
+			deleted_digits=form.deleted_digits.data, substituted_digits=form.substituted_digits.data, 
+			O = form.O.data)
+		wordPart = WordPartSelectMultiple(N = form.N.data,  changed_completely = form. changed_completely.data, 
+			changed_slightly = form.changed_slightly.data, capitalized_letters=form.capitalized_letters.data, 
+			O = form.O.data)
+		securePart = SecureSelectMultiple(numbers = form.numbers.data, upper_case=form.upper_case.data, 
+			symbols=form.symbols.data, eight_chars = form.eight_chars.data, no_dict=form.no_dict.data, adjacent=form.adjacent.data,
+			nothing=form.nothing.data)
+
 		form.populate_obj(model)
+		form.populate_obj(charPart)
+		form.populate_obj(numPart)
+		form.populate_obj(wordPart)
+
 		db.session.add(model)
-		db.session.commit()
+		db.session.add(charPart)
+		db.session.add(numPart)
+		db.session.add(wordPart)
+
 		g.user.s3=True
-		g.user.lastSeen=datetime.utcnow()
+		g.user.lastSeen=datetime.date.today()
 		db.session.add(g.user)
 		db.session.commit()
-		return redirect(url_for('index'))
+		logout_user()
+		return redirect(url_for('logouthtml'))
 	return render_template('Survey3.html', title='Survey', form=form)
 
 @app.route('/survey_4/', methods=['GET','POST'])
@@ -77,12 +100,11 @@ def survey_4():
 		model = Survey4(computerTime=form.computerTime.data, passwordCreation=form.passwordCreation.data, storePasswords=form.storePasswords.data, howStored=form.howStored.data, comments=form.comments.data)
 		form.populate_obj(model)
 		db.session.add(model)
-		db.session.commit()
 		g.user.s4=True
-		g.user.lastSeen=datetime.utcnow()
+		g.user.lastSeen=datetime.date.today()
 		db.session.add(g.user)
 		db.session.commit()
-		return redirect(url_for('index'))
+		return redirect(url_for('logouthtml'))
 	return render_template('Survey4.html', title='Survey', form=form)
 
 @app.route('/create_acct/' , methods=['GET','POST'])
@@ -101,6 +123,11 @@ def create_acct():
 @app.route('/consent/')
 def consent():
 	return render_template('consent.html', title = "Consent")
+
+@app.route('/logouthtml/')
+def logouthtml():
+	return render_template('logout.html', title="Logout")
+
 
 @app.route('/new_pass/' , methods=['GET','POST'])
 def new_pass():
@@ -144,9 +171,14 @@ def forgot_passwd():
 @login_required
 def index():
 	user = g.user
-	return render_template ("index.html",
-		title = "Home", 
-		user = user)
+	flash(user.lastSeen) 
+	flash(str(datetime.date.today()))
+	if user.lastSeen != str(datetime.date.today()):
+		return render_template ("index.html",
+			title = "Home", 
+			user = user)
+	else:
+		return render_template("comeback.html", title="Please come back later", user=user)
 
 @lm.user_loader
 def load_user(id):
