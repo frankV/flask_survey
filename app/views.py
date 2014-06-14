@@ -6,7 +6,7 @@ from flask.ext.sqlalchemy import get_debug_queries
 from flask.ext.mail import Mail
 #LOCAL
 from models import User, ROLE_USER, ROLE_ADMIN, Survey1, Survey2, Survey3, Survey4
-from forms import LoginForm, RegistrationForm, Survey1Form, Survey2Form, Survey3Form, Survey4Form
+from forms import LoginForm, RegistrationForm, Survey1Form, Survey2Form, Survey3Form, Survey4Form, NewPass
 from email import user_notification
 from config import DATABASE_QUERY_TIMEOUT
 from app import app, db, lm, mail
@@ -120,41 +120,36 @@ def create_acct():
 		return redirect(url_for('index'))
 	return render_template('create_acct.html', title = "Create Account", form=form)
 
-@app.route('/consent/')
-def consent():
-	return render_template('consent.html', title = "Consent")
-
-@app.route('/logouthtml/')
-def logouthtml():
-	return render_template('logout.html', title="Logout")
-
-
 @app.route('/new_pass/' , methods=['GET','POST'])
 def new_pass():
 	form = NewPass(request.form)
 	if form.validate_on_submit():
 		print form
-		updated=User(password=form.password.data)
-		db.session.add(updated)
+		user = g.user
+		user.password = form.password.data
+		# updated=update(User).where(User.name == g.user.name).\
+		# 	valuse(password=form.password.data)
+		# User(password=form.password.data)
+		db.session.add(user)
 		db.session.commit()
-		user = User()
-		login_user(user)
 		flash("Thanks for updating your password!")
 		return redirect(url_for('index'))
-	return render_template('new_pass', title='Update Password', form=form)
+	return render_template('new_pass.html', title='Update Password', form=form)
 
 @app.route('/login/',methods=['GET','POST'])
 def login():
 	form = LoginForm(request.form)
 	if form.validate_on_submit():
-		user = User()
+		user = form.get_user()
+		login_user(user)
+		user = g.user
+		flash("Logged in successfully.")
+		flash(user.s2)
+		flash(user.s3)
 		if user.s2 is True and user.s3 is False:
 			flash("Redirect to new password")
 			return redirect(request.args.get("next") or url_for("new_pass"))
 		else:
-			user = form.get_user()
-			login_user(user)
-			flash("Logged in successfully.")
 			return redirect(request.args.get("next") or url_for("index"))
 	return render_template('login.html', title = "Login", form=form)
 
@@ -173,12 +168,23 @@ def index():
 	user = g.user
 	flash(user.lastSeen) 
 	flash(str(datetime.date.today()))
-	if user.lastSeen != str(datetime.date.today()):
-		return render_template ("index.html",
-			title = "Home", 
-			user = user)
-	else:
-		return render_template("comeback.html", title="Please come back later", user=user)
+	return render_template ("index.html",
+		title = "Home", 
+		user = user)
+	# if user.lastSeen != str(datetime.date.today()):
+	# 	return render_template ("index.html",
+	# 		title = "Home", 
+	# 		user = user)
+	# else:
+	# 	return render_template("comeback.html", title="Please come back later", user=user)
+
+@app.route('/consent/')
+def consent():
+	return render_template('consent.html', title = "Consent")
+
+@app.route('/logouthtml/')
+def logouthtml():
+	return render_template('logout.html', title="Logout")
 
 @lm.user_loader
 def load_user(id):
