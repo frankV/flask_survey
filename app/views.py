@@ -59,15 +59,12 @@ def survey_3():
 	g.user = current_user
 	form = Survey3Form(request.form)
 	if form.validate_on_submit():
-		model = Survey3(modify=form.modify.data, usedPassword=form.usedPassword.data)
+		model = Survey3(modify=form.modify.data, wordPart = form.wordPart.data, usedPassword=form.usedPassword.data)
 		charPart = CharPartSelectMultiple(N=form.N.data, added_symbols = form.added_symbols.data, 
 			deleted_symbols=form.deleted_symbols.data, substituted_symbols=form.substituted_symbols.data, 
 			O = form.O.data)
 		numPart = NumberPartSelectMultiple(N=form.N.data, added_digits=form.added_digits.data, 
 			deleted_digits=form.deleted_digits.data, substituted_digits=form.substituted_digits.data, 
-			O = form.O.data)
-		wordPart = WordPartSelectMultiple(N = form.N.data,  changed_completely = form. changed_completely.data, 
-			changed_slightly = form.changed_slightly.data, capitalized_letters=form.capitalized_letters.data, 
 			O = form.O.data)
 		securePart = SecureSelectMultiple(numbers = form.numbers.data, upper_case=form.upper_case.data, 
 			symbols=form.symbols.data, eight_chars = form.eight_chars.data, no_dict=form.no_dict.data, adjacent=form.adjacent.data,
@@ -76,12 +73,10 @@ def survey_3():
 		form.populate_obj(model)
 		form.populate_obj(charPart)
 		form.populate_obj(numPart)
-		form.populate_obj(wordPart)
 
 		db.session.add(model)
 		db.session.add(charPart)
 		db.session.add(numPart)
-		db.session.add(wordPart)
 
 		g.user.s3=True
 		g.user.lastSeen=datetime.date.today()

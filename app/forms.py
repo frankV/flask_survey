@@ -9,9 +9,6 @@ def validate_login(form, field):
     if user is None:
         raise validators.ValidationError('Invalid user')
 
-    # if user.consent is False:
-    #     raise validators.ValidationError('Registration cannot be completed withouth consent')
-
     if user.password != form.password.data:
         raise validators.ValidationError('Invalid password')
 
@@ -36,10 +33,6 @@ class RegistrationForm(Form):
         validators.EqualTo('confirm', message='Passwords must match')
     ])
     confirm = fields.PasswordField(validators=[Required()])
-
-    # def validate_name(self, field):
-    #     if db.session.query(User).filter_by(name=self.name.data).count() > 0:
-    #         raise validators.ValidationError('Duplicate name')
 
     def validate_email(self, field):
         if db.session.query(User).filter_by(email=self.email.data).count() > 0:
@@ -83,7 +76,6 @@ class Survey3Form(Form):
         ('sports', 'Sports teams and players'), ('famous', 'Names of famous people or characters'), ('words', 'Words in a language other than English')], 
         option_widget=widgets.CheckboxInput(),
         widget=widgets.ListWidget(prefix_label=False))
-
     secure = fields.SelectMultipleField('When creating your new password, did you consider any of the following policies to make your password more secure? (Please check all that apply.)', 
         choices = [('numbers', 'Include numbers'), ('upper_case', 'Include upper case letters'), ('symbols', 'Include symbols'), 
         ('eight_chars', 'Have 8 or more characters'), ('no_dict', 'Not contain dictionary words'), 
@@ -95,11 +87,9 @@ class Survey3Form(Form):
         ('Y', 'Yes'), ('N', 'No')], validators=[Required()])
     usedPassword = fields.RadioField('Is the password that you have just created one that you have used in the past?', choices=[
         ('Y', 'Yes'), ('N', 'No'), ('O', 'Password has similarities to another password that I have used before')], validators=[Required()])
-    wordPart = fields.SelectMultipleField('If you created your new password based on one of your old passwords, did you consider changing the word part in one of the following ways?',
+    wordPart = fields.RadioField('If you created your new password based on one of your old passwords, did you consider changing the word part in one of the following ways?',
         choices=[('N', 'Not applicable'), ('Changed_completely', 'Changed completely'), ('Changed_slightly', 'Changed slightly'), 
-        ('Capitalized_letters', 'Capitalized letters'), ('O', 'Other')], validators=[Required()], 
-        option_widget=widgets.CheckboxInput(),
-        widget=widgets.ListWidget(prefix_label=False))
+        ('Capitalized_letters', 'Capitalized letters'), ('O', 'Other')], validators=[Required()])
     numberPart = fields.SelectMultipleField('If you created your new password based on one of your old passwords, did you consider changing the number part in one of the following ways?', 
         choices=[('N', 'Not applicable'), ('added_digits', 'Added digits'), ('deleted_digits', 'Deleted digits'), ('substituted_digits', 'Substituted digits'), 
         ('O', 'Other')], validators=[Required()], 
@@ -122,13 +112,11 @@ class Survey4Form(Form):
         validators=[Required()], 
         option_widget=widgets.CheckboxInput(),
         widget=widgets.ListWidget(prefix_label=False))
-    storePasswords = fields.RadioField('Do you store your passwords?', choices=[('Y', 'Yes I store my passwords (go to question 4)'), ('N', 'No, I do not store my passwords')], 
-        validators=[Required()])
-    howStored = fields.SelectMultipleField('How do you store your passwords? Check all that apply.', 
-        choices=[('regular file', 'I store my passwords in a regular file / document on my computer.'), 
+    howStored = fields.SelectMultipleField('Do you store your passwords? If yes how? (Check all that apply.)', 
+        choices=[('regular_file', 'I store my passwords in a regular file / document on my computer.'), 
         ('encrypted', 'I store my passwords in an encrypted computer file'), ('software', 'I use password management software to securely store my passwords'),
         ('cellphone', 'I store my passwords on my cellphone / smartphone'), ('browser', 'I save my passwords in the browser'), 
-        ('write down', 'I write down my password on a piece of paper')], 
+        ('write_down', 'I write down my password on a piece of paper'), ('no', 'No, I do not save my passwords. I remember them.')], 
         option_widget=widgets.CheckboxInput(),
         widget=widgets.ListWidget(prefix_label=False))
     comments = fields.TextAreaField('If you have any additional feedback about passwords or this survey, please enter your comments here.')
