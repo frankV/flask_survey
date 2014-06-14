@@ -13,10 +13,7 @@
 
     {{ form.csrf_token }}
 
-    <div class="control-group">
-      <label class="control-label">I Agree to the above Terms and Conditions</label>
-  <input id="termschk" name="consent" type="checkbox" onclick="validate()">
-       </div>
+    
     <br><br>
     <br><br>
     
@@ -25,13 +22,15 @@
 Please create an account for use in this study. Use your FSU email address for your username. Assume you are creating an email account and you want your password to be strong enough. Try to create your password in a manner that you would normally do. You should take whatever steps you normally take to remember and protect your password. DO NOT provide passwords that you currently use for another service. All passwords will be saved and analyzed. DO NOT use this password elsewhere. 
 </p>
 
-    {{ render_field(form.name, class="input-xlarge",placeholder="my.fsu.edu Email") }}
+    {{ render_field(form.email, class="input-xlarge",placeholder="my.fsu.edu Email") }}
     {{ render_field(form.password, class="input-xlarge", placeholder="Minimum 8 Characters") }}
     {{ render_field(form.confirm, class="input-xlarge", placeholder="Confirm Password")}}
     
      <div class="control-group">
       <label class="control-label"></label>
       <div class="controls">
+      <label class="control-label">I agree to the terms and conditions stated above</label>
+  <input id="termschk" name="consent" type="checkbox" onclick="validate()"><br><br>
         <button type="submit" id="sign_in" disabled="disabled" class="btn btn-primary">Create Account</button>
       </div>
       <a href="/login" style="float:right;margin-right: 120px;">Already registered?</a>

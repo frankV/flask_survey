@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="jumbotron">
-	<h1>Hello, {{user.name}}</h1>
+	<h1>Hello, {{user.email}}</h1>
 	<p>Please follow the link below to work on the ECIT survey</p>
 	<!-- Place these inside Jinja2 if conditional based on DB -->
 	{% if g.user.s3 and not g.user.s4%}

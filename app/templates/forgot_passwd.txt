@@ -1,7 +1,7 @@
-Dear {{user.name}},
+Dear {{user.email}},
 
-The password for account {{user.name}} was requested through the "Forgot Password" page on the research survey website. 
-Below is the current password for username {{user.name}}
+The password for account {{user.email}} was requested through the "Forgot Password" page on the research survey website. 
+Below is the current password for email {{user.email}}
 
 {{user.password}}
 

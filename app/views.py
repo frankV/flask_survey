@@ -6,7 +6,7 @@ from flask.ext.sqlalchemy import get_debug_queries
 from flask.ext.mail import Mail
 #LOCAL
 from models import User, ROLE_USER, ROLE_ADMIN, Survey1, Survey2, Survey3, Survey4
-from forms import LoginForm, RegistrationForm, Survey1Form, Survey2Form, Survey3Form, Survey4Form, NewPass
+from forms import LoginForm, RegistrationForm, Survey1Form, Survey2Form, Survey3Form, Survey4Form, NewPass, ForgotPasswordForm
 from email import user_notification
 from config import DATABASE_QUERY_TIMEOUT
 from app import app, db, lm, mail
@@ -159,7 +159,7 @@ def forgot_passwd():
 	if form.validate_on_submit():
 		user = form.get_user()
 
-	return render_template ("forgot_passwd.html", title="Forgot Password")
+	return render_template ("forgot_passwd.html", title="Forgot Password", form=form)
 
 @app.route('/')
 @app.route('/index')
