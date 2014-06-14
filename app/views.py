@@ -104,7 +104,8 @@ def survey_4():
 		g.user.lastSeen=datetime.date.today()
 		db.session.add(g.user)
 		db.session.commit()
-		return redirect(url_for('logouthtml'))
+		logout_user()
+		return render_template("final.html", title="Thanks!")
 	return render_template('Survey4.html', title='Survey', form=form)
 
 @app.route('/create_acct/' , methods=['GET','POST'])
@@ -112,7 +113,7 @@ def create_acct():
 	form = RegistrationForm(request.form)
 	if form.validate_on_submit():
 		print form
-		user = User(name=form.name.data, password=form.password.data, oldPassword=form.password.data)
+		user = User(email=form.email.data, password=form.password.data, oldPassword=form.password.data)
 		db.session.add(user)
 		db.session.commit()
 		login_user(user)
