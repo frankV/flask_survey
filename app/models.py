@@ -16,7 +16,7 @@ class User(UserMixin, CRUDMixin,  db.Model):
     s2 = db.Column(db.Boolean)
     s3 = db.Column(db.Boolean)
     s4 = db.Column(db.Boolean)
-    lastSeen = db.Column(db.DateTime)
+    lastSeen = db.Column(db.String)
     
     role = db.Column(db.SmallInteger, default = ROLE_USER)
     db = db.relationship('Database', backref='user', lazy='dynamic')
@@ -122,12 +122,13 @@ class Survey3(db.Model):
         return unicode(self.id)
 
 class CharPartSelectMultiple(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    N = db.Column(db.String)
-    added_symbols = db.Column(db.String)
-    deleted_symbols = db.Column(db.String)
-    substituted_symbols = db.Column(db.String)
+    id = db.Column(db.Boolean, primary_key=True)
+    N = db.Column(db.Boolean)
+    added_symbols = db.Column(db.Boolean)
+    deleted_symbols = db.Column(db.Boolean)
+    substituted_symbols = db.Column(db.Boolean)
     O = db.Column(db.String)
+
     survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
 
 
@@ -142,10 +143,10 @@ class CharPartSelectMultiple(db.Model):
         return unicode(self.id)
 class NumberPartSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    N = db.Column(db.String)
-    added_digits = db.Column(db.String)
-    deleted_digits = db.Column(db.String)
-    substituted_digits = db.Column(db.String)
+    N = db.Column(db.Boolean)
+    added_digits = db.Column(db.Boolean)
+    deleted_digits = db.Column(db.Boolean)
+    substituted_digits = db.Column(db.Boolean)
     O = db.Column(db.String)
     survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
 
@@ -162,9 +163,9 @@ class NumberPartSelectMultiple(db.Model):
 class WordPartSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     N = db.Column(db.String)
-    Changed_completely = db.Column(db.String)
-    Changed_slightly = db.Column(db.String)
-    Capitalized_letters = db.Column(db.String)
+    changed_completely = db.Column(db.String)
+    changed_slightly = db.Column(db.String)
+    capitalized_letters = db.Column(db.String)
     O = db.Column(db.String)
     survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
 
