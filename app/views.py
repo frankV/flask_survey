@@ -97,12 +97,17 @@ def survey_4():
 	g.user = current_user
 	form = Survey4Form(request.form)
 	if form.validate_on_submit():
-		model = Survey4(computerTime=form.computerTime.data, passwordCreation=form.passwordCreation.data, storePasswords=form.storePasswords.data, howStored=form.howStored.data, comments=form.comments.data)
-		form.populate_obj(model)
-		db.session.add(model)
 		g.user.s4=True
 		g.user.lastSeen=datetime.date.today()
+		model = Survey4(computerTime=form.computerTime.data, passwordCreation=form.passwordCreation.data, storePasswords=form.storePasswords.data, howStored=form.howStored.data, comments=form.comments.data)
+		
+
+		form.populate_obj(model)
+		
+
+		db.session.add(model)
 		db.session.add(g.user)
+
 		db.session.commit()
 		return redirect(url_for('logouthtml'))
 	return render_template('Survey4.html', title='Survey', form=form)
