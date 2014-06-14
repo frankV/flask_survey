@@ -102,7 +102,7 @@ class Survey3(db.Model):
     secure = db.relationship('SecureSelectMultiple', backref='survey3', lazy='dynamic')
     modify = db.Column(db.String)
     usedPassword = db.Column(db.String)
-    wordPart = db.relationship('WordPartSelectMultiple', backref='survey3', lazy='dynamic')
+    wordPart = db.Column(db.String)
     numberPart = db.relationship('NumberPartSelectMultiple', backref='survey3', lazy='dynamic')
     charPart = db.relationship('CharPartSelectMultiple', backref='survey3', lazy='dynamic')
     db = db.relationship('Database', backref='survey3', lazy='dynamic')
@@ -152,24 +152,7 @@ class NumberPartSelectMultiple(db.Model):
 
     def get_id(self):
         return unicode(self.id)
-class WordPartSelectMultiple(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    N = db.Column(db.String)
-    changed_completely = db.Column(db.String)
-    changed_slightly = db.Column(db.String)
-    capitalized_letters = db.Column(db.String)
-    O = db.Column(db.String)
-    survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
 
-    def __init__(self, N=None, Changed_completely=None, Changed_slightly=None, Capitalized_letters=None, O=None):
-        self.N = N
-        self.Changed_completely = Changed_completely
-        self.Changed_slightly = Changed_slightly
-        self.Capitalized_letters = Capitalized_letters
-        self.O = O
-
-    def get_id(self):
-        return unicode(self.id)
 class SecureSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     numbers = db.Column(db.String)
@@ -219,15 +202,35 @@ class Survey4(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     computerTime = db.Column(db.String)
     passwordCreation = db.relationship('PasswordCreationSelectMultiple', backref='survey4', lazy='dynamic')
-    storePasswords = db.Column(db.String)
     howStored = db.Column(db.String)
     comments = db.Column(db.String)
 
-    def __init__(self, computerTime=None, storePasswords=None, howStored=None, comments=None):
+    def __init__(self, computerTime=None, howStored=None, comments=None):
         self.computerTime=computerTime
-        self.storePasswords=storePasswords
         self.howStored=howStored
         self.comments=comments
+
+    def get_id(self):
+        return unicode(self.id)
+class HowStoredSelectMultiple(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    regular_file = db.Column(db.String)
+    encrypted = db.Column(db.String)
+    software = db.Column(db.String)
+    cellphone = db.Column(db.String)
+    browser = db.Column(db.String)
+    write_down = db.Column(db.String)
+    no = db.Column(db.String)
+    survey4_id = db.Column(db.Integer, db.ForeignKey('survey4.id'))
+
+    def __init__(self, regular_file=None, encrypted=None, software=None, cellphone=None, browser=None, write_down=None, no=None):
+        self.regular_file = regular_file
+        self.encrypted = encrypted
+        self.software = software
+        self.cellphone = cellphone
+        self.browser = browser
+        self.write_down = write_down
+        self.no = no
 
     def get_id(self):
         return unicode(self.id)
