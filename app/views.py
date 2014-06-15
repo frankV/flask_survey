@@ -5,7 +5,8 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 from flask.ext.sqlalchemy import get_debug_queries
 from flask.ext.mail import Mail
 #LOCAL
-from models import User, ROLE_USER, ROLE_ADMIN, Survey1, Survey2, Survey3, Survey4
+from models import User, ROLE_USER, ROLE_ADMIN, Survey1, Survey2, Survey3, Survey4, CharPartSelectMultiple, NumberPartSelectMultiple
+from models import SecureSelectMultiple, ChooseSelectMultiple, HowStoredSelectMultiple, PasswordCreationSelectMultiple, PasswordCreationSelectMultiple
 from forms import LoginForm, RegistrationForm, Survey1Form, Survey2Form, Survey3Form, Survey4Form, NewPass, ForgotPasswordForm
 from email import user_notification
 from config import DATABASE_QUERY_TIMEOUT
@@ -59,6 +60,8 @@ def survey_3():
 	g.user = current_user
 	form = Survey3Form(request.form)
 	if form.validate_on_submit():
+		g.user.s3=True
+		g.user.lastSeen=datetime.date.today()
 		model = Survey3(modify=form.modify.data, wordPart = form.wordPart.data, usedPassword=form.usedPassword.data)
 		charPart = CharPartSelectMultiple(N=form.N.data, added_symbols = form.added_symbols.data, 
 			deleted_symbols=form.deleted_symbols.data, substituted_symbols=form.substituted_symbols.data, 
@@ -69,18 +72,22 @@ def survey_3():
 		securePart = SecureSelectMultiple(numbers = form.numbers.data, upper_case=form.upper_case.data, 
 			symbols=form.symbols.data, eight_chars = form.eight_chars.data, no_dict=form.no_dict.data, adjacent=form.adjacent.data,
 			nothing=form.nothing.data)
+		choosePart = PasswordCreationSelectMultiple(names = form.names.data, numbers = form.numbers.data, songs=form.songs.data,
+			mnemonic = form.mnemonic.data, sports = form.sports.data, famous=form.famous.data, words=form.words.data)
 
 		form.populate_obj(model)
 		form.populate_obj(charPart)
 		form.populate_obj(numPart)
+		form.populate_obj(securePart)
+		form.populate_obj(choosePart)
 
+		db.session.add(g.user)
 		db.session.add(model)
 		db.session.add(charPart)
 		db.session.add(numPart)
+		db.session.add(choosePart)
+		db.session.add(SecureSelectMultiple)
 
-		g.user.s3=True
-		g.user.lastSeen=datetime.date.today()
-		db.session.add(g.user)
 		db.session.commit()
 		logout_user()
 		return redirect(url_for('logouthtml'))
@@ -92,12 +99,23 @@ def survey_4():
 	g.user = current_user
 	form = Survey4Form(request.form)
 	if form.validate_on_submit():
-		model = Survey4(computerTime=form.computerTime.data, passwordCreation=form.passwordCreation.data, storePasswords=form.storePasswords.data, howStored=form.howStored.data, comments=form.comments.data)
-		form.populate_obj(model)
-		db.session.add(model)
 		g.user.s4=True
 		g.user.lastSeen=datetime.date.today()
+		model = Survey4(computerTime=form.computerTime.data, passwordCreation=form.passwordCreation.data, storePasswords=form.storePasswords.data, howStored=form.howStored.data, comments=form.comments.data)
+		howStored = HowStoredSelectMultiple(regular_file=form.regular_file.data, encrypted=form.encrypted.data, software=form.software.data,
+			cellphone=form.cellphone.data, browser=form.browser.data, write_down=form.write_down.data, no=form.no.data)
+		passwordCreation = PasswordCreationSelectMultiple(random=form.random.data, reuse=form.reuse.data, modify=form.modify.data,
+			new=form.new.data, substitute=form.substitute.data, multiword=form.multiword.data, phrase=form.phrase.data, O=form.O.data)
+
+		form.populate_obj(model)
+		form.populate_obj(howStored)
+		form.populate_obj(passwordCreation)
+
 		db.session.add(g.user)
+		db.session.add(model)
+		db.session.add(howStored)
+		db.session.add(passwordCreation)
+		
 		db.session.commit()
 		logout_user()
 		return render_template("final.html", title="Thanks!")
