@@ -114,11 +114,11 @@ class Survey3(db.Model):
 
 class CharPartSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    N = db.Column(db.String)
-    added_symbols = db.Column(db.String)
-    deleted_symbols = db.Column(db.String)
-    substituted_symbols = db.Column(db.String)
-    O = db.Column(db.String)
+    N = db.Column(db.Boolean)
+    added_symbols = db.Column(db.Boolean)
+    deleted_symbols = db.Column(db.Boolean)
+    substituted_symbols = db.Column(db.Boolean)
+    O = db.Column(db.Boolean)
     survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
 
     def __init__(self, N=None, added_symbols=None, deleted_symbols=None, substituted_symbols=None, O=None):
@@ -133,11 +133,11 @@ class CharPartSelectMultiple(db.Model):
 
 class NumberPartSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    N = db.Column(db.String)
-    added_digits = db.Column(db.String)
-    deleted_digits = db.Column(db.String)
-    substituted_digits = db.Column(db.String)
-    O = db.Column(db.String)
+    N = db.Column(db.Boolean)
+    added_digits = db.Column(db.Boolean)
+    deleted_digits = db.Column(db.Boolean)
+    substituted_digits = db.Column(db.Boolean)
+    O = db.Column(db.Boolean)
     survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
 
     def __init__(self, N=None, added_digits=None, deleted_digits=None, substituted_digits=None, O=None):
@@ -152,13 +152,13 @@ class NumberPartSelectMultiple(db.Model):
 
 class SecureSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    numbers = db.Column(db.String)
-    upper_case = db.Column(db.String)
-    symbols = db.Column(db.String)
-    eight_chars = db.Column(db.String)
-    no_dict = db.Column(db.String)
-    adjacent = db.Column(db.String)
-    nothing = db.Column(db.String)
+    numbers = db.Column(db.Boolean)
+    upper_case = db.Column(db.Boolean)
+    symbols = db.Column(db.Boolean)
+    eight_chars = db.Column(db.Boolean)
+    no_dict = db.Column(db.Boolean)
+    adjacent = db.Column(db.Boolean)
+    nothing = db.Column(db.Boolean)
     survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
 
     def __init__(self, numbers=None, upper_case=None, symbols=None, eight_chars=None, no_dict=None, adjacent=None, nothing=None):
@@ -174,13 +174,13 @@ class SecureSelectMultiple(db.Model):
         return unicode(self.id)   
 class ChooseSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    names = db.Column(db.String)
-    numbers = db.Column(db.String)
-    songs = db.Column(db.String)
-    mnemonic = db.Column(db.String)
-    sports = db.Column(db.String)
-    famous = db.Column(db.String)
-    words = db.Column(db.String)
+    names = db.Column(db.Boolean)
+    numbers = db.Column(db.Boolean)
+    songs = db.Column(db.Boolean)
+    mnemonic = db.Column(db.Boolean)
+    sports = db.Column(db.Boolean)
+    famous = db.Column(db.Boolean)
+    words = db.Column(db.Boolean)
     survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
 
     def __init__(self, names=None, numbers=None, song=None, mnemonic=None, sports=None, famous=None, words=None):
@@ -199,25 +199,25 @@ class Survey4(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     computerTime = db.Column(db.String)
     passwordCreation = db.relationship('PasswordCreationSelectMultiple', backref='survey4', lazy='dynamic')
-    howStored = db.Column(db.String)
+    howStored = db.relationship('HowStoredSelectMultiple', backref='survey4', lazy='dynamic')
     comments = db.Column(db.String)
 
     def __init__(self, computerTime=None, howStored=None, comments=None):
         self.computerTime=computerTime
-        self.howStored=howStored
         self.comments=comments
 
     def get_id(self):
         return unicode(self.id)
+
 class HowStoredSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    regular_file = db.Column(db.String)
-    encrypted = db.Column(db.String)
-    software = db.Column(db.String)
-    cellphone = db.Column(db.String)
-    browser = db.Column(db.String)
-    write_down = db.Column(db.String)
-    no = db.Column(db.String)
+    regular_file = db.Column(db.Boolean)
+    encrypted = db.Column(db.Boolean)
+    software = db.Column(db.Boolean)
+    cellphone = db.Column(db.Boolean)
+    browser = db.Column(db.Boolean)
+    write_down = db.Column(db.Boolean)
+    no = db.Column(db.Boolean)
     survey4_id = db.Column(db.Integer, db.ForeignKey('survey4.id'))
 
     def __init__(self, regular_file=None, encrypted=None, software=None, cellphone=None, browser=None, write_down=None, no=None):
@@ -234,14 +234,14 @@ class HowStoredSelectMultiple(db.Model):
 
 class PasswordCreationSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    random = db.Column(db.String)
-    reuse = db.Column(db.String)
-    modify = db.Column(db.String)
-    new = db.Column(db.String)
-    substitute = db.Column(db.String)
-    multiword = db.Column(db.String)
-    phrase = db.Column(db.String)
-    O = db.Column(db.String)
+    random = db.Column(db.Boolean)
+    reuse = db.Column(db.Boolean)
+    modify = db.Column(db.Boolean)
+    new = db.Column(db.Boolean)
+    substitute = db.Column(db.Boolean)
+    multiword = db.Column(db.Boolean)
+    phrase = db.Column(db.Boolean)
+    O = db.Column(db.Boolean)
     survey4_id = db.Column(db.Integer, db.ForeignKey('survey4.id'))
 
     def __init__(self, random=None, reuse=None, modify=None, new=None, substitute=None, multiword=None, phrase=None, O=None):
