@@ -67,7 +67,9 @@ def survey_2():
 def survey_3():
 	g.user = current_user
 	form = Survey3Form(request.form)
+	# flash(flash_errors)
 	if form.validate_on_submit():
+		flash("Survey3 Validation message")
 
 		g.user.s3=True
 		g.user.lastSeen=datetime.date.today()
@@ -108,11 +110,13 @@ def survey_3():
 def survey_4():
 	g.user = current_user
 	form = Survey4Form(request.form)
+	# flash(flash_errors)
 	if form.validate_on_submit():
+		flash("Survey4 Validation message")
 		
 		g.user.s4=True
 		g.user.lastSeen=datetime.date.today()
-		model = Survey4(computerTime=form.computerTime.data, passwordCreation=form.passwordCreation.data, storePasswords=form.storePasswords.data, howStored=form.howStored.data, comments=form.comments.data)
+		model = Survey4(computerTime=form.computerTime.data, howStored=form.howStored.data, comments=form.comments.data)
 		howStored = HowStoredSelectMultiple(regular_file=form.regular_file.data, encrypted=form.encrypted.data, software=form.software.data,
 			cellphone=form.cellphone.data, browser=form.browser.data, write_down=form.write_down.data, no=form.no.data)
 		passwordCreation = PasswordCreationSelectMultiple(random=form.random.data, reuse=form.reuse.data, modify=form.modify.data,
@@ -238,3 +242,10 @@ def after_request(response):
 		if query.duration >= DATABASE_QUERY_TIMEOUT:
 			app.logger.warning("SLOW QUERY: %s\nParameters: %s\nDuration: %fs\nContext: %s\n" % (query.statement, query.parameters, query.duration, query.context))
 	return response
+
+def flash_errors(form):
+	for field, errors in form.errors.items():
+		for error in errors:
+			flash(u"Error in the %s field - %s" % (
+			getattr(form, field).label.text,error
+		))
