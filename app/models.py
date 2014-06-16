@@ -76,9 +76,6 @@ class Survey1(db.Model):
     def get_id(self):
         return unicode(self.id)
 
-    # def __repr__(self):
-    #     return '<Survey1 %r>' % (self.gender)
-
 class Survey2(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     major = db.Column(db.String)
@@ -107,22 +104,22 @@ class Survey3(db.Model):
     charPart = db.relationship('CharPartSelectMultiple', backref='survey3', lazy='dynamic')
     db = db.relationship('Database', backref='survey3', lazy='dynamic')
 
-    def __init__(self, modify=None, usedPassword=None):
+    def __init__(self, modify=None, usedPassword=None, wordPart=None):
         self.modify=modify
+        self.wordPart=wordPart
         self.usedPassword=usedPassword
 
     def get_id(self):
         return unicode(self.id)
 
 class CharPartSelectMultiple(db.Model):
-    id = db.Column(db.Boolean, primary_key=True)
-    N = db.Column(db.Boolean)
-    added_symbols = db.Column(db.Boolean)
-    deleted_symbols = db.Column(db.Boolean)
-    substituted_symbols = db.Column(db.Boolean)
+    id = db.Column(db.Integer, primary_key=True)
+    N = db.Column(db.String)
+    added_symbols = db.Column(db.String)
+    deleted_symbols = db.Column(db.String)
+    substituted_symbols = db.Column(db.String)
     O = db.Column(db.String)
     survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
-
 
     def __init__(self, N=None, added_symbols=None, deleted_symbols=None, substituted_symbols=None, O=None):
         self.N = N
@@ -133,15 +130,15 @@ class CharPartSelectMultiple(db.Model):
 
     def get_id(self):
         return unicode(self.id)
+
 class NumberPartSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    N = db.Column(db.Boolean)
-    added_digits = db.Column(db.Boolean)
-    deleted_digits = db.Column(db.Boolean)
-    substituted_digits = db.Column(db.Boolean)
+    N = db.Column(db.String)
+    added_digits = db.Column(db.String)
+    deleted_digits = db.Column(db.String)
+    substituted_digits = db.Column(db.String)
     O = db.Column(db.String)
     survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
-
 
     def __init__(self, N=None, added_digits=None, deleted_digits=None, substituted_digits=None, O=None):
         self.N = N

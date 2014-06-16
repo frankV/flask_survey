@@ -29,7 +29,7 @@ class RegistrationForm(Form):
     email = fields.TextField('Email Address', validators=[Required(), Email()])
     consent = fields.BooleanField(validators=[Required()])
     password = fields.PasswordField('New Password', [
-        validators.Required(), validators.Length(min=8),
+        validators.Required(), validators.Length(min=8, max=20),
         validators.EqualTo('confirm', message='Passwords must match')
     ])
     confirm = fields.PasswordField(validators=[Required()])
@@ -40,7 +40,7 @@ class RegistrationForm(Form):
 
 class NewPass(Form):
     password = fields.PasswordField('New Password', [
-        validators.Required(), validators.Length(min=8),
+        validators.Required(), validators.Length(min=8, max=20),
         validators.EqualTo('confirm', message='Passwords must match')
     ])
     confirm = fields.PasswordField(validators=[Required()])    
