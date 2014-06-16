@@ -24,15 +24,19 @@ def survey_1():
 	g.user = current_user
 	form = Survey1Form(request.form)
 	if form.validate_on_submit():
-		model = Survey1(gender=form.gender.data, age=form.age.data, education=form.education.data, language=form.language.data)
-		form.populate_obj(model)
-		db.session.add(model)
-		db.session.commit()
+
 		g.user.s1=True
 		g.user.lastSeen=datetime.date.today()
+		model = Survey1(gender=form.gender.data, age=form.age.data, education=form.education.data, language=form.language.data)
+		
+		form.populate_obj(model)
+		
+		db.session.add(model)		
 		db.session.add(g.user)
+
 		db.session.commit()
 		logout_user()
+
 		return redirect(url_for('logouthtml'))
 	return render_template('Survey1.html', title='Survey', form=form)
 
@@ -42,15 +46,19 @@ def survey_2():
 	g.user = current_user
 	form = Survey2Form(request.form)
 	if form.validate_on_submit():
-		model=Survey2(major=form.major.data, department=form.department.data, count=form.count.data, unique=form.unique.data)
-		form.populate_obj(model)
-		db.session.add(model)
-		db.session.commit()
+		
 		g.user.s2=True
 		g.user.lastSeen=datetime.date.today()
+		model=Survey2(major=form.major.data, department=form.department.data, count=form.count.data, unique=form.unique.data)
+		
+		form.populate_obj(model)
+		
+		db.session.add(model)		
 		db.session.add(g.user)
+		
 		db.session.commit()
 		logout_user()
+		
 		return redirect(url_for('logouthtml'))
 	return render_template('Survey2.html', title='Survey', form=form)
 
@@ -60,6 +68,7 @@ def survey_3():
 	g.user = current_user
 	form = Survey3Form(request.form)
 	if form.validate_on_submit():
+
 		g.user.s3=True
 		g.user.lastSeen=datetime.date.today()
 		model = Survey3(modify=form.modify.data, wordPart = form.wordPart.data, usedPassword=form.usedPassword.data)
@@ -86,10 +95,11 @@ def survey_3():
 		db.session.add(charPart)
 		db.session.add(numPart)
 		db.session.add(choosePart)
-		db.session.add(SecureSelectMultiple)
+		db.session.add(SecurePart)
 
 		db.session.commit()
 		logout_user()
+
 		return redirect(url_for('logouthtml'))
 	return render_template('Survey3.html', title='Survey', form=form)
 
@@ -99,6 +109,7 @@ def survey_4():
 	g.user = current_user
 	form = Survey4Form(request.form)
 	if form.validate_on_submit():
+		
 		g.user.s4=True
 		g.user.lastSeen=datetime.date.today()
 		model = Survey4(computerTime=form.computerTime.data, passwordCreation=form.passwordCreation.data, storePasswords=form.storePasswords.data, howStored=form.howStored.data, comments=form.comments.data)
@@ -118,6 +129,7 @@ def survey_4():
 		
 		db.session.commit()
 		logout_user()
+		
 		return render_template("final.html", title="Thanks!")
 	return render_template('Survey4.html', title='Survey', form=form)
 
@@ -141,9 +153,6 @@ def new_pass():
 		print form
 		user = g.user
 		user.password = form.password.data
-		# updated=update(User).where(User.name == g.user.name).\
-		# 	valuse(password=form.password.data)
-		# User(password=form.password.data)
 		db.session.add(user)
 		db.session.commit()
 		flash("Thanks for updating your password!")
