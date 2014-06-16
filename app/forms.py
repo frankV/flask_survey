@@ -45,9 +45,9 @@ class NewPass(Form):
     ])
     confirm = fields.PasswordField(validators=[Required()])    
 
-    # def validate_new_pass(self, field):
-    #     if db.session.query(User).filter_by(password=self.name.data).count() > 0:   #NOT SURE IF CORRECT
-    #         raise validators.ValidationError('Duplicate Password')
+    def validate_password(self, field):
+        if db.session.query(User).filter_by(password=self.password.data).count() > 0:   #NOT SURE IF CORRECT
+            raise validators.ValidationError('Duplicate Password')
 
 class Survey1Form(Form):
     gender = fields.RadioField('What is your gender?', choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], validators = [Required()], default=None)
@@ -113,7 +113,7 @@ class Survey4Form(Form):
         default=None, option_widget=widgets.CheckboxInput(),
         widget=widgets.ListWidget(prefix_label=False))
     howStored = fields.SelectMultipleField('Do you store your passwords? If yes how? (Check all that apply.)', 
-        choices=[('regular_file', 'I store my passwords in a regular file / document on my computer.'), 
+        choices=[('regular_file ', 'I store my passwords in a regular file / document on my computer.'), 
         ('encrypted', 'I store my passwords in an encrypted computer file'), ('software', 'I use password management software to securely store my passwords'),
         ('cellphone', 'I store my passwords on my cellphone / smartphone'), ('browser', 'I save my passwords in the browser'), 
         ('write_down', 'I write down my password on a piece of paper'), ('no', 'No, I do not save my passwords. I remember them.')], 

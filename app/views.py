@@ -116,20 +116,21 @@ def survey_4():
 		
 		g.user.s4=True
 		g.user.lastSeen=datetime.date.today()
-		model = Survey4(computerTime=form.computerTime.data, howStored=form.howStored.data, comments=form.comments.data)
-		howStored = HowStoredSelectMultiple(regular_file=form.regular_file.data, encrypted=form.encrypted.data, software=form.software.data,
-			cellphone=form.cellphone.data, browser=form.browser.data, write_down=form.write_down.data, no=form.no.data)
-		passwordCreation = PasswordCreationSelectMultiple(random=form.random.data, reuse=form.reuse.data, modify=form.modify.data,
-			new=form.new.data, substitute=form.substitute.data, multiword=form.multiword.data, phrase=form.phrase.data, O=form.O.data)
-
+		model = Survey4(computerTime=form.computerTime.data, comments=form.comments.data)
+		# howStored = HowStoredSelectMultiple(howStored.data
+		# 	# regular_file=form.regular_file.data, encrypted=form.encrypted.data, software=form.software.data,
+		# 	# cellphone=form.cellphone.data, browser=form.browser.data, write_down=form.write_down.data, no=form.no.data)
+		# passwordCreation = PasswordCreationSelectMultiple(random=form.random.data, reuse=form.reuse.data, modify=form.modify.data,
+		# 	new=form.new.data, substitute=form.substitute.data, multiword=form.multiword.data, phrase=form.phrase.data, O=form.O.data)
+		print form.computerTime
 		form.populate_obj(model)
-		form.populate_obj(howStored)
-		form.populate_obj(passwordCreation)
+		# form.populate_obj(howStored)
+		# form.populate_obj(passwordCreation)
 
 		db.session.add(g.user)
 		db.session.add(model)
-		db.session.add(howStored)
-		db.session.add(passwordCreation)
+		# db.session.add(howStored)
+		# db.session.add(passwordCreation)
 		
 		db.session.commit()
 		logout_user()
@@ -223,7 +224,6 @@ def before_request():
 
 @app.route('/logout')
 def logout():
-	#double check if the 
 	logout_user()
 	return redirect(url_for('index'))
 
@@ -233,7 +233,8 @@ def internal_error(error):
 
 @app.errorhandler(500)
 def internal_error(error):
-    # db.session.rollback()
+	#uncommented next line, might cause instability
+    db.session.rollback()
     return render_template('500.html'), 500
 
 @app.after_request
