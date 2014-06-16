@@ -2,6 +2,7 @@
 {% block content%}
 <div class="jumbotron">
   {% from "macro.html" import render_field %}
+  {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
   <h1>Survey 3</h1>
   <br>
   <form method="POST" action="." class="form form-horizontal">
@@ -21,6 +22,9 @@
   <div class="controls">
     <button type="submit" id="submit" class="btn btn-primary">Submit</button>
   </div>
+  {% for message in get_flashed_messages() %}
+  <div class=flash>{{ message }}</div>
+  {% endfor %}
 </div>
 </form>
 </div>
