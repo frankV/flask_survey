@@ -9,6 +9,7 @@ ROLE_ADMIN = 1
 class User(UserMixin, CRUDMixin,  db.Model):
 
     id = db.Column(db.Integer, primary_key = True, unique=True)
+    userid = db.Column(db.Integer, autoincrement=True, unique=True)
     email = db.Column(db.String(20), unique = True)
     password = db.Column(db.String(20))
     oldPassword = db.Column(db.String(20))
@@ -47,11 +48,11 @@ class User(UserMixin, CRUDMixin,  db.Model):
 
 class Database(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    survey1_id = db.Column(db.Integer, db.ForeignKey('survey1.id'))
-    survey2_id = db.Column(db.Integer, db.ForeignKey('survey2.id'))
-    survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.id'))
-    survey4_id = db.Column(db.Integer, db.ForeignKey('survey4.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.userid'))
+    survey1_id = db.Column(db.Integer, db.ForeignKey('survey1.userid'))
+    survey2_id = db.Column(db.Integer, db.ForeignKey('survey2.userid'))
+    survey3_id = db.Column(db.Integer, db.ForeignKey('survey3.userid'))
+    survey4_id = db.Column(db.Integer, db.ForeignKey('survey4.userid'))
 
     def get_id(self):
         return unicode(self.id)
@@ -61,6 +62,7 @@ class Database(db.Model):
 
 class Survey1(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    userid = db.Column(db.Integer, db.ForeignKey('user.userid'))
     gender = db.Column(db.String)
     age = db.Column(db.String)
     education = db.Column(db.String)
@@ -78,6 +80,7 @@ class Survey1(db.Model):
 
 class Survey2(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    userid = db.Column(db.Integer, db.ForeignKey('user.userid'))
     major = db.Column(db.String)
     department = db.Column(db.String(30))
     count = db.Column(db.String)
@@ -95,6 +98,7 @@ class Survey2(db.Model):
 
 class Survey3(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    userid = db.Column(db.Integer, db.ForeignKey('user.userid'))
     choose = db.relationship('ChooseSelectMultiple', backref='survey3', lazy='dynamic')
     secure = db.relationship('SecureSelectMultiple', backref='survey3', lazy='dynamic')
     modify = db.Column(db.String)
@@ -114,6 +118,7 @@ class Survey3(db.Model):
 
 class CharPartSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    userid = db.Column(db.Integer, db.ForeignKey('user.userid'))
     N = db.Column(db.Boolean)
     added_symbols = db.Column(db.Boolean)
     deleted_symbols = db.Column(db.Boolean)
@@ -133,6 +138,7 @@ class CharPartSelectMultiple(db.Model):
 
 class NumberPartSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    userid = db.Column(db.Integer, db.ForeignKey('user.userid'))
     N = db.Column(db.Boolean)
     added_digits = db.Column(db.Boolean)
     deleted_digits = db.Column(db.Boolean)
@@ -152,6 +158,7 @@ class NumberPartSelectMultiple(db.Model):
 
 class SecureSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    userid = db.Column(db.Integer, db.ForeignKey('user.userid'))
     numbers = db.Column(db.Boolean)
     upper_case = db.Column(db.Boolean)
     symbols = db.Column(db.Boolean)
@@ -174,6 +181,7 @@ class SecureSelectMultiple(db.Model):
         return unicode(self.id)   
 class ChooseSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    userid = db.Column(db.Integer, db.ForeignKey('user.userid'))
     names = db.Column(db.Boolean)
     numbers = db.Column(db.Boolean)
     songs = db.Column(db.Boolean)
@@ -197,6 +205,7 @@ class ChooseSelectMultiple(db.Model):
 
 class Survey4(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    userid = db.Column(db.Integer, db.ForeignKey('user.userid'))
     computerTime = db.Column(db.String)
     passwordCreation = db.relationship('PasswordCreationSelectMultiple', backref='survey4', lazy='dynamic')
     howStored = db.relationship('HowStoredSelectMultiple', backref='survey4', lazy='dynamic')
@@ -211,6 +220,7 @@ class Survey4(db.Model):
 
 class HowStoredSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    userid = db.Column(db.Integer, db.ForeignKey('user.userid'))
     regular_file = db.Column(db.Boolean)
     encrypted = db.Column(db.Boolean)
     software = db.Column(db.Boolean)
@@ -234,6 +244,7 @@ class HowStoredSelectMultiple(db.Model):
 
 class PasswordCreationSelectMultiple(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    userid = db.Column(db.Integer, db.ForeignKey('user.userid'))
     random = db.Column(db.Boolean)
     reuse = db.Column(db.Boolean)
     modify = db.Column(db.Boolean)

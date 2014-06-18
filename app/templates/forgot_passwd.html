@@ -4,19 +4,19 @@
   {% from "macro.html" import render_field %}
   <h1>Password Retrieval</h1>
   <br>
-  <form method="POST" action="." class="form form-horizontal">
+  <form method="POST" action="" class="form form-horizontal">
+
     {{ form.csrf_token }}
-    {{ render_field(form.email, class="input-xlarge",placeholder="fsu.edu email") }}
+    {{ render_field(form.email, class="input-xlarge",placeholder="fsu.edu Email") }}
     
     <div class="control-group">
       <label class="control-label"></label>
       <div class="controls">
-        <button type="submit" id="sign_in" class="btn btn-primary">Submit</button>
-
+        <button type="submit" id="submit" class="btn btn-primary">Submit</button>
       </div>
 
     </div>
-  </form>
-</div>
+  </div>
+</form>
 
-   {% endblock %}
+{% endblock %}
