@@ -8,11 +8,14 @@ from flask.ext.mail import Mail
 from models import User, ROLE_USER, ROLE_ADMIN, Survey1, Survey2, Survey3, Survey4, CharPartSelectMultiple, NumberPartSelectMultiple
 from models import SecureSelectMultiple, ChooseSelectMultiple, HowStoredSelectMultiple, PasswordCreationSelectMultiple, PasswordCreationSelectMultiple
 from forms import LoginForm, RegistrationForm, Survey1Form, Survey2Form, Survey3Form, Survey4Form, NewPass, ForgotPasswordForm
-from email import user_notification
+from email import user_notification, forgot_password
 from config import DATABASE_QUERY_TIMEOUT
 from app import app, db, lm, mail
 #OTHER
-import datetime
+from  datetime import date, timedelta
+
+# session.permanent = True
+# app.permanent_session_lifetime = timedelta(minutes=10)
 
 @lm.user_loader
 def load_user(id):
@@ -26,7 +29,7 @@ def survey_1():
 	if form.validate_on_submit():
 
 		g.user.s1=True
-		g.user.lastSeen=datetime.date.today()
+		g.user.lastSeen=date.today()
 		model = Survey1(gender=form.gender.data, age=form.age.data, education=form.education.data, language=form.language.data)
 		
 		form.populate_obj(model)
@@ -48,7 +51,7 @@ def survey_2():
 	if form.validate_on_submit():
 		
 		g.user.s2=True
-		g.user.lastSeen=datetime.date.today()
+		g.user.lastSeen=date.today()
 		model=Survey2(major=form.major.data, department=form.department.data, count=form.count.data, unique=form.unique.data)
 		
 		form.populate_obj(model)
@@ -72,7 +75,7 @@ def survey_3():
 		flash("Survey3 Validation message")
 
 		g.user.s3=True
-		g.user.lastSeen=datetime.date.today()
+		g.user.lastSeen=date.today()
 		model = Survey3(modify=form.modify.data, wordPart = form.wordPart.data, usedPassword=form.usedPassword.data)
 		charPart = CharPartSelectMultiple(N=form.N.data, added_symbols = form.added_symbols.data, 
 			deleted_symbols=form.deleted_symbols.data, substituted_symbols=form.substituted_symbols.data, 
@@ -115,7 +118,7 @@ def survey_4():
 		flash("Survey4 Validation message")
 		
 		g.user.s4=True
-		g.user.lastSeen=datetime.date.today()
+		g.user.lastSeen=date.today()
 		model = Survey4(computerTime=form.computerTime.data, comments=form.comments.data)
 		# howStored = HowStoredSelectMultiple(howStored.data
 		# 	# regular_file=form.regular_file.data, encrypted=form.encrypted.data, software=form.software.data,
@@ -181,13 +184,19 @@ def login():
 			return redirect(request.args.get("next") or url_for("index"))
 	return render_template('login.html', title = "Login", form=form)
 
-@app.route('/forgot_passwd')
+@app.route('/forgot_passwd', methods=['GET', 'POST'])
 def forgot_passwd():
 	form = ForgotPasswordForm(request.form)
 	if form.validate_on_submit():
-		user = form.get_user()
-
-	return render_template ("forgot_passwd.html", title="Forgot Password", form=form)
+		# user = form.get_user()
+		user = request.form['email']
+		q = User.query.filter_by(email=user).first()
+		# print(q.password)
+		forgot_password(user, q.password)
+		return redirect(request.args.get("next") or url_for("login"))	
+	return render_template ("forgot_passwd.html", 
+		title="Forgot Password", 
+		form=form)
 
 @app.route('/')
 @app.route('/index')
@@ -195,11 +204,11 @@ def forgot_passwd():
 def index():
 	user = g.user
 	flash(user.lastSeen) 
-	flash(str(datetime.date.today()))
+	flash(str(date.today()))
 	return render_template ("index.html",
 		title = "Home", 
 		user = user)
-	# if user.lastSeen != str(datetime.date.today()):
+	# if user.lastSeen != str(date.today()):
 	# 	return render_template ("index.html",
 	# 		title = "Home", 
 	# 		user = user)
