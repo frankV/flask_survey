@@ -1,18 +1,20 @@
 #FLASK
-from flask import abort, render_template, Response, flash, redirect, session, url_for, g, request, send_from_directory
+from flask import abort, render_template, Response, flash, redirect, session 
+from flask import url_for, g, request, send_from_directory
 #FLASK EXTENSIONS
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext.sqlalchemy import get_debug_queries
 from flask.ext.mail import Mail
 #LOCAL
-from models import User, ROLE_USER, ROLE_ADMIN, Survey1, Survey2, Survey3, Survey4, CharPartSelectMultiple, NumberPartSelectMultiple
-from models import SecureSelectMultiple, ChooseSelectMultiple, HowStoredSelectMultiple, PasswordCreationSelectMultiple, PasswordCreationSelectMultiple
-from forms import LoginForm, RegistrationForm, Survey1Form, Survey2Form, Survey3Form, Survey4Form, NewPass, ForgotPasswordForm
+from models import User, ROLE_USER, ROLE_ADMIN, Survey1, Survey2, Survey3, Survey4
+from forms import LoginForm, RegistrationForm, Survey1Form, Survey2Form, Survey3Form
+from forms import Survey4Form, NewPass, ForgotPasswordForm
 from email import user_notification, forgot_password
 from config import DATABASE_QUERY_TIMEOUT
 from app import app, db, lm, mail
 #OTHER
 from  datetime import date, timedelta
+import uuid
 
 # session.permanent = True
 # app.permanent_session_lifetime = timedelta(minutes=10)
@@ -25,128 +27,145 @@ def load_user(id):
 @login_required
 def survey_1():
 	g.user = current_user
-	form = Survey1Form(request.form)
-	if form.validate_on_submit():
+	if g.user.s1 is False:
+		form = Survey1Form(request.form)
+		if form.validate_on_submit():
 
-		g.user.s1=True
-		g.user.lastSeen=date.today()
-		model = Survey1(gender=form.gender.data, age=form.age.data, education=form.education.data, language=form.language.data)
-		
-		form.populate_obj(model)
-		
-		db.session.add(model)		
-		db.session.add(g.user)
+			g.user.s1=True
+			g.user.lastSeen=date.today()
+			model = Survey1(gender=form.gender.data, age=form.age.data, 
+				education=form.education.data, language=form.language.data)
+			
+			form.populate_obj(model)
+			
+			db.session.add(model)		
+			db.session.add(g.user)
 
-		db.session.commit()
-		logout_user()
+			db.session.commit()
+			logout_user()
 
-		return redirect(url_for('logouthtml'))
-	return render_template('Survey1.html', title='Survey', form=form)
+			return redirect(url_for('logouthtml'))
+		return render_template('Survey1.html', title='Survey', form=form)
+	else:
+		return redirect(url_for('index'))
 
 @app.route('/survey_2/', methods=['GET','POST'])
 @login_required
 def survey_2():
 	g.user = current_user
-	form = Survey2Form(request.form)
-	if form.validate_on_submit():
-		
-		g.user.s2=True
-		g.user.lastSeen=date.today()
-		model=Survey2(major=form.major.data, department=form.department.data, count=form.count.data, unique=form.unique.data)
-		
-		form.populate_obj(model)
-		
-		db.session.add(model)		
-		db.session.add(g.user)
-		
-		db.session.commit()
-		logout_user()
-		
-		return redirect(url_for('logouthtml'))
-	return render_template('Survey2.html', title='Survey', form=form)
+	if g.user.s2 is False:
+		form = Survey2Form(request.form)
+		if form.validate_on_submit():
+			
+			g.user.s2=True
+			g.user.lastSeen=date.today()
+			model=Survey2(major=form.major.data, department=form.department.data, 
+				count=form.count.data, unique=form.unique.data)
+			
+			form.populate_obj(model)
+			
+			db.session.add(model)		
+			db.session.add(g.user)
+			
+			db.session.commit()
+			logout_user()
+			
+			return redirect(url_for('logouthtml'))
+		return render_template('Survey2.html', title='Survey', form=form)
+	else:
+		return redirect(url_for('index'))
 
 @app.route('/survey_3/', methods=['GET','POST'])
 @login_required
 def survey_3():
 	g.user = current_user
-	form = Survey3Form(request.form)
-	# flash(flash_errors)
-	if form.validate_on_submit():
-		flash("Survey3 Validation message")
+	if g.user.s3 is False:
+		form = Survey3Form(request.form)
+		if form.validate_on_submit():
+			flash("Survey3 Validation message")
 
-		g.user.s3=True
-		g.user.lastSeen=date.today()
-		model = Survey3(modify=form.modify.data, wordPart = form.wordPart.data, usedPassword=form.usedPassword.data)
-		charPart = CharPartSelectMultiple(N=form.N.data, added_symbols = form.added_symbols.data, 
-			deleted_symbols=form.deleted_symbols.data, substituted_symbols=form.substituted_symbols.data, 
-			O = form.O.data)
-		numPart = NumberPartSelectMultiple(N=form.N.data, added_digits=form.added_digits.data, 
-			deleted_digits=form.deleted_digits.data, substituted_digits=form.substituted_digits.data, 
-			O = form.O.data)
-		securePart = SecureSelectMultiple(numbers = form.numbers.data, upper_case=form.upper_case.data, 
-			symbols=form.symbols.data, eight_chars = form.eight_chars.data, no_dict=form.no_dict.data, adjacent=form.adjacent.data,
-			nothing=form.nothing.data)
-		choosePart = PasswordCreationSelectMultiple(names = form.names.data, numbers = form.numbers.data, songs=form.songs.data,
-			mnemonic = form.mnemonic.data, sports = form.sports.data, famous=form.famous.data, words=form.words.data)
+			g.user.s3=True
+			g.user.lastSeen=date.today()
+			model = request.form['Survey3Form']
+			print(model)
+			# model = Survey3(modify=form.modify.data, wordPart = form.wordPart.data, usedPassword=form.usedPassword.data)
+			# charPart = CharPartSelectMultiple(N=form.N.data, added_symbols = form.added_symbols.data, 
+			# 	deleted_symbols=form.deleted_symbols.data, substituted_symbols=form.substituted_symbols.data, 
+			# 	O = form.O.data)
+			# numPart = NumberPartSelectMultiple(N=form.N.data, added_digits=form.added_digits.data, 
+			# 	deleted_digits=form.deleted_digits.data, substituted_digits=form.substituted_digits.data, 
+			# 	O = form.O.data)
+			# securePart = SecureSelectMultiple(numbers = form.numbers.data, upper_case=form.upper_case.data, 
+			# 	symbols=form.symbols.data, eight_chars = form.eight_chars.data, no_dict=form.no_dict.data, adjacent=form.adjacent.data,
+			# 	nothing=form.nothing.data)
+			# choosePart = PasswordCreationSelectMultiple(names = form.names.data, numbers = form.numbers.data, songs=form.songs.data,
+			# 	mnemonic = form.mnemonic.data, sports = form.sports.data, famous=form.famous.data, words=form.words.data)
 
-		form.populate_obj(model)
-		form.populate_obj(charPart)
-		form.populate_obj(numPart)
-		form.populate_obj(securePart)
-		form.populate_obj(choosePart)
+			# form.populate_obj(model)
+			# form.populate_obj(charPart)
+			# form.populate_obj(numPart)
+			# form.populate_obj(securePart)
+			# form.populate_obj(choosePart)
 
-		db.session.add(g.user)
-		db.session.add(model)
-		db.session.add(charPart)
-		db.session.add(numPart)
-		db.session.add(choosePart)
-		db.session.add(SecurePart)
+			# db.session.add(g.user)
+			# db.session.add(model)
+			# db.session.add(charPart)
+			# db.session.add(numPart)
+			# db.session.add(choosePart)
+			# db.session.add(SecurePart)
 
-		db.session.commit()
-		logout_user()
+			# db.session.commit()
+			# logout_user()
 
-		return redirect(url_for('logouthtml'))
-	return render_template('Survey3.html', title='Survey', form=form)
+			return redirect(url_for('logouthtml'))
+		return render_template('Survey3.html', title='Survey', form=form)
+	else:
+		return redirect(url_for('index'))
 
 @app.route('/survey_4/', methods=['GET','POST'])
 @login_required
 def survey_4():
 	g.user = current_user
-	form = Survey4Form(request.form)
-	# flash(flash_errors)
-	if form.validate_on_submit():
-		flash("Survey4 Validation message")
-		
-		g.user.s4=True
-		g.user.lastSeen=date.today()
-		model = Survey4(computerTime=form.computerTime.data, comments=form.comments.data)
-		# howStored = HowStoredSelectMultiple(howStored.data
-		# 	# regular_file=form.regular_file.data, encrypted=form.encrypted.data, software=form.software.data,
-		# 	# cellphone=form.cellphone.data, browser=form.browser.data, write_down=form.write_down.data, no=form.no.data)
-		# passwordCreation = PasswordCreationSelectMultiple(random=form.random.data, reuse=form.reuse.data, modify=form.modify.data,
-		# 	new=form.new.data, substitute=form.substitute.data, multiword=form.multiword.data, phrase=form.phrase.data, O=form.O.data)
-		print form.computerTime
-		form.populate_obj(model)
-		# form.populate_obj(howStored)
-		# form.populate_obj(passwordCreation)
+	if g.user.s4 is False:
+		form = Survey4Form(request.form)
+		# flash(flash_errors)
+		if form.validate_on_submit():
+			flash("Survey4 Validation message")
+			
+			g.user.s4=True
+			g.user.lastSeen=date.today()
+			model = Survey4(computerTime=form.computerTime.data, comments=form.comments.data)
+			# howStored = HowStoredSelectMultiple(howStored.data
+			# 	# regular_file=form.regular_file.data, encrypted=form.encrypted.data, software=form.software.data,
+			# 	# cellphone=form.cellphone.data, browser=form.browser.data, write_down=form.write_down.data, no=form.no.data)
+			# passwordCreation = PasswordCreationSelectMultiple(random=form.random.data, reuse=form.reuse.data, modify=form.modify.data,
+			# 	new=form.new.data, substitute=form.substitute.data, multiword=form.multiword.data, phrase=form.phrase.data, O=form.O.data)
+			print form.computerTime
+			form.populate_obj(model)
+			# form.populate_obj(howStored)
+			# form.populate_obj(passwordCreation)
 
-		db.session.add(g.user)
-		db.session.add(model)
-		# db.session.add(howStored)
-		# db.session.add(passwordCreation)
+			db.session.add(g.user)
+			db.session.add(model)
+			# db.session.add(howStored)
+			# db.session.add(passwordCreation)
+			
+			db.session.commit()
+			logout_user()
+			
+			return render_template("final.html", title="Thanks!")
+		return render_template('Survey4.html', title='Survey', form=form)
+	else:
+		return redirect(url_for('index'))
 		
-		db.session.commit()
-		logout_user()
-		
-		return render_template("final.html", title="Thanks!")
-	return render_template('Survey4.html', title='Survey', form=form)
-
 @app.route('/create_acct/' , methods=['GET','POST'])
 def create_acct():
 	form = RegistrationForm(request.form)
 	if form.validate_on_submit():
 		print form
-		user = User(email=form.email.data, password=form.password.data, oldPassword=form.password.data)
+		uid = str(uuid.uuid1())
+		user = User(email=form.email.data, password=form.password.data, 
+			oldPassword=form.password.data, userid=uid)
 		db.session.add(user)
 		db.session.commit()
 		login_user(user)
@@ -188,10 +207,8 @@ def login():
 def forgot_passwd():
 	form = ForgotPasswordForm(request.form)
 	if form.validate_on_submit():
-		# user = form.get_user()
 		user = request.form['email']
 		q = User.query.filter_by(email=user).first()
-		# print(q.password)
 		forgot_password(user, q.password)
 		return redirect(request.args.get("next") or url_for("login"))	
 	return render_template ("forgot_passwd.html", 
