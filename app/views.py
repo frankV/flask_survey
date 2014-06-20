@@ -16,9 +16,6 @@ from app import app, db, lm, mail
 from  datetime import date, timedelta
 import uuid
 
-# session.permanent = True
-# app.permanent_session_lifetime = timedelta(minutes=10)
-
 @lm.user_loader
 def load_user(id):
 	return User.query.get(int(id))
@@ -35,7 +32,7 @@ def survey_1():
 			g.user.lastSeen=date.today()
 			model = Survey1(gender=form.gender.data, age=form.age.data, 
 				education=form.education.data, language=form.language.data)
-			
+
 			form.populate_obj(model)
 			
 			db.session.add(model)		
@@ -80,13 +77,13 @@ def survey_2():
 def survey_3():
 	g.user = current_user
 	if g.user.s2 is not False and g.user.s3 is False:
+		if g.user.changedPass is False:
+			return redirect(url_for('new_pass'))
 		form = Survey3Form(request.form)
 		if form.validate_on_submit():
-			flash("Survey3 Validation message")
 
 			g.user.s3=True
 			g.user.lastSeen=date.today()
-
 			model = Survey3(choose_names=form.choose_names.data, choose_numbers=form.choose_numbers.data, 
 				choose_songs=form.choose_songs.data, choose_mnemonic=form.choose_mnemonic.data, 
 				choose_sports=form.choose_sports.data, choose_famous=form.choose_famous.data, 
@@ -120,9 +117,10 @@ def survey_3():
 def survey_4():
 	g.user = current_user
 	if g.user.s3 is not False and g.user.s4 is False:
+		if g.user.changedPass is False:
+			return redirect(url_for('new_pass'))
 		form = Survey4Form(request.form)
 		if form.validate_on_submit():
-			flash("Survey4 Validation message")
 			
 			g.user.s4=True
 			g.user.lastSeen=date.today()
@@ -135,12 +133,12 @@ def survey_4():
 				how_software=form.how_software.data, how_cellphone=form.how_cellphone.data,
 				how_browser=form.how_browser.data, how_write_down=form.how_write_down.data, 
 				how_no=form.how_no.data)
-
+			
 			form.populate_obj(model)
 
 			db.session.add(g.user)
 			db.session.add(model)
-			
+
 			db.session.commit()
 			logout_user()
 			
@@ -153,10 +151,8 @@ def survey_4():
 def create_acct():
 	form = RegistrationForm(request.form)
 	if form.validate_on_submit():
-		print form
-		uid = str(uuid.uuid1())
 		user = User(email=form.email.data, password=form.password.data, 
-			oldPassword=form.password.data, userid=uid)
+			oldPassword=form.password.data)
 		db.session.add(user)
 		db.session.commit()
 		login_user(user)
@@ -168,12 +164,11 @@ def create_acct():
 def new_pass():
 	form = NewPass(request.form)
 	if form.validate_on_submit():
-		print form
 		user = g.user
 		user.password = form.password.data
+		user.changedPass=True
 		db.session.add(user)
 		db.session.commit()
-		flash("Thanks for updating your password!")
 		return redirect(url_for('index'))
 	return render_template('new_pass.html', title='Update Password', form=form)
 
@@ -184,11 +179,7 @@ def login():
 		user = form.get_user()
 		login_user(user)
 		user = g.user
-		flash("Logged in successfully.")
-		flash(user.s2)
-		flash(user.s3)
 		if user.s2 is True and user.s3 is False:
-			flash("Redirect to new password")
 			return redirect(request.args.get("next") or url_for("new_pass"))
 		else:
 			return redirect(request.args.get("next") or url_for("index"))
@@ -215,8 +206,6 @@ def forgot_passwd():
 @login_required
 def index():
 	user = g.user
-	flash(user.lastSeen) 
-	flash(str(date.today()))
 	return render_template ("index.html",
 		title = "Home", 
 		user = user)
