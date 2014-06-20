@@ -9,13 +9,19 @@
 <span class="help-block has-error">{{ error|e }}</span>
 {% endfor %}
 </div>
-{% else %}
 
-<div class="form-group">
-{{ field.label(class="control-label", for=field.name) }}
-<br>
-{{ field(**kwargs) }}
-</div>
+{% else %}
+	{% if field.type == 'BooleanField' %}
+		<div class="form-group">
+		{{ field(**kwargs) }} {{ field.label(class="control-label", for=field.name) }}
+		</div>
+
+	{% else %}
+		<div class="form-group">
+		{{ field.label(class="control-label", for=field.name) }}<br>
+		{{ field(**kwargs) }}
+		</div>
+	{% endif %}
 
 {% endif %}
 
