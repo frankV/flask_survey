@@ -86,7 +86,7 @@ class Survey3Form(Form):
     secure_nothing = fields.BooleanField('I did not consider any policy')
     modify = fields.RadioField('Did you create your new password by slightly changing your old password for this website?', choices=[
         ('Y', 'Yes'), ('N', 'No')], validators=[Required()], default=None)
-    wordPart = fields.RadioField('If you created your new password based on one of your old passwords, did you consider changing the word part in one of the following ways?',
+    wordPart = fields.RadioField('\tIf you created your new password based on one of your old passwords, did you consider changing the word part in one of the following ways?',
         choices=[('N', 'Not applicable'), ('Changed_completely', 'Changed completely'), ('Changed_slightly', 'Changed slightly'), 
         ('Capitalized_letters', 'Capitalized letters'), ('O', 'Other')], validators=[Required()], default=None)
     usedPassword = fields.RadioField('Is the password that you have just created one that you have used in the past?', choices=[
@@ -95,12 +95,12 @@ class Survey3Form(Form):
     number_added_digits = fields.BooleanField('Added digits')
     number_deleted_digits = fields.BooleanField('Deleted digits')
     number_substituted_digits = fields.BooleanField('Substituted digits')
-    number_O = fields.BooleanField('Other')
+    number_O = fields.TextAreaField('Other')
     char_N = fields.BooleanField('Not applicable')
     char_added_symbols = fields.BooleanField('Added symbols')
     char_deleted_symbols = fields.BooleanField('Deleted symbols')
     char_substituted_symbols = fields.BooleanField('Substituted symbols')
-    char_O = fields.BooleanField('Other')
+    char_O = fields.TextAreaField('Other')
         
 class Survey4Form(Form):
     computerTime = fields.RadioField('How long have you been using a computer?', choices=[
@@ -112,7 +112,7 @@ class Survey4Form(Form):
     pass_substitute = fields.BooleanField('Choose a word and substitute some letters with numbers of symbols (for example @ for a)')
     pass_multiword = fields.BooleanField('Use a pass-phrase consisting of several words')
     pass_phrase = fields.BooleanField('Choose a phrase and use the first letters of each word')
-    pass_O = fields.BooleanField('Other')
+    pass_O = fields.TextAreaField('Other')
     how_regular_file = fields.BooleanField('I store my passwords in a regular file / document on my computer.')
     how_encrypted = fields.BooleanField('I store my passwords in an encrypted computer file')
     how_software = fields.BooleanField('I use password management software to securely store my passwords')

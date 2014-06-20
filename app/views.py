@@ -53,7 +53,7 @@ def survey_1():
 @login_required
 def survey_2():
 	g.user = current_user
-	if g.user.s2 is False:
+	if g.user.s1 is not False and g.user.s2 is False:
 		form = Survey2Form(request.form)
 		if form.validate_on_submit():
 			
@@ -79,43 +79,36 @@ def survey_2():
 @login_required
 def survey_3():
 	g.user = current_user
-	if g.user.s3 is False:
+	if g.user.s2 is not False and g.user.s3 is False:
 		form = Survey3Form(request.form)
 		if form.validate_on_submit():
 			flash("Survey3 Validation message")
 
 			g.user.s3=True
 			g.user.lastSeen=date.today()
-			model = request.form['Survey3Form']
-			print(model)
-			# model = Survey3(modify=form.modify.data, wordPart = form.wordPart.data, usedPassword=form.usedPassword.data)
-			# charPart = CharPartSelectMultiple(N=form.N.data, added_symbols = form.added_symbols.data, 
-			# 	deleted_symbols=form.deleted_symbols.data, substituted_symbols=form.substituted_symbols.data, 
-			# 	O = form.O.data)
-			# numPart = NumberPartSelectMultiple(N=form.N.data, added_digits=form.added_digits.data, 
-			# 	deleted_digits=form.deleted_digits.data, substituted_digits=form.substituted_digits.data, 
-			# 	O = form.O.data)
-			# securePart = SecureSelectMultiple(numbers = form.numbers.data, upper_case=form.upper_case.data, 
-			# 	symbols=form.symbols.data, eight_chars = form.eight_chars.data, no_dict=form.no_dict.data, adjacent=form.adjacent.data,
-			# 	nothing=form.nothing.data)
-			# choosePart = PasswordCreationSelectMultiple(names = form.names.data, numbers = form.numbers.data, songs=form.songs.data,
-			# 	mnemonic = form.mnemonic.data, sports = form.sports.data, famous=form.famous.data, words=form.words.data)
 
-			# form.populate_obj(model)
-			# form.populate_obj(charPart)
-			# form.populate_obj(numPart)
-			# form.populate_obj(securePart)
-			# form.populate_obj(choosePart)
-
-			# db.session.add(g.user)
-			# db.session.add(model)
-			# db.session.add(charPart)
-			# db.session.add(numPart)
-			# db.session.add(choosePart)
-			# db.session.add(SecurePart)
-
-			# db.session.commit()
-			# logout_user()
+			model = Survey3(choose_names=form.choose_names.data, choose_numbers=form.choose_numbers.data, 
+				choose_songs=form.choose_songs.data, choose_mnemonic=form.choose_mnemonic.data, 
+				choose_sports=form.choose_sports.data, choose_famous=form.choose_famous.data, 
+				choose_words=form.choose_words.data, secure_numbers=form.secure_numbers.data, 
+				secure_upper_case=form.secure_upper_case.data, secure_symbols=form.secure_symbols.data, 
+				secure_eight_chars=form.secure_eight_chars.data, secure_no_dict=form.secure_no_dict.data, 
+				secure_adjacent=form.secure_adjacent.data, secure_nothing=form.secure_nothing.data, 
+				modify=form.modify.data, wordPart=form.wordPart.data, usedPassword=form.usedPassword.data,
+				number_N=form.number_N.data, number_added_digits=form.number_added_digits.data, 
+				number_deleted_digits=form.number_deleted_digits.data, 
+				number_substituted_digits=form.number_substituted_digits.data,number_O=form.number_O.data,
+				char_N = form.char_N.data, char_added_symbols=form.char_added_symbols.data,
+				char_deleted_symbols=form.char_deleted_symbols.data, char_substituted_symbols=form.char_substituted_symbols.data,
+				char_O=form.char_O.data)
+			
+			form.populate_obj(model)
+			
+			db.session.add(g.user)
+			db.session.add(model)
+			
+			db.session.commit()
+			logout_user()
 
 			return redirect(url_for('logouthtml'))
 		return render_template('Survey3.html', title='Survey', form=form)
@@ -126,29 +119,27 @@ def survey_3():
 @login_required
 def survey_4():
 	g.user = current_user
-	if g.user.s4 is False:
+	if g.user.s3 is not False and g.user.s4 is False:
 		form = Survey4Form(request.form)
-		# flash(flash_errors)
 		if form.validate_on_submit():
 			flash("Survey4 Validation message")
 			
 			g.user.s4=True
 			g.user.lastSeen=date.today()
-			model = Survey4(computerTime=form.computerTime.data, comments=form.comments.data)
-			# howStored = HowStoredSelectMultiple(howStored.data
-			# 	# regular_file=form.regular_file.data, encrypted=form.encrypted.data, software=form.software.data,
-			# 	# cellphone=form.cellphone.data, browser=form.browser.data, write_down=form.write_down.data, no=form.no.data)
-			# passwordCreation = PasswordCreationSelectMultiple(random=form.random.data, reuse=form.reuse.data, modify=form.modify.data,
-			# 	new=form.new.data, substitute=form.substitute.data, multiword=form.multiword.data, phrase=form.phrase.data, O=form.O.data)
-			print form.computerTime
+			model = Survey4(computerTime=form.computerTime.data, comments=form.comments.data, 
+				pass_random=form.pass_random.data, pass_reuse=form.pass_reuse.data, 
+				pass_modify=form.pass_modify.data, pass_new=form.pass_new.data, 
+				pass_substitute=form.pass_substitute.data, pass_multiword=form.pass_multiword.data,
+				pass_phrase=form.pass_phrase.data, pass_O=form.pass_O.data, 
+				how_regular_file=form.how_regular_file.data, how_encrypted=form.how_encrypted.data,
+				how_software=form.how_software.data, how_cellphone=form.how_cellphone.data,
+				how_browser=form.how_browser.data, how_write_down=form.how_write_down.data, 
+				how_no=form.how_no.data)
+
 			form.populate_obj(model)
-			# form.populate_obj(howStored)
-			# form.populate_obj(passwordCreation)
 
 			db.session.add(g.user)
 			db.session.add(model)
-			# db.session.add(howStored)
-			# db.session.add(passwordCreation)
 			
 			db.session.commit()
 			logout_user()
@@ -208,9 +199,13 @@ def forgot_passwd():
 	form = ForgotPasswordForm(request.form)
 	if form.validate_on_submit():
 		user = request.form['email']
-		q = User.query.filter_by(email=user).first()
-		forgot_password(user, q.password)
-		return redirect(request.args.get("next") or url_for("login"))	
+		if User.query.filter_by(email=user).first():
+			q = User.query.filter_by(email=user).first()
+			forgot_password(user, q.password)
+			return redirect(request.args.get("next") or url_for("login"))	
+		else:
+			flash('Username not found')
+			return redirect(request.args.get("next") or url_for("login"))
 	return render_template ("forgot_passwd.html", 
 		title="Forgot Password", 
 		form=form)
@@ -259,7 +254,6 @@ def internal_error(error):
 
 @app.errorhandler(500)
 def internal_error(error):
-	#uncommented next line, might cause instability
     db.session.rollback()
     return render_template('500.html'), 500
 
