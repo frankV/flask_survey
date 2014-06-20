@@ -3,7 +3,6 @@
 <div class="jumbotron">
 	<h1>Hello, {{user.email}}</h1>
 	<p>Please follow the link below to work on the ECIT survey</p>
-	<!-- Place these inside Jinja2 if conditional based on DB -->
 	{% if g.user.s3 and not g.user.s4%}
 	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_4')}}" role="button">Research Survey 4</a></p>
 	{% endif %}
@@ -16,9 +15,6 @@
 	{% if not g.user.s1 %}
 	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_1')}}" role="button">Research Survey 1</a></p>
 	{% endif %}
-	<!-- End if conditional -->
 </div>
-{% for message in get_flashed_messages() %}
-<div class=flash>{{ message }}</div>
-{% endfor %}
+
 {% endblock %}
