@@ -1,14 +1,7 @@
-Dear {{user}},
+You have requested the password for your account on research.ecit.fsu.edu. 
 
-The password for account {{user}} was requested through the "Forgot Password" page on the research survey website. 
-Below is the current password for email {{user}}
+Your password is:
 
 {{password}}
 
-Please log in with the aforementioned password at the website:
-
-{{url_for('login', _external = True)}}
-
-Regards,
-
-The Research Survey Admin Team
+Please log in at {{url_for('login', _external = True)}} to continue the survey.

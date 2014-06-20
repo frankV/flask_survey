@@ -7,14 +7,40 @@
   <br>
   <form method="POST" action="." class="form form-horizontal">
     {{ form.csrf_token }}
-    {{ render_field(form.choose) }}
-    {{ render_field(form.secure) }}
-    {{ render_field(form.modify) }}
-    {{ render_field(form.usedPassword) }}
-    {{ render_field(form.wordPart) }}
-    {{ render_field(form.numberPart) }}
-    {{ render_field(form.charPart) }}
 
+    {{ render_field(form.choose_names, type="checkbox") }}
+    {{ render_field(form.choose_numbers, type="checkbox") }}
+    {{ render_field(form.choose_songs, type="checkbox") }}
+    {{ render_field(form.choose_mnemonic, type="checkbox" ) }}
+    {{ render_field(form.choose_sports, type="checkbox" ) }}
+    {{ render_field(form.choose_famous, type="checkbox" ) }}
+    {{ render_field(form.choose_words, type="checkbox" ) }}
+
+    {{ render_field(form.secure_numbers, type="checkbox" ) }}
+    {{ render_field(form.secure_upper_case, type="checkbox" ) }}
+    {{ render_field(form.secure_symbols, type="checkbox" ) }}
+    {{ render_field(form.secure_eight_chars, type="checkbox" ) }}
+    {{ render_field(form.secure_no_dict, type="checkbox" ) }}
+    {{ render_field(form.secure_adjacent , type="checkbox") }}
+    {{ render_field(form.secure_nothing, type="checkbox" ) }}
+
+    {{ render_field(form.modify ) }}
+
+    {{ render_field(form.usedPassword ) }}
+
+    {{ render_field(form.wordPart ) }}
+
+    {{ render_field(form.number_N, type="checkbox" ) }}
+    {{ render_field(form.number_added_digits, type="checkbox" ) }}
+    {{ render_field(form.number_deleted_digits, type="checkbox" ) }}
+    {{ render_field(form.number_substituted_digits, type="checkbox") }}
+    {{ render_field(form.number_O, type="checkbox") }}
+
+    {{ render_field(form.char_N, type="checkbox") }}
+    {{ render_field(form.char_added_symbols, type="checkbox" ) }}
+    {{ render_field(form.char_deleted_symbols , type="checkbox") }}
+    {{ render_field(form.char_substituted_symbols, type="checkbox") }}
+    {{ render_field(form.char_O, type="checkbox") }}
 
 <div class="control-group">
   <label class="control-label"></label>
