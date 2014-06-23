@@ -30,6 +30,7 @@ def survey_1():
 
 			g.user.s1=True
 			g.user.lastSeen=date.today()
+			g.user.userid = str(uuid.uuid1())
 			model = Survey1(gender=form.gender.data, age=form.age.data, 
 				education=form.education.data, language=form.language.data)
 
@@ -42,7 +43,9 @@ def survey_1():
 			logout_user()
 
 			return redirect(url_for('logouthtml'))
-		return render_template('Survey1.html', title='Survey', form=form)
+
+		posts = Survey1.query.all()
+		return render_template('Survey1.html', title='Survey', form=form, posts=posts)
 	else:
 		return redirect(url_for('index'))
 
@@ -66,9 +69,11 @@ def survey_2():
 			
 			db.session.commit()
 			logout_user()
-			
+
 			return redirect(url_for('logouthtml'))
-		return render_template('Survey2.html', title='Survey', form=form)
+
+		posts = Survey2.query.all()
+		return render_template('Survey2.html', title='Survey', form=form, posts=posts)
 	else:
 		return redirect(url_for('index'))
 
@@ -108,7 +113,9 @@ def survey_3():
 			logout_user()
 
 			return redirect(url_for('logouthtml'))
-		return render_template('Survey3.html', title='Survey', form=form)
+
+		posts = Survey3.query.all()
+		return render_template('Survey3.html', title='Survey', form=form, posts=posts)
 	else:
 		return redirect(url_for('index'))
 
@@ -141,9 +148,11 @@ def survey_4():
 
 			db.session.commit()
 			logout_user()
-			
+
 			return render_template("final.html", title="Thanks!")
-		return render_template('Survey4.html', title='Survey', form=form)
+
+		posts = Survey4.query.all()
+		return render_template('Survey4.html', title='Survey', form=form, posts=posts)
 	else:
 		return redirect(url_for('index'))
 		
