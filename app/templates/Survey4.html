@@ -2,8 +2,7 @@
 {% block content%}
 <div class="jumbotron">
   {% from "macro.html" import render_field %}
-  {% if form.error %}<p class=error><strong>Form Error:</strong> {{ form.error }}{% endif %}
-  <h1>Survey 4</h1>
+  <h2>Please answer the following questions</h2>
   <br>
   <form method="POST" action="." class="form form-horizontal">
     {{ form.csrf_token }}
