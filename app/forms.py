@@ -1,4 +1,4 @@
-from flask.ext.wtf import Form, fields, validators, Required, Email, ValidationError, Length
+from flask.ext.wtf import Form, fields, validators, Required, Email, ValidationError, Length, Regexp
 from wtforms import widgets
 from models import User
 from app import db
@@ -26,7 +26,7 @@ class ForgotPasswordForm(Form):
         return db.session.query(User).filter_by(email=self.email.data).first()
 
 class RegistrationForm(Form):
-    email = fields.TextField('Email Address', validators=[Required(), Email()])
+    email = fields.TextField('Email Address', validators=[Required(), Email(), Regexp('[^@]+@[^@]+[fsu]+\.[edu]+')])
     consent = fields.BooleanField(validators=[Required()])
     password = fields.PasswordField('New Password', [
         validators.Required(), validators.Length(min=8, max=20),
