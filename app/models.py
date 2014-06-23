@@ -10,7 +10,6 @@ ROLE_ADMIN = 1
 class User(UserMixin, CRUDMixin,  db.Model):
 
     id = db.Column(db.Integer, primary_key = True, unique=True)
-    # userid = db.Column(db.String, unique=True)
     email = db.Column(db.String(20), unique = True)
     password = db.Column(db.String(20))
     oldPassword = db.Column(db.String(20))
@@ -20,11 +19,6 @@ class User(UserMixin, CRUDMixin,  db.Model):
     s3 = db.Column(db.Boolean)
     s4 = db.Column(db.Boolean)
     lastSeen = db.Column(db.String)
-
-    survey1 = db.relationship('Survey1', backref='user', lazy='dynamic')
-    survey2 = db.relationship('Survey2', backref='user', lazy='dynamic')
-    survey3 = db.relationship('Survey3', backref='user', lazy='dynamic')
-    survey4 = db.relationship('Survey4', backref='user', lazy='dynamic')
        
     role = db.Column(db.SmallInteger, default = ROLE_USER)
 
@@ -57,41 +51,44 @@ class User(UserMixin, CRUDMixin,  db.Model):
 
 class Survey1(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    userid = db.Column(db.Integer, db.ForeignKey('user.id'))
     gender = db.Column(db.String)
     age = db.Column(db.String)
     education = db.Column(db.String)
     language = db.Column(db.String(20))
+    userid = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('Survey1', lazy='dynamic'))
 
-    def __init__(self, gender=None, age=None, education=None, language=None):
+    def __init__(self, gender=None, age=None, education=None, language=None, user=None):
         self.gender=gender
         self.age=age
         self.education=education
         self.language=language
+        self.user = user
 
     def get_id(self):
         return unicode(self.id)
 
 class Survey2(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    userid = db.Column(db.Integer, db.ForeignKey('user.id'))
     major = db.Column(db.String)
     department = db.Column(db.String(30))
     count = db.Column(db.String)
     unique = db.Column(db.String)
+    userid = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('Survey2', lazy='dynamic'))
 
-    def __init__(self, major=None, department=None, count=None, unique=None):
+    def __init__(self, major=None, department=None, count=None, unique=None, user=None):
         self.major=major
         self.department=department
         self.count=count
         self.unique=unique
+        self.user=user
 
     def get_id(self):
         return unicode(self.id)
 
 class Survey3(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    userid = db.Column(db.Integer, db.ForeignKey('user.id'))
     choose_names = db.Column(db.Boolean)
     choose_numbers = db.Column(db.Boolean)
     choose_songs = db.Column(db.Boolean)
@@ -119,6 +116,8 @@ class Survey3(db.Model):
     char_deleted_symbols = db.Column(db.Boolean)
     char_substituted_symbols = db.Column(db.Boolean)
     char_O = db.Column(db.String)
+    userid = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('Survey3', lazy='dynamic'))
 
     def __init__(self, choose_names=None, choose_numbers=None, choose_songs=None, 
         choose_mnemonic=None, choose_sports=None, choose_famous=None, choose_words=None, 
@@ -127,7 +126,7 @@ class Survey3(db.Model):
         modify=None, usedPassword=None, wordPart=None, number_N=None, number_added_digits=None, 
         number_deleted_digits=None, number_substituted_digits=None, number_O=None, 
         char_N=None, char_added_symbols=None, char_deleted_symbols=None, 
-        char_substituted_symbols=None, char_O=None):
+        char_substituted_symbols=None, char_O=None, user=None):
 
         self.choose_names=choose_names
         self.choose_numbers=choose_numbers
@@ -156,13 +155,13 @@ class Survey3(db.Model):
         self.char_deleted_symbols=char_deleted_symbols
         self.char_substituted_symbols=char_substituted_symbols
         self.char_O=char_O
+        self.user=user
 
     def get_id(self):
         return unicode(self.id)
 
 class Survey4(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    userid = db.Column(db.Integer, db.ForeignKey('user.id'))
     computerTime = db.Column(db.String)
     pass_random = db.Column(db.Boolean)
     pass_reuse = db.Column(db.Boolean)
@@ -180,12 +179,14 @@ class Survey4(db.Model):
     how_write_down = db.Column(db.Boolean)
     how_no = db.Column(db.Boolean)
     comments = db.Column(db.String)
+    userid = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', backref=db.backref('Survey4', lazy='dynamic'))
 
     def __init__(self, computerTime=None, pass_random=None, pass_reuse=None, 
         pass_modify=None, pass_new=None, pass_substitute=None, pass_multiword=None, 
         pass_phrase=None, pass_O=None, how_regular_file=None, how_encrypted=None, 
         how_software=None, how_cellphone=None, how_browser=None, how_write_down=None, 
-        how_no=None, comments=None):
+        how_no=None, comments=None, user=None):
 
         self.computerTime=computerTime
         self.pass_random = pass_random
@@ -204,6 +205,7 @@ class Survey4(db.Model):
         self.how_write_down = how_write_down
         self.how_no = how_no
         self.comments=comments
+        self.user=user
 
     def get_id(self):
         return unicode(self.id)
