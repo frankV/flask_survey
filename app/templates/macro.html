@@ -1,28 +1,28 @@
 {% macro render_field(field) %}
-        
-    {% if field.errors %}
-        <div class="control-group error">
-            {{ field.label(class="control-label", for=field.name) }}
-            
-            <div class="controls">
-                {{ field(**kwargs) }}
-            </div>
-        
-            {% for error in field.errors %}
-                <span class="help-inline">{{ error|e }}</span>
-            {% endfor %}
-        </div>
-    {% else %}
 
-    <div class="control-group">
-        {{ field.label(class="control-label", for=field.name) }}
-    
-        <div class="controls">
-            {{ field(**kwargs) }}
-        </div>
+{% if field.errors %}
+<div class="form-group has-error">
+{{ field.label(class="control-label", for=field.name) }}
+{{ field(**kwargs)|safe }}
 
-    </div>
+{% for error in field.errors %}
+<span class="help-block has-error">{{ error|e }}</span>
+{% endfor %}
+</div>
 
-    {% endif %}
+{% else %}
+	{% if field.type == 'BooleanField' %}
+		<div class="form-group">
+		{{ field(**kwargs) }} {{ field.label(class="control-label", for=field.name) }}
+		</div>
+
+	{% else %}
+		<div class="form-group">
+		{{ field.label(class="control-label", for=field.name) }}<br>
+		{{ field(**kwargs) }}
+		</div>
+	{% endif %}
+
+{% endif %}
 
 {% endmacro %}

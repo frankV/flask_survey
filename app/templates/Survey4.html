@@ -2,21 +2,43 @@
 {% block content%}
 <div class="jumbotron">
   {% from "macro.html" import render_field %}
-  <h1>Survey</h1>
+  {% if form.error %}<p class=error><strong>Form Error:</strong> {{ form.error }}{% endif %}
+  <h1>Survey 4</h1>
   <br>
   <form method="POST" action="." class="form form-horizontal">
     {{ form.csrf_token }}
+
     {{ render_field(form.computerTime) }}
-    {{ render_field(form.passwordCreation) }}    
-    {{ render_field(form.storePasswords)}}
-    {{ render_field(form.howStored)}}
-   {{ render_field(form.comments)}}
+    <b>How do you usually create passwords for your accounts? (Please check all that apply.)</b><br>
+    <ul>
+    {{ render_field(form.pass_random) }}
+    {{ render_field(form.pass_reuse) }}
+    {{ render_field(form.pass_modify) }}
+    {{ render_field(form.pass_new) }}
+    {{ render_field(form.pass_substitute) }}
+    {{ render_field(form.pass_multiword ) }}
+    {{ render_field(form.pass_phrase) }}
+    {{ render_field(form.pass_O) }}
+    </ul>
+    <br>
+    <b>Do you store your passwords? If yes how? (Check all that apply.)</b>
+    <ul>
+    {{ render_field(form.how_regular_file) }}
+    {{ render_field(form.how_encrypted) }}
+    {{ render_field(form.how_software) }}
+    {{ render_field(form.how_cellphone) }}
+    {{ render_field(form.how_browser) }}
+    {{ render_field(form.how_write_down) }}
+    {{ render_field(form.how_no) }}
+    </ul>
+    {{ render_field(form.comments)}}
     <div class="control-group">
       <label class="control-label"></label>
       <div class="controls">
         <button type="submit" id="submit" class="btn btn-primary">Submit</button>
       </div>
-      </div>
-      </form>
-      </div>
+     
+    </div>
+  </form>
+</div>
 {% endblock %}
