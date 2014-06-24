@@ -8,7 +8,7 @@ ROLE_USER = 0
 ROLE_ADMIN = 1
 
 class User(UserMixin, CRUDMixin,  db.Model):
-
+    # __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key = True, unique=True)
     userid = db.Column(db.String, unique=True)
     email = db.Column(db.String(20), unique = True)
@@ -21,6 +21,11 @@ class User(UserMixin, CRUDMixin,  db.Model):
     s4 = db.Column(db.Boolean)
     lastSeen = db.Column(db.String)
 
+    survey1 = db.relationship('Survey1', backref=db.backref('survey1', lazy='joined'))
+    survey2 = db.relationship('Survey2', backref=db.backref('survey1', lazy='joined'))
+    survey3 = db.relationship('Survey3', backref=db.backref('survey1', lazy='joined'))
+    survey4 = db.relationship('Survey4', backref=db.backref('survey1', lazy='joined'))
+    
     role = db.Column(db.SmallInteger, default = ROLE_USER)
 
     def __init__(self, email=None, userid=None, password=None, oldPassword = None, changedPass=False, 
@@ -51,13 +56,14 @@ class User(UserMixin, CRUDMixin,  db.Model):
         return '<User %r>' % (self.email)
 
 class Survey1(db.Model):
+    # __tablename__='survey1'
     id = db.Column(db.Integer, primary_key = True)
     gender = db.Column(db.String)
     age = db.Column(db.String)
     education = db.Column(db.String)
     language = db.Column(db.String(20))
-    user = db.relationship('User', backref=db.backref('post1', lazy='dynamic'))
-    userid = db.Column(db.String, db.ForeignKey('user.userid'))
+    user = db.Column(db.String, db.ForeignKey('user.userid'))
+    # user = db.relationship('User', backref=db.backref('survey1', lazy='dynamic'))
     
 
     def __init__(self, gender=None, age=None, education=None, language=None, user=None):
@@ -71,13 +77,14 @@ class Survey1(db.Model):
         return unicode(self.id)
 
 class Survey2(db.Model):
+    # __tablename__='survey2'
     id = db.Column(db.Integer, primary_key = True)
     major = db.Column(db.String)
     department = db.Column(db.String(30))
     count = db.Column(db.String)
     unique = db.Column(db.String)
-    user = db.relationship('User', backref=db.backref('post2', lazy='dynamic'))
-    userid = db.Column(db.Integer, db.ForeignKey('user.userid'))
+    user = db.Column(db.String, db.ForeignKey('user.userid'))
+    # user = db.relationship('User', backref=db.backref('survey2', lazy='dynamic'))
 
     def __init__(self, major=None, department=None, count=None, unique=None, user=None):
         self.major=major
@@ -90,6 +97,7 @@ class Survey2(db.Model):
         return unicode(self.id)
 
 class Survey3(db.Model):
+    # __tablename__='survey3'
     id = db.Column(db.Integer, primary_key = True)
     choose_names = db.Column(db.Boolean)
     choose_numbers = db.Column(db.Boolean)
@@ -118,8 +126,8 @@ class Survey3(db.Model):
     char_deleted_symbols = db.Column(db.Boolean)
     char_substituted_symbols = db.Column(db.Boolean)
     char_O = db.Column(db.String)
-    user = db.relationship('User', backref=db.backref('post3', lazy='dynamic'))
-    userid = db.Column(db.Integer, db.ForeignKey('user.userid'))
+    user = db.Column(db.String, db.ForeignKey('user.userid'))
+    # user = db.relationship('User', backref=db.backref('survey3', lazy='dynamic'))
     
     def __init__(self, choose_names=None, choose_numbers=None, choose_songs=None, 
         choose_mnemonic=None, choose_sports=None, choose_famous=None, choose_words=None, 
@@ -163,6 +171,7 @@ class Survey3(db.Model):
         return unicode(self.id)
 
 class Survey4(db.Model):
+    # __tablename__='survey4'
     id = db.Column(db.Integer, primary_key = True)
     computerTime = db.Column(db.String)
     pass_random = db.Column(db.Boolean)
@@ -181,8 +190,8 @@ class Survey4(db.Model):
     how_write_down = db.Column(db.Boolean)
     how_no = db.Column(db.Boolean)
     comments = db.Column(db.String)
-    user = db.relationship('User', backref=db.backref('post4', lazy='dynamic'))
-    userid = db.Column(db.Integer, db.ForeignKey('user.userid'))
+    user = db.Column(db.String, db.ForeignKey('user.userid'))
+    # user = db.relationship('User', backref=db.backref('survey4', lazy='dynamic'))
 
     def __init__(self, computerTime=None, pass_random=None, pass_reuse=None, 
         pass_modify=None, pass_new=None, pass_substitute=None, pass_multiword=None, 
