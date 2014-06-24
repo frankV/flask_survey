@@ -21,17 +21,17 @@ class User(UserMixin, CRUDMixin,  db.Model):
     s4 = db.Column(db.Boolean)
     lastSeen = db.Column(db.String)
 
-    survey1 = db.relationship('Survey1', backref=db.backref('survey1', lazy='joined'))
-    survey2 = db.relationship('Survey2', backref=db.backref('survey1', lazy='joined'))
-    survey3 = db.relationship('Survey3', backref=db.backref('survey1', lazy='joined'))
-    survey4 = db.relationship('Survey4', backref=db.backref('survey1', lazy='joined'))
+    # survey1 = db.relationship('Survey1', backref=db.backref('survey1', lazy='joined'))
+    # survey2 = db.relationship('Survey2', backref=db.backref('survey1', lazy='joined'))
+    # survey3 = db.relationship('Survey3', backref=db.backref('survey1', lazy='joined'))
+    # survey4 = db.relationship('Survey4', backref=db.backref('survey1', lazy='joined'))
     
     role = db.Column(db.SmallInteger, default = ROLE_USER)
 
     def __init__(self, email=None, userid=None, password=None, oldPassword = None, changedPass=False, 
         s1=False, s2=False, s3=False, s4=False):
         self.email = email
-        # self.userid = userid
+        self.userid = userid
         self.password = password
         self.oldPassword = oldPassword
         self.changedPass = changedPass
@@ -58,20 +58,21 @@ class User(UserMixin, CRUDMixin,  db.Model):
 class Survey1(db.Model):
     # __tablename__='survey1'
     id = db.Column(db.Integer, primary_key = True)
+    userid = db.Column(db.String)
     gender = db.Column(db.String)
     age = db.Column(db.String)
     education = db.Column(db.String)
     language = db.Column(db.String(20))
-    user = db.Column(db.String, db.ForeignKey('user.userid'))
+    # userid = db.Column(db.String, db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey1', lazy='dynamic'))
     
 
-    def __init__(self, gender=None, age=None, education=None, language=None, user=None):
+    def __init__(self, gender=None, age=None, education=None, language=None, userid=None):
         self.gender=gender
         self.age=age
         self.education=education
         self.language=language
-        self.user = user
+        self.userid = userid
 
     def get_id(self):
         return unicode(self.id)
@@ -79,19 +80,20 @@ class Survey1(db.Model):
 class Survey2(db.Model):
     # __tablename__='survey2'
     id = db.Column(db.Integer, primary_key = True)
+    userid = db.Column(db.String)
     major = db.Column(db.String)
     department = db.Column(db.String(30))
     count = db.Column(db.String)
     unique = db.Column(db.String)
-    user = db.Column(db.String, db.ForeignKey('user.userid'))
+    # user = db.Column(db.String, db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey2', lazy='dynamic'))
 
-    def __init__(self, major=None, department=None, count=None, unique=None, user=None):
+    def __init__(self, major=None, department=None, count=None, unique=None, userid=None):
         self.major=major
         self.department=department
         self.count=count
         self.unique=unique
-        self.user=user
+        self.userid=userid
 
     def get_id(self):
         return unicode(self.id)
@@ -99,6 +101,7 @@ class Survey2(db.Model):
 class Survey3(db.Model):
     # __tablename__='survey3'
     id = db.Column(db.Integer, primary_key = True)
+    userid = db.Column(db.String)
     choose_names = db.Column(db.Boolean)
     choose_numbers = db.Column(db.Boolean)
     choose_songs = db.Column(db.Boolean)
@@ -126,7 +129,7 @@ class Survey3(db.Model):
     char_deleted_symbols = db.Column(db.Boolean)
     char_substituted_symbols = db.Column(db.Boolean)
     char_O = db.Column(db.String)
-    user = db.Column(db.String, db.ForeignKey('user.userid'))
+    # user = db.Column(db.String, db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey3', lazy='dynamic'))
     
     def __init__(self, choose_names=None, choose_numbers=None, choose_songs=None, 
@@ -136,7 +139,7 @@ class Survey3(db.Model):
         modify=None, usedPassword=None, wordPart=None, number_N=None, number_added_digits=None, 
         number_deleted_digits=None, number_substituted_digits=None, number_O=None, 
         char_N=None, char_added_symbols=None, char_deleted_symbols=None, 
-        char_substituted_symbols=None, char_O=None, user=None):
+        char_substituted_symbols=None, char_O=None, userid=None):
 
         self.choose_names=choose_names
         self.choose_numbers=choose_numbers
@@ -165,7 +168,7 @@ class Survey3(db.Model):
         self.char_deleted_symbols=char_deleted_symbols
         self.char_substituted_symbols=char_substituted_symbols
         self.char_O=char_O
-        self.user=user
+        self.userid=userid
 
     def get_id(self):
         return unicode(self.id)
@@ -173,6 +176,7 @@ class Survey3(db.Model):
 class Survey4(db.Model):
     # __tablename__='survey4'
     id = db.Column(db.Integer, primary_key = True)
+    userid = db.Column(db.String)
     computerTime = db.Column(db.String)
     pass_random = db.Column(db.Boolean)
     pass_reuse = db.Column(db.Boolean)
@@ -190,14 +194,14 @@ class Survey4(db.Model):
     how_write_down = db.Column(db.Boolean)
     how_no = db.Column(db.Boolean)
     comments = db.Column(db.String)
-    user = db.Column(db.String, db.ForeignKey('user.userid'))
+    # user = db.Column(db.String, db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey4', lazy='dynamic'))
 
     def __init__(self, computerTime=None, pass_random=None, pass_reuse=None, 
         pass_modify=None, pass_new=None, pass_substitute=None, pass_multiword=None, 
         pass_phrase=None, pass_O=None, how_regular_file=None, how_encrypted=None, 
         how_software=None, how_cellphone=None, how_browser=None, how_write_down=None, 
-        how_no=None, comments=None, user=None):
+        how_no=None, comments=None, userid=None):
 
         self.computerTime=computerTime
         self.pass_random = pass_random
@@ -216,7 +220,7 @@ class Survey4(db.Model):
         self.how_write_down = how_write_down
         self.how_no = how_no
         self.comments=comments
-        self.user=user
+        self.userid=userid
 
     def get_id(self):
         return unicode(self.id)
