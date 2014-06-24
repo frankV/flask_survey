@@ -30,9 +30,8 @@ def survey_1():
 
 			g.user.s1=True
 			g.user.lastSeen=date.today()
-			g.user.userid = str(uuid.uuid1())
 			model = Survey1(gender=form.gender.data, age=form.age.data, 
-				education=form.education.data, language=form.language.data)
+				education=form.education.data, language=form.language.data, userid=g.user.userid)
 
 			form.populate_obj(model)
 			
@@ -44,8 +43,7 @@ def survey_1():
 
 			return redirect(url_for('logouthtml'))
 
-		posts = Survey1.query.all()
-		return render_template('Survey1.html', title='Survey', form=form, posts=posts)
+		return render_template('Survey1.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
 
@@ -60,7 +58,7 @@ def survey_2():
 			g.user.s2=True
 			g.user.lastSeen=date.today()
 			model=Survey2(major=form.major.data, department=form.department.data, 
-				count=form.count.data, unique=form.unique.data)
+				count=form.count.data, unique=form.unique.data, userid=g.user.userid)
 			
 			form.populate_obj(model)
 			
@@ -72,8 +70,7 @@ def survey_2():
 
 			return redirect(url_for('logouthtml'))
 
-		posts = Survey2.query.all()
-		return render_template('Survey2.html', title='Survey', form=form, posts=posts)
+		return render_template('Survey2.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
 
@@ -102,7 +99,7 @@ def survey_3():
 				number_substituted_digits=form.number_substituted_digits.data,number_O=form.number_O.data,
 				char_N = form.char_N.data, char_added_symbols=form.char_added_symbols.data,
 				char_deleted_symbols=form.char_deleted_symbols.data, char_substituted_symbols=form.char_substituted_symbols.data,
-				char_O=form.char_O.data)
+				char_O=form.char_O.data, userid=g.user.userid)
 			
 			form.populate_obj(model)
 			
@@ -114,8 +111,7 @@ def survey_3():
 
 			return redirect(url_for('logouthtml'))
 
-		posts = Survey3.query.all()
-		return render_template('Survey3.html', title='Survey', form=form, posts=posts)
+		return render_template('Survey3.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
 
@@ -139,7 +135,7 @@ def survey_4():
 				how_regular_file=form.how_regular_file.data, how_encrypted=form.how_encrypted.data,
 				how_software=form.how_software.data, how_cellphone=form.how_cellphone.data,
 				how_browser=form.how_browser.data, how_write_down=form.how_write_down.data, 
-				how_no=form.how_no.data)
+				how_no=form.how_no.data, userid=g.user.userid)
 			
 			form.populate_obj(model)
 
@@ -151,8 +147,7 @@ def survey_4():
 
 			return render_template("final.html", title="Thanks!")
 
-		posts = Survey4.query.all()
-		return render_template('Survey4.html', title='Survey', form=form, posts=posts)
+		return render_template('Survey4.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
 		
@@ -161,7 +156,7 @@ def create_acct():
 	form = RegistrationForm(request.form)
 	if form.validate_on_submit():
 		user = User(email=form.email.data, password=form.password.data, 
-			oldPassword=form.password.data)
+			oldPassword=form.password.data, userid=(str(uuid.uuid1())))
 		db.session.add(user)
 		db.session.commit()
 		login_user(user)
