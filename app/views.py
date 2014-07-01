@@ -27,22 +27,17 @@ def survey_1():
 	if g.user.s1 is False:
 		form = Survey1Form(request.form)
 		if form.validate_on_submit():
-
 			g.user.s1=True
 			g.user.lastSeen=date.today()
 			model = Survey1(gender=form.gender.data, age=form.age.data, 
 				education=form.education.data, language=form.language.data, userid=g.user.userid)
 
 			form.populate_obj(model)
-			
 			db.session.add(model)		
 			db.session.add(g.user)
-
 			db.session.commit()
 			logout_user()
-
 			return redirect(url_for('logouthtml'))
-
 		return render_template('Survey1.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
@@ -53,23 +48,18 @@ def survey_2():
 	g.user = current_user
 	if g.user.s1 is not False and g.user.s2 is False:
 		form = Survey2Form(request.form)
-		if form.validate_on_submit():
-			
+		if form.validate_on_submit():	
 			g.user.s2=True
 			g.user.lastSeen=date.today()
 			model=Survey2(major=form.major.data, department=form.department.data, 
 				count=form.count.data, unique=form.unique.data, userid=g.user.userid)
 			
 			form.populate_obj(model)
-			
 			db.session.add(model)		
 			db.session.add(g.user)
-			
 			db.session.commit()
 			logout_user()
-
 			return redirect(url_for('logouthtml'))
-
 		return render_template('Survey2.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
@@ -83,7 +73,6 @@ def survey_3():
 			return redirect(url_for('new_pass'))
 		form = Survey3Form(request.form)
 		if form.validate_on_submit():
-
 			g.user.s3=True
 			g.user.lastSeen=date.today()
 			model = Survey3(choose_names=form.choose_names.data, choose_numbers=form.choose_numbers.data, 
@@ -102,15 +91,11 @@ def survey_3():
 				char_O=form.char_O.data, userid=g.user.userid)
 			
 			form.populate_obj(model)
-			
 			db.session.add(g.user)
 			db.session.add(model)
-			
 			db.session.commit()
 			logout_user()
-
 			return redirect(url_for('logouthtml'))
-
 		return render_template('Survey3.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
@@ -124,7 +109,6 @@ def survey_4():
 			return redirect(url_for('new_pass'))
 		form = Survey4Form(request.form)
 		if form.validate_on_submit():
-			
 			g.user.s4=True
 			g.user.lastSeen=date.today()
 			model = Survey4(computerTime=form.computerTime.data, comments=form.comments.data, 
@@ -138,15 +122,11 @@ def survey_4():
 				how_no=form.how_no.data, userid=g.user.userid)
 			
 			form.populate_obj(model)
-
 			db.session.add(g.user)
 			db.session.add(model)
-
 			db.session.commit()
 			logout_user()
-
 			return render_template("final.html", title="Thanks!")
-
 		return render_template('Survey4.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
