@@ -36,7 +36,7 @@ def survey_1():
 			db.session.add(model)		
 			db.session.add(g.user)
 			db.session.commit()
-			# logout_user()
+			logout_user()
 			return redirect(url_for('logouthtml'))
 		return render_template('Survey1.html', title='Survey', form=form)
 	else:
@@ -58,7 +58,7 @@ def survey_2():
 			db.session.add(model)		
 			db.session.add(g.user)
 			db.session.commit()
-			# logout_user()
+			logout_user()
 			return redirect(url_for('logouthtml'))
 		return render_template('Survey2.html', title='Survey', form=form)
 	else:
@@ -96,7 +96,7 @@ def survey_3():
 			db.session.add(g.user)
 			db.session.add(model)
 			db.session.commit()
-			# logout_user()
+			logout_user()
 			return redirect(url_for('logouthtml'))
 		return render_template('Survey3.html', title='Survey', form=form)
 	else:
@@ -127,7 +127,7 @@ def survey_4():
 			db.session.add(g.user)
 			db.session.add(model)
 			db.session.commit()
-			# logout_user()
+			logout_user()
 			return render_template("final.html", title="Thanks!")
 		return render_template('Survey4.html', title='Survey', form=form)
 	else:
@@ -197,12 +197,12 @@ def index():
 	return render_template ("index.html",
 		title = "Home", 
 		user = user)
-	# if user.lastSeen != str(date.today()):
-	# 	return render_template ("index.html",
-	# 		title = "Home", 
-	# 		user = user)
-	# else:
-	# 	return render_template("comeback.html", title="Please come back later", user=user)
+	if user.lastSeen != str(date.today()):
+		return render_template ("index.html",
+			title = "Home", 
+			user = user)
+	else:
+		return render_template("comeback.html", title="Please come back later", user=user)
 
 @app.route('/consent/')
 def consent():
