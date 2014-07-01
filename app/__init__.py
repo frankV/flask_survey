@@ -23,5 +23,6 @@ mail = Mail(app)
 app.secret_key = os.urandom(24)
 app.permanent_session_lifetime = timedelta(minutes=120)
 
+fail_log = "failed_login.log"
 
 from app import views, models

@@ -86,9 +86,11 @@ class Survey3Form(Form):
     secure_nothing = fields.BooleanField('I did not consider any policy')
     modify = fields.RadioField('Did you create your new password by slightly changing your old password for this website?', choices=[
         ('Y', 'Yes'), ('N', 'No')], validators=[Required()], default=None)
-    wordPart = fields.RadioField('\tIf you created your new password based on one of your old passwords, did you consider changing the word part in one of the following ways?',
-        choices=[('N', 'Not applicable'), ('Changed_completely', 'Changed completely'), ('Changed_slightly', 'Changed slightly'), 
-        ('Capitalized_letters', 'Capitalized letters'), ('O', 'Other')], validators=[Required()], default=None)
+    word_part_N = fields.BooleanField('Not applicabl')
+    word_part_changed_completely = fields.BooleanField('Changed completely')
+    word_part_changed_slightly = fields.BooleanField('Changed slightly')
+    word_part_capitalized_letters = fields.BooleanField('Capitalized letters')
+    word_part_O = fields.TextAreaField('Other')
     usedPassword = fields.RadioField('Is the password that you have just created one that you have used in the past?', choices=[
         ('Y', 'Yes'), ('N', 'No'), ('O', 'Password has similarities to another password that I have used before')], validators=[Required()], default=None)
     number_N = fields.BooleanField('Not applicable')

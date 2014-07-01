@@ -11,7 +11,7 @@ from forms import LoginForm, RegistrationForm, Survey1Form, Survey2Form, Survey3
 from forms import Survey4Form, NewPass, ForgotPasswordForm
 from email import user_notification, forgot_password
 from config import DATABASE_QUERY_TIMEOUT
-from app import app, db, lm, mail
+from app import app, db, lm, mail, fail_log
 #OTHER
 from  datetime import date, timedelta
 import uuid
@@ -39,7 +39,7 @@ def survey_1():
 			db.session.add(g.user)
 
 			db.session.commit()
-			logout_user()
+			# logout_user()
 
 			return redirect(url_for('logouthtml'))
 
@@ -66,7 +66,7 @@ def survey_2():
 			db.session.add(g.user)
 			
 			db.session.commit()
-			logout_user()
+			# logout_user()
 
 			return redirect(url_for('logouthtml'))
 
@@ -107,7 +107,7 @@ def survey_3():
 			db.session.add(model)
 			
 			db.session.commit()
-			logout_user()
+			# logout_user()
 
 			return redirect(url_for('logouthtml'))
 
@@ -143,7 +143,7 @@ def survey_4():
 			db.session.add(model)
 
 			db.session.commit()
-			logout_user()
+			# logout_user()
 
 			return render_template("final.html", title="Thanks!")
 

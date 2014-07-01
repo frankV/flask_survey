@@ -2,17 +2,23 @@
 {% block content %}
 <div class="jumbotron">
 	<h1>Hello, {{user.email}}</h1>
-	<p>Please follow the link below to work on the ECIT survey</p>
+	{% if g.user.s4 %}
+	<p>Thanks for completing the survey, you have already been entered into the drawing.</p>
+	{% endif %}
 	{% if g.user.s3 and not g.user.s4%}
+	<p>Please follow the link below to work on the ECIT survey</p>
 	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_4')}}" role="button">Research Survey 4</a></p>
 	{% endif %}
 	{% if g.user.s2 and not g.user.s3%}
+	<p>Please follow the link below to work on the ECIT survey</p>
 	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_3')}}" role="button">Research Survey 3</a></p>
 	{% endif %}
 	{% if g.user.s1 and not g.user.s2%}
+	<p>Please follow the link below to work on the ECIT survey</p>
 	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_2')}}" role="button">Research Survey 2</a></p>
 	{% endif %}
 	{% if not g.user.s1 %}
+	<p>Please follow the link below to work on the ECIT survey</p>
 	<p><a class="btn btn-primary btn-lg" href="{{ url_for('survey_1')}}" role="button">Research Survey 1</a></p>
 	{% endif %}
 </div>
