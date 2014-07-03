@@ -168,7 +168,10 @@ def login():
 		app.permanent_session_lifetime = timedelta(minutes=25)
 		user = g.user
 		if user.s2 is True and user.s3 is False:
-			return redirect(request.args.get("next") or url_for("new_pass"))
+			if user.changedPass is not True:
+				return redirect(request.args.get("next") or url_for("new_pass"))
+			else:	
+				return redirect(request.args.get("next") or url_for("index"))
 		else:
 			return redirect(request.args.get("next") or url_for("index"))
 	return render_template('login.html', title = "Login", form=form)
