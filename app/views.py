@@ -197,9 +197,6 @@ def forgot_passwd():
 @login_required
 def index():
 	user = g.user
-	return render_template ("index.html",
-		title = "Home", 
-		user = user)
 	if user.lastSeen != str(date.today()):
 		return render_template ("index.html",
 			title = "Home", 

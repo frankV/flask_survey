@@ -29,6 +29,7 @@
 				
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
+				<li><a href="mailto:sh09r@my.fsu.edu?Subject=ECIT%20Survey%20Issues">Having Trouble?</a></li>
 				{% if g.user.is_authenticated() %}
 				<li><a href="{{ url_for('logout') }}">Logout</a></li>
 				{% endif %}
@@ -38,9 +39,9 @@
 			<hr>
 			<div class="span12">	
 				{% block content %}{% endblock %}
-				<br>
+				<!-- <br>
 				<div align="right">
-				<a href="mailto:shibba@gmail.com.com?Subject=ECIT%20Survey%20Issues" target="_top">Having difficulty or want to report a problem?</a></div>
+				<a href="mailto:shibba@gmail.com.com?Subject=ECIT%20Survey%20Issues" target="_top">Having difficulty or want to report a problem?</a></div> -->
 				<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 				<script src="/static/js/bootstrap.min.js"></script>
 			</div>
