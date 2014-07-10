@@ -62,15 +62,17 @@ class Survey1(db.Model):
     gender = db.Column(db.String)
     age = db.Column(db.String)
     education = db.Column(db.String)
+    education_O = db.Column(db.String)
     language = db.Column(db.String(20))
     # userid = db.Column(db.String, db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey1', lazy='dynamic'))
     
 
-    def __init__(self, gender=None, age=None, education=None, language=None, userid=None):
+    def __init__(self, gender=None, age=None, education=None, education_O=None, language=None, userid=None):
         self.gender=gender
         self.age=age
         self.education=education
+        self.education_O = education_O
         self.language=language
         self.userid = userid
 

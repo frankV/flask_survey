@@ -54,8 +54,8 @@ class Survey1Form(Form):
     age = fields.RadioField('What is your age?', choices=[('lt18', 'Younger than 18'), ('18-24', '18 to 24'), ('25-34', '25 to 34'), 
         ('35-44', '35 to 44'), ('45-54', '45 to 54'), ('55-64', '55 to 64'), ('65-74', '65 to 74'), ('75oa', '75 or above')], validators=[Required()])
     education = fields.RadioField('Which of the following best describes your highest education level?', choices=[('Hsg', 'High school graduate'), 
-        ('Scnd', 'Some college, no degree'), ('Assoc', 'Associates Degree'), ('Bach', 'Bachelors degree'), ('Grad', 'Graduate degree (Masters, Doctorate, etc.)'), ('O', 'Other')], 
-        validators=[Required()])
+        ('Scnd', 'Some college, no degree'), ('Assoc', 'Associates Degree'), ('Bach', 'Bachelors degree'), ('Grad', 'Graduate degree (Masters, Doctorate, etc.)')])
+    education_O = fields.TextAreaField('Other')        
     language = fields.TextField('Native Language', validators=[Required()])
 
 class Survey2Form(Form):

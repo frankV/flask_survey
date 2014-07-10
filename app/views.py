@@ -30,7 +30,8 @@ def survey_1():
 			g.user.s1=True
 			g.user.lastSeen=date.today()
 			model = Survey1(gender=form.gender.data, age=form.age.data, 
-				education=form.education.data, language=form.language.data, userid=g.user.userid)
+				education=form.education.data, education_O=form.education_O.data,
+				language=form.language.data, userid=g.user.userid)
 
 			form.populate_obj(model)
 			db.session.add(model)		
