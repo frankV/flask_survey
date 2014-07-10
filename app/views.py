@@ -168,7 +168,7 @@ def login():
 		app.permanent_session_lifetime = timedelta(minutes=25)
 		user = g.user
 		if user.s2 is True and user.s3 is False:
-			if user.changedPass is not True:
+			if user.changedPass is not True and user.lastSeen != str(date.today()):
 				return redirect(request.args.get("next") or url_for("new_pass"))
 			else:	
 				return redirect(request.args.get("next") or url_for("index"))
@@ -197,12 +197,15 @@ def forgot_passwd():
 @login_required
 def index():
 	user = g.user
-	if user.lastSeen != str(date.today()):
+	if user.lastSeen == str(date.today()):
+		return render_template("comeback.html", 
+			title="Please come back later", 
+			user=user)
+	else:
 		return render_template ("index.html",
 			title = "Home", 
 			user = user)
-	else:
-		return render_template("comeback.html", title="Please come back later", user=user)
+		
 
 @app.route('/consent/')
 def consent():
