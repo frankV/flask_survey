@@ -1,17 +1,18 @@
-from flask import Flask, session
-from flask.ext.assets import Environment, Bundle
-from flask_oauthlib.client import OAuth
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.login import LoginManager
-from flask.ext.openid import OpenID
-from flask.ext.mail import Mail
-from config import basedir
+# -*- coding: utf-8 -*-
+
 import os
 from datetime import timedelta
+from config import basedir
+
+from flask import Flask, session
+from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.login import LoginManager
+from flask.ext.mail import Mail
+
 
 app = Flask(__name__)
 app.config.from_object('config')
-db = SQLAlchemy(app)			
+db = SQLAlchemy(app)
 # assets = Environment(app)
 
 lm = LoginManager()
@@ -24,4 +25,5 @@ app.secret_key = os.urandom(24)
 app.permanent_session_lifetime = timedelta(minutes=120)
 
 
-from app import views, models
+import views
+import models
