@@ -26,3 +26,28 @@
 {% endif %}
 
 {% endmacro %}
+
+
+
+{% macro render_input_ca(field) %}
+  {% if field.errors %}
+    <div class="form-group has-error">
+      {{ field.label(class="col-lg-3 control-label", for=field.name) }}
+      <div class="col-lg-9">
+        {{ field(**kwargs)|safe }}
+        {% for error in field.errors %}
+          <span class="help-block">{{ error|e }}</span>
+        {% endfor %}
+       </div>
+    </div>
+  {% else %}
+
+  <div class="form-group">
+      {{ field.label(class="col-lg-3 control-label", for=field.name) }}
+      <div class="col-lg-9">
+      	{{ field(**kwargs) }}
+    	</div>
+  </div>
+
+  {% endif %}
+{% endmacro %}

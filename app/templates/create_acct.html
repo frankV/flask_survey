@@ -1,51 +1,74 @@
 {% extends "base.html" %}
-{% block content%}
-<div class="jumbotron">
-  {% from "macro.html" import render_field %}
-<!--  <h1>Welcome to the ECIT Survey</h1><br><br> -->
+{% from "macro.html" import render_input_ca %}
 
-<h2>Please read the terms of consent form carefully at the following link:</h2>
-<h3><a href="/consent", target="_blank">Consent form</a></h3>
+{% block content %}
+
+<style type="text/css">
+  label.col-lg-3.control-label {
+    text-align: left;
+  }
+</style>
+
+<br>
+
+<legend>Please read the terms of the <a href="/consent", target="_blank">Consent Form</a> carefully.</legend>
 <p>
  By checking I Agree below and creating an accout, you confirm that you have read the above information, you have asked any questions you may have had and have received answers, and you consent to participate in the study.
 </p>
-  <form method="POST" action="." class="form form-horizontal">
 
-    {{ form.csrf_token }}
+<br>
 
-    <br>
-    
-<h2>Create an Account</h2>
+<legend>Create an Account</legend>
 <p>
-Please create an account for use in this study. Use your FSU email address for your username. Assume you are creating an email account and you want your password to be strong enough. Try to create your password in a manner that you would normally do. You should take whatever steps you normally take to remember and protect your password. DO NOT provide passwords that you currently use for another service. All passwords will be saved and analyzed. DO NOT use this password elsewhere. 
+Please create an account for use in this study. Use your FSU email address for your username. Assume you are creating an email account and you want your password to be strong enough. Try to create your password in a manner that you would normally do. You should take whatever steps you normally take to remember and protect your password. <strong>DO NOT</strong> provide passwords that you currently use for another service. All passwords will be saved and analyzed. DO NOT use this password elsewhere.
 </p>
 
-    {{ render_field(form.email, class="input-xlarge",placeholder="my.fsu.edu Email") }}
-    {{ render_field(form.password, class="input-xlarge", placeholder="Minimum 8 Characters") }}
-    {{ render_field(form.confirm, class="input-xlarge", placeholder="Confirm Password")}}
-    
-     <div class="control-group">
-      <label class="control-label"></label>
-      <div class="controls">
-       <br>
-      <label class="control-label">I agree to the terms and conditions stated above</label>
-  <input id="termschk" name="consent" type="checkbox" onclick="validate()"><br><br>
-        <button type="submit" id="sign_in" disabled="disabled" class="btn btn-primary">Create Account</button>
-      </div>
-      <a href="/login" style="float:right;margin-right: 120px;">Already registered?</a>
-      </div>
+<hr>
+
+<div class="row">
+
+    <div class="well bs-component">
+      <form method="POST" action="." class="form-horizontal">
+        {{ form.csrf_token }}
+        <fieldset>
+
+          <div class="col-md-7">
+            {{ render_input_ca(form.email, class="form-control", id="inputEmail", placeholder="your@my.fsu.edu email") }}
+            {{ render_input_ca(form.password, class="form-control", id="inputPassword", placeholder="Minimum of 8 characters") }}
+            {{ render_input_ca(form.confirm, class="form-control", id="confirmPassword", placeholder="Confirm Password")}}
+          </div>
+
+          <div class="col-md-5">
+
+            <div class="radio">
+              <label class="checkbox">
+                <input type="checkbox" id="termschk" name="consent" onclick="validate()">
+                I agree to the terms and conditions stated above.
+              </label>
+            </div>
+
+            <div style="margin-top:72px;">
+              <button type="submit" id="sign_in" disabled="disabled" class="btn btn-block btn-primary">Create Account</button>
+            </div>
+
+          </div>
+
+        </fieldset>
       </form>
-      </div>
-<script language=javascript>
-function validate(){
-var chk = document.getElementById('termschk')
-if(chk.checked){
-document.getElementById('sign_in').disabled = false
-}
-else
-{
-document.getElementById('sign_in').disabled = true
-}
-}
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+  function validate() {
+    var chk = document.getElementById('termschk');
+    if(chk.checked)
+      document.getElementById('sign_in').disabled = false;
+    else
+      document.getElementById('sign_in').disabled = true;
+  }
 </script>
- {% endblock %}
+
+{% endblock %}

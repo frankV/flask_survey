@@ -1,45 +1,42 @@
 {% extends "base.html" %}
+{% from "macro.html" import render_field %}
+
 {% block content%}
-<div class="jumbotron">
-  {% from "macro.html" import render_field %}
-  <h1>Sign In to the ECIT Survey</h1>
-  <br>
-  <form method="POST" action="." class="form form-horizontal">
-    {{ form.csrf_token }}
-    {{ render_field(form.email, class="input-xlarge",placeholder="fsu.edu Email") }}
-    {{ render_field(form.password, class="input-xlarge", placeholder="Password") }}
-    
-    <div class="control-group">
-      <label class="control-label"></label>
-      <div class="controls">
-        <button type="submit" id="sign_in" class="btn btn-primary">Log In</button>
-        
-        <br><br>
-        <a href="/create_acct">Need an Account?</a>
-<!--         <a href="#" style="float:right;margin-right: 120px;">Forgot Password?</a>
--->              <a href="/forgot_passwd" style="float:right;margin-right: 120px;">Forgot Password?</a> 
 
-</div>
+<legend style="text-align:center;margin-top:20px;">Sign-in to the ECIT Survey</legend>
+<br>
 
-</div>
-</form>
-</div>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
 
-  <!-- <div class="input-group">
-    <input type="text" class="form-control" placeholder="my.FSU.edu email address">
-    <span class="input-group-addon"</span>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Please Sign In</h3>
+        </div>
+        <div class="panel-body">
+          <form method="POST" action=".">
+            <fieldset>
+
+            {{ form.csrf_token }}
+            {{ render_field(form.email, class="form-control",placeholder="fsu.edu Email") }}
+            {{ render_field(form.password, class="form-control", placeholder="Password") }}
+
+            <button type="submit" id="sign_in" class="btn btn-primary btn-block">Log In</button>
+
+            </fieldset>
+
+            <div class="pull-right">
+              <br>
+              <a href="/create_acct">Need an Account?</a>
+              <br>
+              <a href="/forgot_passwd">Forgot Password?</a>
+            </div>
+
+          </form>
+      </div>
     </div>
-    <br>
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Password">
-      <span class="input-group-addon"></span>
-    </div>
-    <br>
 
-    <div class="btn-group">
-     <div class="btn-group">
-       <button type="submit" class="btn btn-default" value="submit">Sign In</button>
-       <button type="forgot"  class="btn btn-default" href="#" value="forgot">Forgot Password</button>
-     </div>
-   </div>
-   {% endblock %}
+  </div>
+</div><!-- /.row -->
+
+{% endblock %}

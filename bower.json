@@ -6,7 +6,6 @@
     "Frank Valcarcel <fvalcarcel@me.com>"
   ],
   "license": "MIT",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
@@ -14,5 +13,8 @@
     "app/static/",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "bootstrap": "~3.2.0"
+  }
 }
