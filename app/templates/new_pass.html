@@ -1,22 +1,42 @@
-{% extends "lockbase.html" %}
+{% extends "base.html" %}
+{% from "macro.html" import render_field %}
+
 {% block content%}
-<div class="jumbotron">
-	{% from "macro.html" import render_field %}
-	 <p>
-    Your password has expired and must be changed. Please choose a new password. Try to change your password in a manner that you would normally do. You should take whatever steps you normally take to remember and protect your password. DO NOT provide passwords that you currently use for another service. All passwords will be saved and analyzed. DO NOT use this password elsewhere.
-    </p><br>
-	<form method="POST" action="." class="form form-horizontal">
 
-		{{ form.csrf_token }}
-		{{ render_field(form.password, class="input-xlarge", placeholder="New Password") }}
-		{{ render_field(form.confirm, class="input-xlarge", placeholder="Confirm New Password")}}
+<legend style="text-align:center;margin-top:20px;">Your Password Has Expired</legend>
+<br>
 
-		<div class="control-group">
-			<label class="control-label"></label>
-			<div class="controls">
-			<button type="submit" id="update_pass" class="btn btn-primary">Update Password</button>
-			</div>
-		</div>
-	</form>
-</div>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Please Create a New Password</h3>
+        </div>
+        <div class="panel-body">
+        	<p>Your password has expired and must be changed. Please choose a new password. Try to change your password in a manner that you would normally do. You should take whatever steps you normally take to remember and protect your password.</p>
+
+        	<p><strong>DO NOT</strong> provide passwords that you currently use for another service. All passwords will be saved and analyzed.</p>
+
+        	<p><strong>DO NOT</strong> use this password elsewhere.</p>
+        	<br>
+
+          <form method="POST" action=".">
+            <fieldset>
+
+						{{ form.csrf_token }}
+						{{ render_field(form.password, class="form-control", placeholder="New Password") }}
+						{{ render_field(form.confirm, class="form-control", placeholder="Confirm New Password")}}
+
+            <button type="submit" id="update_pass" class="btn btn-primary btn-block">Update Password</button>
+
+            </fieldset>
+
+          </form>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /.row -->
+
 {% endblock %}

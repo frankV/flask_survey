@@ -29,6 +29,7 @@
 
 					<ul class="nav navbar-nav navbar-right">
 						{% if g.user.is_authenticated() %}
+            <li class="navbar-text"><span class="muted">{{ current_user.email }}</span></li>
 						<li><a href="{{ url_for('logout') }}">Logout</a></li>
 						{% else %}
 						<li><a href="{{ url_for('create_acct') }}">Create Account</a></li>
@@ -41,7 +42,7 @@
     </div>
 
     <div class="container">
-      <div class="row" style="margin-top:63px;">
+      <div class="row" style="margin-top:10%;">
         <div class="col-lg-12">
 					{% block content %}
 					{% endblock %}
