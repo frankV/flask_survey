@@ -77,7 +77,7 @@ class Survey3Form(Form):
     choose_sports = fields.BooleanField('Sports teams and players')
     choose_famous = fields.BooleanField('Names of famous people or characters')
     choose_words = fields.BooleanField('Words in a language other than English')
-    choose_other = fields.BooleanField('other')
+    choose_other=fields.BooleanField('other')
     specify = fields.TextField('please specify', validators=[Required()])
     secure_numbers = fields.BooleanField('Include numbers')
     secure_upper_case = fields.BooleanField('Include upper case letters')
