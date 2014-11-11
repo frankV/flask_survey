@@ -94,12 +94,11 @@ def survey_3():
 				secure_eight_chars=form.secure_eight_chars.data, secure_no_dict=form.secure_no_dict.data, 
 				secure_adjacent=form.secure_adjacent.data, secure_nothing=form.secure_nothing.data, 
 				modify=form.modify.data, wordPart=form.wordPart.data, usedPassword=form.usedPassword.data,
-				number_N=form.number_N.data, number_added_digits=form.number_added_digits.data, 
+				number_N=form.number_N.data,number_changed_slightly=form.number_changed_slightly.data,number_changed_completly=form.number_changed_completly.data,number_added_digits=form.number_added_digits.data, 
 				number_deleted_digits=form.number_deleted_digits.data, 
-				number_substituted_digits=form.number_substituted_digits.data,number_O=form.number_O.data,
-				char_N = form.char_N.data, char_added_symbols=form.char_added_symbols.data,
-				char_deleted_symbols=form.char_deleted_symbols.data, char_substituted_symbols=form.char_substituted_symbols.data,
-				char_O=form.char_O.data, userid=g.user.userid)
+				char_N = form.char_N.data,char_changed_slightly=form.char_changed_slightly.data,char_changed_completly=form.char_changed_completly.data, char_added_symbols=form.char_added_symbols.data,
+				char_deleted_symbols=form.char_deleted_symbols.data,
+				userid=g.user.userid)
 			
 			form.populate_obj(model)
 			

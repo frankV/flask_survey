@@ -11,17 +11,15 @@
     {{ render_field(form.choose_names, type="checkbox") }}
     {{ render_field(form.choose_numbers, type="checkbox") }}
     {{ render_field(form.choose_songs, type="checkbox") }}
-    {{ render_field(form.choose_mnemonic,
-) }}
-    {{ render_field(form.choose_sports,
-) }}
-    {{ render_field(form.choose_famous,
-) }}
-    {{ render_field(form.choose_words,
-) }}
+    {{ render_field(form.choose_mnemonic,type="checkbox") }}
+    {{ render_field(form.choose_sports,type="checkbox") }}
+    {{ render_field(form.choose_famous,type="checkbox") }}
+    {{ render_field(form.choose_words,type="checkbox") }}
+    {{ render_field(form.choose_other,type="checkbox") }}
+    {{ render_field(form.specify,) }}
     </ul>
     <br><br>
-    <b>When creating your new password, did you consider any of the following policies to make your password more secure? (Please check all that apply.)</b><br>
+    <b>When creating your new password, did you consider any of the following policies that websites typically enforce to make your password more secure? (Please check all that apply.)</b><br>
     <ul>
     {{ render_field(form.secure_numbers,
 ) }}
@@ -36,6 +34,8 @@
     {{ render_field(form.secure_adjacent , type="checkbox") }}
     {{ render_field(form.secure_nothing,
 ) }}
+{{ render_field(form.secure_other,type="checkbox") }}
+    {{ render_field(form.specify1,) }}
     </ul><br>
 
 <!--     <b>Did you create your new password by slightly changing your old password for this website?</b>
@@ -45,24 +45,25 @@
  -->    {{ render_field(form.usedPassword ) }}
 
 <!--     <b>If you created your new password based on one of your old passwords, did you consider changing the word part in one of the following ways?',</b>
- -->    {{ render_field(form.wordPart ) }}
 
-    <b>If you created your new password based on one of your old passwords, did you consider changing the number part in one of the following ways?</b><br>
+ --> {{ render_field(form.wordPart ) }}
+
+    <b>NUMBERS:</b><br>
     <ul>
     {{ render_field(form.number_N) }}
+    {{ render_field(form.number_changed_slightly)}}
+    {{ render_field(form.number_changed_completly)}}
     {{ render_field(form.number_added_digits) }}
     {{ render_field(form.number_deleted_digits) }}
-    {{ render_field(form.number_substituted_digits) }}
-    {{ render_field(form.number_O, tye="textbox") }}
+    
     </ul>
-    <b>If you created your new password based on one of your old passwords, did you consider changing the
-    special character part in one of the following ways?</b><br>
+    <b>SPECIAL CHARACTERS :</b><br>
     <ul>
     {{ render_field(form.char_N) }}
+    {{ render_field(form.char_changed_slightly)}}
+    {{ render_field(form.char_changed_completly)}}
     {{ render_field(form.char_added_symbols) }}
     {{ render_field(form.char_deleted_symbols) }}
-    {{ render_field(form.char_substituted_symbols) }}
-    {{ render_field(form.char_O, type="textbox") }}
     </ul>
 <div class="control-group">
   <label class="control-label"></label>

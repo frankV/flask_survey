@@ -109,6 +109,8 @@ class Survey3(db.Model):
     choose_sports = db.Column(db.Boolean)
     choose_famous = db.Column(db.Boolean)
     choose_words = db.Column(db.Boolean)
+    choose_other=db.Column(db.Boolean)
+    specify=db.Column(db.String(255))
     secure_numbers = db.Column(db.Boolean)
     secure_upper_case = db.Column(db.Boolean)
     secure_symbols = db.Column(db.Boolean)
@@ -116,15 +118,21 @@ class Survey3(db.Model):
     secure_no_dict = db.Column(db.Boolean)
     secure_adjacent = db.Column(db.Boolean)
     secure_nothing = db.Column(db.Boolean)
+    secure_other=db.Column(db.Boolean)
+    specify1=db.Column(db.String(255))
     modify = db.Column(db.String(255))
     usedPassword = db.Column(db.String(255))
     wordPart = db.Column(db.String(255))
     number_N = db.Column(db.Boolean)
+    number_changed_slightly=db.Column(db.Boolean)
+    number_changed_completely=db.Column(db.Boolean)
     number_added_digits = db.Column(db.Boolean)
     number_deleted_digits = db.Column(db.Boolean)
     number_substituted_digits = db.Column(db.Boolean)
     number_O = db.Column(db.String(255))
     char_N = db.Column(db.Boolean)
+    char_changed_slightly=db.Column(db.Boolean)
+    char_changed_completly=db.Column(db.Boolean)
     char_added_symbols = db.Column(db.Boolean)
     char_deleted_symbols = db.Column(db.Boolean)
     char_substituted_symbols = db.Column(db.Boolean)
@@ -139,7 +147,7 @@ class Survey3(db.Model):
         modify=None, usedPassword=None, wordPart=None, number_N=None, number_added_digits=None,
         number_deleted_digits=None, number_substituted_digits=None, number_O=None,
         char_N=None, char_added_symbols=None, char_deleted_symbols=None,
-        char_substituted_symbols=None, char_O=None, userid=None):
+        char_substituted_symbols=None, char_O=None, userid=None,choose_other=None,specify=None,specify1=None,secure_other=None,number_changed_completly=None,number_changed_slightly=None,char_changed_slightly=None,char_changed_completly=None):
 
         self.choose_names=choose_names
         self.choose_numbers=choose_numbers
@@ -148,6 +156,8 @@ class Survey3(db.Model):
         self.choose_sports=choose_sports
         self.choose_famous=choose_famous
         self.choose_words=choose_words
+        self.choose_other=choose_other
+        self.specify=specify
         self.secure_numbers=secure_numbers
         self.secure_upper_case=secure_upper_case
         self.secure_symbols=secure_symbols
@@ -155,15 +165,21 @@ class Survey3(db.Model):
         self.secure_no_dict=secure_no_dict
         self.secure_adjacent=secure_adjacent
         self.secure_nothing=secure_nothing
+        self.secure_other=secure_other
+        self.specify1=specify1
         self.modify=modify
         self.usedPassword=usedPassword
         self.wordPart=wordPart
         self.number_N=number_N
+        self.number_changed_slightly=number_changed_slightly
+        self.number_changed_completly=number_changed_completly
         self.number_added_digits=number_added_digits
         self.number_deleted_digits=number_deleted_digits
         self.number_substituted_digits=number_substituted_digits
         self.number_O=number_O
         self.char_N=char_N
+        self.char_changed_slightly=char_changed_slightly
+        self.char_changed_completly=char_changed_completly
         self.char_added_symbols=char_added_symbols
         self.char_deleted_symbols=char_deleted_symbols
         self.char_substituted_symbols=char_substituted_symbols
