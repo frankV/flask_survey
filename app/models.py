@@ -2,8 +2,8 @@ from mixins import CRUDMixin
 from flask.ext.login import UserMixin
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, backref
-from app import db
 
+from app import db
 ROLE_USER = 0
 ROLE_ADMIN = 1
 
@@ -20,11 +20,10 @@ class User(UserMixin, CRUDMixin,  db.Model):
     s3 = db.Column(db.Boolean)
     s4 = db.Column(db.Boolean)
     lastSeen = db.Column(db.String(255))
-
-    # survey1 = db.relationship('Survey1', backref=db.backref('survey1', lazy='joined'))
-    # survey2 = db.relationship('Survey2', backref=db.backref('survey1', lazy='joined'))
-    # survey3 = db.relationship('Survey3', backref=db.backref('survey1', lazy='joined'))
-    # survey4 = db.relationship('Survey4', backref=db.backref('survey1', lazy='joined'))
+    survey1 = db.relationship('Survey1', backref=db.backref('user', lazy='joined'))
+    survey2 = db.relationship('Survey2', backref=db.backref('user', lazy='joined'))
+    survey3 = db.relationship('Survey3', backref=db.backref('user', lazy='joined'))
+    survey4 = db.relationship('Survey4', backref=db.backref('user', lazy='joined'))
 
     role = db.Column(db.SmallInteger, default = ROLE_USER)
 
@@ -63,16 +62,17 @@ class Survey1(db.Model):
     age = db.Column(db.String(255))
     education = db.Column(db.String(255))
     language = db.Column(db.String(20))
-    # userid = db.Column(db.String, db.ForeignKey('user.userid'))
-    # user = db.relationship('User', backref=db.backref('survey1', lazy='dynamic'))
+    userid = db.Column(db.String, db.ForeignKey('user.userid'))
+    #user = db.relationship('User', backref=db.backref('survey1', lazy='dynamic'))
+    
 
-
-    def __init__(self, gender=None, age=None, education=None, language=None, userid=None):
+    def __init__(self, gender=None,age=None, education=None, language=None, userid=None):
         self.gender=gender
         self.age=age
         self.education=education
         self.language=language
         self.userid = userid
+    
 
     def get_id(self):
         return unicode(self.id)
@@ -85,7 +85,7 @@ class Survey2(db.Model):
     department = db.Column(db.String(30))
     count = db.Column(db.String(255))
     unique = db.Column(db.String(255))
-    # user = db.Column(db.String, db.ForeignKey('user.userid'))
+    userid = db.Column(db.String, db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey2', lazy='dynamic'))
 
     def __init__(self, major=None, department=None, count=None, unique=None, userid=None):
@@ -129,7 +129,7 @@ class Survey3(db.Model):
     char_deleted_symbols = db.Column(db.Boolean)
     char_substituted_symbols = db.Column(db.Boolean)
     char_O = db.Column(db.String(255))
-    # user = db.Column(db.String, db.ForeignKey('user.userid'))
+    userid = db.Column(db.String, db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey3', lazy='dynamic'))
 
     def __init__(self, choose_names=None, choose_numbers=None, choose_songs=None,
@@ -194,7 +194,7 @@ class Survey4(db.Model):
     how_write_down = db.Column(db.Boolean)
     how_no = db.Column(db.Boolean)
     comments = db.Column(db.String(255))
-    # user = db.Column(db.String, db.ForeignKey('user.userid'))
+    userid = db.Column(db.String, db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey4', lazy='dynamic'))
 
     def __init__(self, computerTime=None, pass_random=None, pass_reuse=None,

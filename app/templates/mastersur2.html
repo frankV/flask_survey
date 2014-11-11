@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content%}
+  <h2>Survey-2</h2>
+  <table border="1">
+  <th>email</th>
+  <th>major</th>
+  <th>department</th>
+  <th>count</th>
+  <th>unique</th>
+{%for user in users%}
+  <tr>
+  <td>{{user.email}}</td>
+  <td>{{user.major}}</td>
+  <td>{{user.department}}</td>
+  <td>{{user.count}}</td>
+  <td>{{user.unique}}</td>
+  </tr>
+  {%endfor%}
+  
+{% endblock %}
