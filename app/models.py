@@ -62,7 +62,7 @@ class Survey1(db.Model):
     age = db.Column(db.String(255))
     education = db.Column(db.String(255))
     language = db.Column(db.String(20))
-    userid = db.Column(db.String, db.ForeignKey('user.userid'))
+    userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
     #user = db.relationship('User', backref=db.backref('survey1', lazy='dynamic'))
     
 
@@ -85,7 +85,7 @@ class Survey2(db.Model):
     department = db.Column(db.String(30))
     count = db.Column(db.String(255))
     unique = db.Column(db.String(255))
-    userid = db.Column(db.String, db.ForeignKey('user.userid'))
+    userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey2', lazy='dynamic'))
 
     def __init__(self, major=None, department=None, count=None, unique=None, userid=None):
@@ -137,7 +137,7 @@ class Survey3(db.Model):
     char_deleted_symbols = db.Column(db.Boolean)
     char_substituted_symbols = db.Column(db.Boolean)
     char_O = db.Column(db.String(255))
-    userid = db.Column(db.String, db.ForeignKey('user.userid'))
+    userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey3', lazy='dynamic'))
 
     def __init__(self, choose_names=None, choose_numbers=None, choose_songs=None,
@@ -210,7 +210,7 @@ class Survey4(db.Model):
     how_write_down = db.Column(db.Boolean)
     how_no = db.Column(db.Boolean)
     comments = db.Column(db.String(255))
-    userid = db.Column(db.String, db.ForeignKey('user.userid'))
+    userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey4', lazy='dynamic'))
 
     def __init__(self, computerTime=None, pass_random=None, pass_reuse=None,
