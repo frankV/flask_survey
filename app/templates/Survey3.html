@@ -21,10 +21,12 @@
                 {{ render_field(form.choose_names, type="checkbox") }}
                 {{ render_field(form.choose_numbers, type="checkbox") }}
                 {{ render_field(form.choose_songs, type="checkbox") }}
-                {{ render_field(form.choose_mnemonic) }}
-                {{ render_field(form.choose_sports) }}
-                {{ render_field(form.choose_famous) }}
-                {{ render_field(form.choose_words) }}
+                {{ render_field(form.choose_mnemonic,type="checkbox") }}
+                {{ render_field(form.choose_sports,type="checkbox") }}
+                {{ render_field(form.choose_famous,type="checkbox") }}
+                {{ render_field(form.choose_words,type="checkbox") }}
+                {{ render_field(form.choose_other,type="checkbox") }}
+                {{ render_field(form.specify,) }}
             </ul>
 
 
@@ -38,6 +40,8 @@
                 {{ render_field(form.secure_no_dict) }}
                 {{ render_field(form.secure_adjacent, type="checkbox") }}
                 {{ render_field(form.secure_nothing) }}
+                {{ render_field(form.secure_other,type="checkbox") }}
+                {{ render_field(form.specify1,) }}
             </ul>
 
             {{ render_field(form.modify ) }}
@@ -47,20 +51,20 @@
             <legend>If you created your new password based on one of your old passwords, did you consider changing the number part in one of the following ways?</legend>
             <ul>
                 {{ render_field(form.number_N) }}
+                {{ render_field(form.number_changed_slightly)}}
+                {{ render_field(form.number_changed_completly)}}
                 {{ render_field(form.number_added_digits) }}
                 {{ render_field(form.number_deleted_digits) }}
-                {{ render_field(form.number_substituted_digits) }}
-                {{ render_field(form.number_O, class="form-control") }}
             </ul>
 
             <legend>If you created your new password based on one of your old passwords, did you consider changing the
             special character part in one of the following ways?</legend>
             <ul>
                 {{ render_field(form.char_N) }}
+                {{ render_field(form.char_changed_slightly)}}
+                {{ render_field(form.char_changed_completly)}}
                 {{ render_field(form.char_added_symbols) }}
                 {{ render_field(form.char_deleted_symbols) }}
-                {{ render_field(form.char_substituted_symbols) }}
-                {{ render_field(form.char_O, class="form-control") }}
             </ul>
 
             <div class="control-group">

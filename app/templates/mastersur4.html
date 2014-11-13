@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content%}
+  <h2>Survey-3</h2>
+  <table border="1">
+  <th>email</th>
+  <th>computer_time/th>
+  <th>pass_random</th>
+  <th>pass_reuse</th>
+  <th>pass_modify</th>
+  <th>pass_new</th>
+  <th>pass_substitute</th>
+  <th>pass_multiword</th>
+  <th>pass_phrase</th>
+  <th>pass_0</th>
+  <th>How_regular_file</th>
+  <th>How_encrpted/th>
+  <th>How_software</th>
+{%for user in users%}
+  <tr>
+  <td>{{user.email}}</td>
+  <td>{{user.computerTime}}</td>
+  <td>{{user.pass_random}}</td>
+  <td>{{user.pass_reuse}}</td> 
+  <td>{{user.pass_modify}}</td>  
+  <td>{{user.pass_new}}</td>
+  <td>{{user.pass_substitute}}</td>
+  <td>{{user.pass_multiword}}</td>
+  <td>{{user.pass_phrase}}</td>  
+  <td>{{user.pass_0}}</td>
+  <td>{{user.how_regular_file}}</td>
+  <td>{{user.how_encrypted}}</td>  
+  <td>{{user.how_software}}</td>
+  </tr>
+  {%endfor%}
+  
+{% endblock %}

@@ -2,8 +2,8 @@ from mixins import CRUDMixin
 from flask.ext.login import UserMixin
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, backref
-from app import db
 
+from app import db
 ROLE_USER = 0
 ROLE_ADMIN = 1
 
@@ -20,11 +20,10 @@ class User(UserMixin, CRUDMixin,  db.Model):
     s3 = db.Column(db.Boolean)
     s4 = db.Column(db.Boolean)
     lastSeen = db.Column(db.String(255))
-
-    # survey1 = db.relationship('Survey1', backref=db.backref('survey1', lazy='joined'))
-    # survey2 = db.relationship('Survey2', backref=db.backref('survey1', lazy='joined'))
-    # survey3 = db.relationship('Survey3', backref=db.backref('survey1', lazy='joined'))
-    # survey4 = db.relationship('Survey4', backref=db.backref('survey1', lazy='joined'))
+    survey1 = db.relationship('Survey1', backref=db.backref('user', lazy='joined'))
+    survey2 = db.relationship('Survey2', backref=db.backref('user', lazy='joined'))
+    survey3 = db.relationship('Survey3', backref=db.backref('user', lazy='joined'))
+    survey4 = db.relationship('Survey4', backref=db.backref('user', lazy='joined'))
 
     role = db.Column(db.SmallInteger, default = ROLE_USER)
 
@@ -63,16 +62,17 @@ class Survey1(db.Model):
     age = db.Column(db.String(255))
     education = db.Column(db.String(255))
     language = db.Column(db.String(20))
-    # userid = db.Column(db.String, db.ForeignKey('user.userid'))
-    # user = db.relationship('User', backref=db.backref('survey1', lazy='dynamic'))
+    userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
+    #user = db.relationship('User', backref=db.backref('survey1', lazy='dynamic'))
+    
 
-
-    def __init__(self, gender=None, age=None, education=None, language=None, userid=None):
+    def __init__(self, gender=None,age=None, education=None, language=None, userid=None):
         self.gender=gender
         self.age=age
         self.education=education
         self.language=language
         self.userid = userid
+    
 
     def get_id(self):
         return unicode(self.id)
@@ -85,7 +85,7 @@ class Survey2(db.Model):
     department = db.Column(db.String(30))
     count = db.Column(db.String(255))
     unique = db.Column(db.String(255))
-    # user = db.Column(db.String, db.ForeignKey('user.userid'))
+    userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey2', lazy='dynamic'))
 
     def __init__(self, major=None, department=None, count=None, unique=None, userid=None):
@@ -109,6 +109,8 @@ class Survey3(db.Model):
     choose_sports = db.Column(db.Boolean)
     choose_famous = db.Column(db.Boolean)
     choose_words = db.Column(db.Boolean)
+    choose_other=db.Column(db.Boolean)
+    specify=db.Column(db.String(255))
     secure_numbers = db.Column(db.Boolean)
     secure_upper_case = db.Column(db.Boolean)
     secure_symbols = db.Column(db.Boolean)
@@ -116,20 +118,26 @@ class Survey3(db.Model):
     secure_no_dict = db.Column(db.Boolean)
     secure_adjacent = db.Column(db.Boolean)
     secure_nothing = db.Column(db.Boolean)
+    secure_other=db.Column(db.Boolean)
+    specify1=db.Column(db.String(255))
     modify = db.Column(db.String(255))
     usedPassword = db.Column(db.String(255))
     wordPart = db.Column(db.String(255))
     number_N = db.Column(db.Boolean)
+    number_changed_slightly=db.Column(db.Boolean)
+    number_changed_completely=db.Column(db.Boolean)
     number_added_digits = db.Column(db.Boolean)
     number_deleted_digits = db.Column(db.Boolean)
     number_substituted_digits = db.Column(db.Boolean)
     number_O = db.Column(db.String(255))
     char_N = db.Column(db.Boolean)
+    char_changed_slightly=db.Column(db.Boolean)
+    char_changed_completly=db.Column(db.Boolean)
     char_added_symbols = db.Column(db.Boolean)
     char_deleted_symbols = db.Column(db.Boolean)
     char_substituted_symbols = db.Column(db.Boolean)
     char_O = db.Column(db.String(255))
-    # user = db.Column(db.String, db.ForeignKey('user.userid'))
+    userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey3', lazy='dynamic'))
 
     def __init__(self, choose_names=None, choose_numbers=None, choose_songs=None,
@@ -139,7 +147,7 @@ class Survey3(db.Model):
         modify=None, usedPassword=None, wordPart=None, number_N=None, number_added_digits=None,
         number_deleted_digits=None, number_substituted_digits=None, number_O=None,
         char_N=None, char_added_symbols=None, char_deleted_symbols=None,
-        char_substituted_symbols=None, char_O=None, userid=None):
+        char_substituted_symbols=None, char_O=None, userid=None,choose_other=None,specify=None,specify1=None,secure_other=None,number_changed_completly=None,number_changed_slightly=None,char_changed_slightly=None,char_changed_completly=None):
 
         self.choose_names=choose_names
         self.choose_numbers=choose_numbers
@@ -148,6 +156,8 @@ class Survey3(db.Model):
         self.choose_sports=choose_sports
         self.choose_famous=choose_famous
         self.choose_words=choose_words
+        self.choose_other=choose_other
+        self.specify=specify
         self.secure_numbers=secure_numbers
         self.secure_upper_case=secure_upper_case
         self.secure_symbols=secure_symbols
@@ -155,15 +165,21 @@ class Survey3(db.Model):
         self.secure_no_dict=secure_no_dict
         self.secure_adjacent=secure_adjacent
         self.secure_nothing=secure_nothing
+        self.secure_other=secure_other
+        self.specify1=specify1
         self.modify=modify
         self.usedPassword=usedPassword
         self.wordPart=wordPart
         self.number_N=number_N
+        self.number_changed_slightly=number_changed_slightly
+        self.number_changed_completly=number_changed_completly
         self.number_added_digits=number_added_digits
         self.number_deleted_digits=number_deleted_digits
         self.number_substituted_digits=number_substituted_digits
         self.number_O=number_O
         self.char_N=char_N
+        self.char_changed_slightly=char_changed_slightly
+        self.char_changed_completly=char_changed_completly
         self.char_added_symbols=char_added_symbols
         self.char_deleted_symbols=char_deleted_symbols
         self.char_substituted_symbols=char_substituted_symbols
@@ -194,7 +210,7 @@ class Survey4(db.Model):
     how_write_down = db.Column(db.Boolean)
     how_no = db.Column(db.Boolean)
     comments = db.Column(db.String(255))
-    # user = db.Column(db.String, db.ForeignKey('user.userid'))
+    userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey4', lazy='dynamic'))
 
     def __init__(self, computerTime=None, pass_random=None, pass_reuse=None,

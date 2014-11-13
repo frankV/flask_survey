@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content%}
+  <h2>Survey-3</h2>
+  <table border="1">
+  <th>email</th>
+  <th>choose numbers</th>
+  <th>choose songs</th>
+  <th>choose_mnemonic</th>
+  <th>choose_sports</th>
+  <th>choose_famous</th>
+  <th>choose_words</th>
+  <th>secure_numbers</th>
+  <th>secure_uppercase</th>
+  <th>secure_symbols</th>
+  <th>secure_eightchars</th>
+  <th>secure_no_dict</th>
+  <th>secure_adjacent</th>
+  <th>secure_nothing</th>
+  <th>modify</th>
+  <th>usedpassword</th>
+  <th>wordpart</th>
+  <th>number_N</th>
+  <th>ADDED_DIGITS</th>
+  <th>DELETED DIGITS</th>
+  <th>SUBSTITUTED DIGITS</th>
+  <th>NUMBER_0</th>
+  <th>CHAR_ADDED_SYMBOLS</th>
+  <th>char_deleted_symbols</th>
+  <th>char_substituted_symbols</th>
+  <th>char_0</th>
+{%for user in users%}
+  <tr>
+  <td>{{user.email}}</td>
+  <td>{{user.choose_names}}</td>
+  <td>{{user.choose_numbers}}</td>
+  <td>{{user.choose_songs}}</td> 
+  <td>{{user.choose_mnemonic}}</td>  
+  <td>{{user.choose_sports}}</td>
+  <td>{{user.choose_famous}}</td>
+  <td>{{user.choose_words}}</td>
+  <td>{{user.secure_numbers}}</td>  
+  <td>{{user.secure_upper_case}}</td>
+  <td>{{user.secure_symbols}}</td>
+  <td>{{user.secure_eight_chars}}</td>  
+  <td>{{user.secure_no_dict}}</td>
+  <td>{{user.secure_adjacent}}</td>  
+  <td>{{user.secure_nothing}}</td>  
+  <td>{{user.modify}}</td>  
+  <td>{{user.usedPassword}}</td>
+  <td>{{user.wordPart}}</td>
+  <td>{{user.number_N}}</td>
+  <td>{{user.number_added_digits}}</td>
+  <td>{{user.number_deleted_digits}}</td>
+  <td>{{user.number_substituted_digits}}</td>
+  <td>{{user.number_O}}</td>
+  <td>{{user.char_N}}</td>  
+  <td>{{user.char_added_symbols}}</td>
+  <td>{{user.char_deleted_symbols}}</td>
+  <td>{{user.char_substituted_symbols}}</td>
+  <td>{{user.char_O}}</td>   
+  </tr>
+  {%endfor%}
+  
+{% endblock %}
+
+    

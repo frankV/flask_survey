@@ -11,10 +11,11 @@ from forms import LoginForm, RegistrationForm, Survey1Form, Survey2Form, Survey3
 from forms import Survey4Form, NewPass, ForgotPasswordForm
 from email import user_notification, forgot_password
 from config import DATABASE_QUERY_TIMEOUT
-from app import app, db, lm, mail
+from app import app, db, lm, mail, models
 #OTHER
 from  datetime import date, timedelta
 import uuid
+
 
 @lm.user_loader
 def load_user(id):
@@ -86,20 +87,20 @@ def survey_3():
 
 			g.user.s3=True
 			g.user.lastSeen=date.today()
+
 			model = Survey3(choose_names=form.choose_names.data, choose_numbers=form.choose_numbers.data,
 				choose_songs=form.choose_songs.data, choose_mnemonic=form.choose_mnemonic.data,
 				choose_sports=form.choose_sports.data, choose_famous=form.choose_famous.data,
-				choose_words=form.choose_words.data, secure_numbers=form.secure_numbers.data,
+				choose_words=form.choose_words.data,choose_other=form.choose_other.data,specify=form.specify.data,secure_other=form.secure_other.data,specify1=form.specify1.data,secure_numbers=form.secure_numbers.data,
 				secure_upper_case=form.secure_upper_case.data, secure_symbols=form.secure_symbols.data,
 				secure_eight_chars=form.secure_eight_chars.data, secure_no_dict=form.secure_no_dict.data,
 				secure_adjacent=form.secure_adjacent.data, secure_nothing=form.secure_nothing.data,
 				modify=form.modify.data, wordPart=form.wordPart.data, usedPassword=form.usedPassword.data,
-				number_N=form.number_N.data, number_added_digits=form.number_added_digits.data,
+				number_N=form.number_N.data,number_changed_slightly=form.number_changed_slightly.data,number_changed_completly=form.number_changed_completly.data,number_added_digits=form.number_added_digits.data,
 				number_deleted_digits=form.number_deleted_digits.data,
-				number_substituted_digits=form.number_substituted_digits.data,number_O=form.number_O.data,
-				char_N = form.char_N.data, char_added_symbols=form.char_added_symbols.data,
-				char_deleted_symbols=form.char_deleted_symbols.data, char_substituted_symbols=form.char_substituted_symbols.data,
-				char_O=form.char_O.data, userid=g.user.userid)
+				char_N = form.char_N.data,char_changed_slightly=form.char_changed_slightly.data,char_changed_completly=form.char_changed_completly.data, char_added_symbols=form.char_added_symbols.data,
+				char_deleted_symbols=form.char_deleted_symbols.data,
+				userid=g.user.userid)
 
 			form.populate_obj(model)
 
@@ -263,3 +264,34 @@ def flash_errors(form):
 			flash(u"Error in the %s field - %s" % (
 			getattr(form, field).label.text,error
 		))
+
+@app.route('/mastersheet/')
+@login_required
+def mastersheet():
+	e1=models.User.query.all()
+	return render_template('mastersheet.html', title='Survey',users=e1)
+@app.route('/mastersur1/')
+@login_required
+def mastersur1():
+	e2=db.session.query(User.email,Survey1.gender,Survey1.age,Survey1.education,Survey1.language).join(Survey1)
+	return render_template('mastersur1.html', title='Survey-1',users=e2)
+@app.route('/mastersur2/')
+@login_required
+def mastersur2():
+	e3=db.session.query(User.email,Survey2.major,Survey2.department,Survey2.count,Survey2.unique).join(Survey2)
+	return render_template('mastersur2.html', title='Survey-2',users=e3)
+@app.route('/mastersur3/')
+@login_required
+def mastersur3():
+	e4=db.session.query(User.email,Survey3.choose_words,Survey3.choose_mnemonic).join(Survey3)
+	return render_template('mastersur3.html', title='Survey-3',users=e4)
+@app.route('/mastersur4/')
+@login_required
+def mastersur4():
+	e5=db.session.query(User.email,Survey4.computerTime,Survey4.pass_random,Survey4.pass_reuse,Survey4.pass_modify,Survey4.pass_new,Survey4.pass_substitute,Survey4.pass_multiword,Survey4.pass_phrase,Survey4.pass_O,Survey4.how_regular_file,Survey4.how_encrypted,Survey4.how_software).join(Survey4)
+	return render_template('mastersur4.html', title='Survey-4',users=e5)
+@app.route('/admin/')
+@login_required
+def admin():
+	return render_template('admin.html', title='admin module')
+

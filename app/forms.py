@@ -50,9 +50,9 @@ class NewPass(Form):
             raise validators.ValidationError('Duplicate Password')
 
 class Survey1Form(Form):
-    gender = fields.RadioField('What is your gender?', choices=[('M', 'Male'), ('F', 'Female'), ('O', 'Other')], validators = [Required()], default=None)
+    gender = fields.RadioField('What is your gender?', choices=[('M', 'Male'), ('F', 'Female'), ('O', 'I prefer not to answer')], validators = [Required()], default=None)
     age = fields.RadioField('What is your age?', choices=[('lt18', 'Younger than 18'), ('18-24', '18 to 24'), ('25-34', '25 to 34'),
-        ('35-44', '35 to 44'), ('45-54', '45 to 54'), ('55-64', '55 to 64'), ('65-74', '65 to 74'), ('75oa', '75 or above')], validators=[Required()])
+        ('35-44', '35 to 44'), ('45-54', '45 to 54'), ('55', '55 years or older')], validators=[Required()])
     education = fields.RadioField('Which of the following best describes your highest education level?', choices=[('Hsg', 'High school graduate'),
         ('Scnd', 'Some college, no degree'), ('Assoc', 'Associates Degree'), ('Bach', 'Bachelors degree'), ('Grad', 'Graduate degree (Masters, Doctorate, etc.)'), ('O', 'Other')],
         validators=[Required()])
@@ -61,7 +61,6 @@ class Survey1Form(Form):
 class Survey2Form(Form):
     major = fields.RadioField('Are you majoring in or do you have a degree or job in computer science, computer engineering, information technology, or a related field?',
         choices=[('Y', 'yes'), ('N', 'No'), ('O','I prefer not to answer')], validators = [Required()])
-    # department = fields.TextField('In what department are you majoring?', validators=[Required()])
     count = fields.RadioField('How many website user-names and passwords do you have, approximately?', choices=[('lt5', 'Less than 5 accounts'),
         ('5-10', '5 to 10 Accounts'), ('11-20', '11 to 20 Accounts'), ('gt20', 'More Than 20 Accounts') ])
     unique = fields.RadioField('Do you try to create unique passwords for each different account?', choices=[
@@ -77,6 +76,8 @@ class Survey3Form(Form):
     choose_sports = fields.BooleanField('Sports teams and players')
     choose_famous = fields.BooleanField('Names of famous people or characters')
     choose_words = fields.BooleanField('Words in a language other than English')
+    choose_other=fields.BooleanField('other')
+    specify = fields.TextField('please specify')
     secure_numbers = fields.BooleanField('Include numbers')
     secure_upper_case = fields.BooleanField('Include upper case letters')
     secure_symbols = fields.BooleanField('Include symbols')
@@ -84,23 +85,25 @@ class Survey3Form(Form):
     secure_no_dict = fields.BooleanField('Not contain dictionary words')
     secure_adjacent = fields.BooleanField('Not containing a sequence of adjacent or repeated characters on your keyboard (e.g. qwerty)')
     secure_nothing = fields.BooleanField('I did not consider any policy')
+    secure_other=fields.BooleanField('other')
+    specify1 = fields.TextField('please specify')
     modify = fields.RadioField('Did you create your new password by slightly changing your old password for this website?', choices=[
         ('Y', 'Yes'), ('N', 'No')], validators=[Required()], default=None)
-    wordPart = fields.RadioField('\tIf you created your new password based on one of your old passwords, did you consider changing the word part in one of the following ways?',
-        choices=[('N', 'Not applicable'), ('Changed_completely', 'Changed completely'), ('Changed_slightly', 'Changed slightly'),
-        ('Capitalized_letters', 'Capitalized letters'), ('O', 'Other')], validators=[Required()], default=None)
+    wordPart = fields.RadioField('\tIf you created your new password based on one of your old passwords,which of the following changes did you consider',
+        choices=[('N', 'Not changed'), ('Changed_completely', 'Changed completely'), ('Changed_slightly', 'Changed slightly'),
+        ('Capitalized_letters', 'Capitalized  or lower cased letters'), ('addedwordsorletters', 'added words or letters'),('deletedwordsorletters', 'deleted words or letters')], validators=[Required()], default=None)
     usedPassword = fields.RadioField('Is the password that you have just created one that you have used in the past?', choices=[
         ('Y', 'Yes'), ('N', 'No'), ('O', 'Password has similarities to another password that I have used before')], validators=[Required()], default=None)
-    number_N = fields.BooleanField('Not applicable')
+    number_N = fields.BooleanField('Not changed')
+    number_changed_slightly = fields.BooleanField('changed slightly')
+    number_changed_completly = fields.BooleanField('changed completely')
     number_added_digits = fields.BooleanField('Added digits')
     number_deleted_digits = fields.BooleanField('Deleted digits')
-    number_substituted_digits = fields.BooleanField('Substituted digits')
-    number_O = fields.TextAreaField('Other')
-    char_N = fields.BooleanField('Not applicable')
+    char_N = fields.BooleanField('Not changed')
+    char_changed_slightly = fields.BooleanField('changed slightly')
+    char_changed_completly = fields.BooleanField('changed completly')
     char_added_symbols = fields.BooleanField('Added symbols')
     char_deleted_symbols = fields.BooleanField('Deleted symbols')
-    char_substituted_symbols = fields.BooleanField('Substituted symbols')
-    char_O = fields.TextAreaField('Other')
 
 class Survey4Form(Form):
     computerTime = fields.RadioField('How long have you been using a computer?', choices=[
