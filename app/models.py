@@ -39,7 +39,7 @@ class User(UserMixin, CRUDMixin,  db.Model):
         self.s3=s3
         self.s4=s4
     def is_admin(self):
-        if self.id==1 :
+        if self.email=="ss14ak@my.fsu.edu":
             return True
         else:
             return False
@@ -47,13 +47,6 @@ class User(UserMixin, CRUDMixin,  db.Model):
         return True
     def get_id(self):
         return unicode(self.id)
-
-    def is_admin(self):
-        if self.role > 0:
-            return True
-        else:
-            return False
-
     def __repr__(self):
         return '<User %r>' % (self.email)
 
