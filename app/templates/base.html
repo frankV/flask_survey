@@ -10,15 +10,14 @@
 	<title>ECIT Survey</title>
 	{% endif %}
 	<link href="{{ url_for('static', filename='bootswatch/darkly/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{url_for('static', filename='bootwatch/darkly/new1.css')}}" rel="stylesheet">
+	<link href="{{url_for('static', filename='bootwatch/darkly/new2.css')}}" rel="stylesheet">
 	<style type="text/css">
-	table
-	{
-		border:1;
-	}
-	table td,table th{
-		border: 1px solid white;
-	}
+	body { font-size: 140%; }
 	</style>
+	<script type="text/javascript">
+    $(document).ready(function(){$('#example').dataTable();} );
+	</script>
 </head>
 
 <body>

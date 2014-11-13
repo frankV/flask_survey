@@ -38,10 +38,13 @@ class User(UserMixin, CRUDMixin,  db.Model):
         self.s2=s2
         self.s3=s3
         self.s4=s4
-
+    def is_admin(self):
+        if self.id==1 :
+            return True
+        else:
+            return False
     def is_active(self):
         return True
-
     def get_id(self):
         return unicode(self.id)
 

@@ -5,7 +5,7 @@
 <div class="jumbotron">
 
 	{% if not g.user.s1 %}
-	<h1>Hello</h1>
+	<h1>Hello Admin!</h1>
 	{% else %}
 	<h1>Welcome back.</h1>
 	{% endif %}
@@ -14,7 +14,7 @@
 	
 
 </div>
-{%if g.user.email=="ss14ak@my.fsu.edu" %}
+{%if g.user.is_admin %}
  <a href="{{url_for('admin')}}">Summary Sheets</a>
 {% else %}
     <div class="jumbotron">
