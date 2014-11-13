@@ -1,5 +1,5 @@
 #FLASK
-from flask import abort, render_template, Response, flash, redirect, session 
+from flask import abort, render_template, Response, flash, redirect, session
 from flask import url_for, g, request, send_from_directory
 #FLASK EXTENSIONS
 from flask.ext.login import login_user, logout_user, current_user, login_required
@@ -30,12 +30,12 @@ def survey_1():
 
 			g.user.s1=True
 			g.user.lastSeen=date.today()
-			model = Survey1(gender=form.gender.data, age=form.age.data, 
+			model = Survey1(gender=form.gender.data, age=form.age.data,
 				education=form.education.data, language=form.language.data, userid=g.user.userid)
 
 			form.populate_obj(model)
-			
-			db.session.add(model)		
+
+			db.session.add(model)
 			db.session.add(g.user)
 
 			db.session.commit()
@@ -54,17 +54,17 @@ def survey_2():
 	if g.user.s1 is not False and g.user.s2 is False:
 		form = Survey2Form(request.form)
 		if form.validate_on_submit():
-			
+
 			g.user.s2=True
 			g.user.lastSeen=date.today()
-			model=Survey2(major=form.major.data, department=form.department.data, 
+			model=Survey2(major=form.major.data,
 				count=form.count.data, unique=form.unique.data, userid=g.user.userid)
-			
+
 			form.populate_obj(model)
-			
-			db.session.add(model)		
+
+			db.session.add(model)
 			db.session.add(g.user)
-			
+
 			db.session.commit()
 			logout_user()
 
@@ -86,26 +86,26 @@ def survey_3():
 
 			g.user.s3=True
 			g.user.lastSeen=date.today()
-			model = Survey3(choose_names=form.choose_names.data, choose_numbers=form.choose_numbers.data, 
-				choose_songs=form.choose_songs.data, choose_mnemonic=form.choose_mnemonic.data, 
-				choose_sports=form.choose_sports.data, choose_famous=form.choose_famous.data, 
-				choose_words=form.choose_words.data, secure_numbers=form.secure_numbers.data, 
-				secure_upper_case=form.secure_upper_case.data, secure_symbols=form.secure_symbols.data, 
-				secure_eight_chars=form.secure_eight_chars.data, secure_no_dict=form.secure_no_dict.data, 
-				secure_adjacent=form.secure_adjacent.data, secure_nothing=form.secure_nothing.data, 
+			model = Survey3(choose_names=form.choose_names.data, choose_numbers=form.choose_numbers.data,
+				choose_songs=form.choose_songs.data, choose_mnemonic=form.choose_mnemonic.data,
+				choose_sports=form.choose_sports.data, choose_famous=form.choose_famous.data,
+				choose_words=form.choose_words.data, secure_numbers=form.secure_numbers.data,
+				secure_upper_case=form.secure_upper_case.data, secure_symbols=form.secure_symbols.data,
+				secure_eight_chars=form.secure_eight_chars.data, secure_no_dict=form.secure_no_dict.data,
+				secure_adjacent=form.secure_adjacent.data, secure_nothing=form.secure_nothing.data,
 				modify=form.modify.data, wordPart=form.wordPart.data, usedPassword=form.usedPassword.data,
-				number_N=form.number_N.data, number_added_digits=form.number_added_digits.data, 
-				number_deleted_digits=form.number_deleted_digits.data, 
+				number_N=form.number_N.data, number_added_digits=form.number_added_digits.data,
+				number_deleted_digits=form.number_deleted_digits.data,
 				number_substituted_digits=form.number_substituted_digits.data,number_O=form.number_O.data,
 				char_N = form.char_N.data, char_added_symbols=form.char_added_symbols.data,
 				char_deleted_symbols=form.char_deleted_symbols.data, char_substituted_symbols=form.char_substituted_symbols.data,
 				char_O=form.char_O.data, userid=g.user.userid)
-			
+
 			form.populate_obj(model)
-			
+
 			db.session.add(g.user)
 			db.session.add(model)
-			
+
 			db.session.commit()
 			logout_user()
 
@@ -124,19 +124,19 @@ def survey_4():
 			return redirect(url_for('new_pass'))
 		form = Survey4Form(request.form)
 		if form.validate_on_submit():
-			
+
 			g.user.s4=True
 			g.user.lastSeen=date.today()
-			model = Survey4(computerTime=form.computerTime.data, comments=form.comments.data, 
-				pass_random=form.pass_random.data, pass_reuse=form.pass_reuse.data, 
-				pass_modify=form.pass_modify.data, pass_new=form.pass_new.data, 
+			model = Survey4(computerTime=form.computerTime.data, comments=form.comments.data,
+				pass_random=form.pass_random.data, pass_reuse=form.pass_reuse.data,
+				pass_modify=form.pass_modify.data, pass_new=form.pass_new.data,
 				pass_substitute=form.pass_substitute.data, pass_multiword=form.pass_multiword.data,
-				pass_phrase=form.pass_phrase.data, pass_O=form.pass_O.data, 
+				pass_phrase=form.pass_phrase.data, pass_O=form.pass_O.data,
 				how_regular_file=form.how_regular_file.data, how_encrypted=form.how_encrypted.data,
 				how_software=form.how_software.data, how_cellphone=form.how_cellphone.data,
-				how_browser=form.how_browser.data, how_write_down=form.how_write_down.data, 
+				how_browser=form.how_browser.data, how_write_down=form.how_write_down.data,
 				how_no=form.how_no.data, userid=g.user.userid)
-			
+
 			form.populate_obj(model)
 
 			db.session.add(g.user)
@@ -150,12 +150,12 @@ def survey_4():
 		return render_template('Survey4.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
-		
+
 @app.route('/create_acct/' , methods=['GET','POST'])
 def create_acct():
 	form = RegistrationForm(request.form)
 	if form.validate_on_submit():
-		user = User(email=form.email.data, password=form.password.data, 
+		user = User(email=form.email.data, password=form.password.data,
 			oldPassword=form.password.data, userid=(str(uuid.uuid1())))
 		db.session.add(user)
 		db.session.commit()
@@ -197,12 +197,12 @@ def forgot_passwd():
 		if User.query.filter_by(email=user).first():
 			q = User.query.filter_by(email=user).first()
 			forgot_password(user, q.password)
-			return redirect(request.args.get("next") or url_for("login"))	
+			return redirect(request.args.get("next") or url_for("login"))
 		else:
 			flash('Username not found')
 			return redirect(request.args.get("next") or url_for("login"))
-	return render_template ("forgot_passwd.html", 
-		title="Forgot Password", 
+	return render_template ("forgot_passwd.html",
+		title="Forgot Password",
 		form=form)
 
 @app.route('/')
@@ -211,11 +211,11 @@ def forgot_passwd():
 def index():
 	user = g.user
 	return render_template ("index.html",
-		title = "Home", 
+		title = "Home",
 		user = user)
 	# if user.lastSeen != str(date.today()):
 	# 	return render_template ("index.html",
-	# 		title = "Home", 
+	# 		title = "Home",
 	# 		user = user)
 	# else:
 	# 	return render_template("comeback.html", title="Please come back later", user=user)

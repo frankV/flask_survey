@@ -90,7 +90,7 @@ class Survey2(db.Model):
 
     def __init__(self, major=None, department=None, count=None, unique=None, userid=None):
         self.major=major
-        self.department=department
+        # self.department=department
         self.count=count
         self.unique=unique
         self.userid=userid

@@ -1,22 +1,36 @@
+{% from "macro.html" import render_field %}
+
 {% extends "base.html" %}
+
 {% block content%}
-<div class="jumbotron">
-  {% from "macro.html" import render_field %}
-  <h2>Please answer the following questions</h2>
-  <br>
-    <form method="POST" action="." class="form form-horizontal">
-      {{ form.csrf_token }}
-      {{ render_field(form.gender) }}
-      {{ render_field(form.age) }}
-      {{ render_field(form.education)}}
-      {{ render_field(form.language)}}
-    
-    <div class="control-group">
-      <label class="control-label"></label>
-      <div class="controls">
-        <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+
+  <div class="row">
+    <div class="col-lg-12 well">
+
+      <div class="page-header">
+        <h2>Please answer the following questions</h2>
       </div>
+
+      <div class="col-lg-10">
+        <form method="POST" action="." class="form form-horizontal">
+          {{ form.csrf_token }}
+
+          {{ render_field(form.gender) }}
+          {{ render_field(form.age) }}
+          {{ render_field(form.education)}}
+          {{ render_field(form.language, class="form-control")}}
+
+          <div class="control-group">
+            <label class="control-label"></label>
+              <div class="controls">
+                <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+              </div>
+          </div>
+
+        </form>
       </div>
-      </form>
-      </div>
+
+    </div>
+  </div>
+
 {% endblock %}
