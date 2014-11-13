@@ -2,24 +2,18 @@
 
 {% block content %}
 
-<div class="jumbotron">
+	<div class="jumbotron">
 
-	{% if not g.user.s1 %}
-	<h1>Hello</h1>
-	{% else %}
-	<h1>Welcome back.</h1>
-	{% endif %}
+		{% if not g.user.s1 %}
+		<h1>Hello</h1>
+		{% else %}
+		<h1>Welcome back.</h1>
+		{% endif %}
 
-    
-	
+		<p>Please complete the four surveys.</p>
 
-</div>
-{%if g.user.email=="ss14ak@my.fsu.edu" %}
- <a href="{{url_for('admin')}}">Summary Sheets</a>
-{% else %}
-    <div class="jumbotron">
-    <p>Please complete the four surveys.</p>
-    </div>
+	</div>
+
 	<div class="row">
 
 		<div class="col-md-3">
@@ -73,5 +67,5 @@
 		</div>
 
 	</div><!-- /.row -->
-{% endif %}
+
 {% endblock %}
