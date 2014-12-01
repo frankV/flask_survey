@@ -10,18 +10,36 @@
 	<title>ECIT Survey</title>
 	{% endif %}
 	<link href="{{ url_for('static', filename='bootswatch/darkly/bootstrap.min.css') }}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.css">
+  <script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
   <style type="text/css">
     .navbar-default .navbar-nav>li>a:hover {
       color: gold;
     }
-	  table {
-		  border:1;
-	   }
-	   table td,table th{
-		  border: 1px solid white;
-	  }
+    table {
+      border:1;
+     }
+     table td,table th{
+      border: 1px solid white;
+    }
+  	body { font-size: 140%; }
+  	table
+  	{
+  	 table-layout :auto;
+  	}
+  	tbody
+  	{
+  	overflow:auto;
+  	}
 	</style>
+
+	<script type="text/javascript">
+    $(document).ready(function(){$('#example').dataTable();} );
+	</script>
+	<link href="{{url_for('static', filename='bootswatch/darkly/bootstrap.min.css')}}" rel="stylesheet">
 </head>
 
 <body>

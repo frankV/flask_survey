@@ -16,6 +16,7 @@ class User(UserMixin, CRUDMixin,  db.Model):
     password = db.Column(db.String(20))
     oldPassword = db.Column(db.String(20))
     changedPass = db.Column(db.Boolean)
+    role = db.Column(db.SmallInteger, default=ROLE_USER)
     s1 = db.Column(db.Boolean)
     s2 = db.Column(db.Boolean)
     s3 = db.Column(db.Boolean)
@@ -25,8 +26,6 @@ class User(UserMixin, CRUDMixin,  db.Model):
     survey2 = db.relationship('Survey2', backref=db.backref('user', lazy='joined'))
     survey3 = db.relationship('Survey3', backref=db.backref('user', lazy='joined'))
     survey4 = db.relationship('Survey4', backref=db.backref('user', lazy='joined'))
-
-    role = db.Column(db.SmallInteger, default=ROLE_USER)
 
     def __init__(self, email=None, userid=None, password=None, oldPassword = None, changedPass=False,
         s1=False, s2=False, s3=False, s4=False, role=None):
@@ -40,20 +39,21 @@ class User(UserMixin, CRUDMixin,  db.Model):
         self.s3=s3
         self.s4=s4
 
-    def is_active(self):
-        return True
-
-    def get_id(self):
-        return unicode(self.id)
-
     def is_admin(self):
         if self.role == 1:
             return True
         else:
             return False
 
+    def is_active(self):
+        return True
+
+    def get_id(self):
+        return unicode(self.id)
+
     def __repr__(self):
         return '<User %r>' % (self.email)
+
 
 class Survey1(db.Model):
     # __tablename__='survey1'
@@ -66,7 +66,6 @@ class Survey1(db.Model):
     userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
     #user = db.relationship('User', backref=db.backref('survey1', lazy='dynamic'))
 
-
     def __init__(self, gender=None,age=None, education=None, language=None, userid=None):
         self.gender=gender
         self.age=age
@@ -74,9 +73,9 @@ class Survey1(db.Model):
         self.language=language
         self.userid = userid
 
-
     def get_id(self):
         return unicode(self.id)
+
 
 class Survey2(db.Model):
     # __tablename__='survey2'
@@ -189,6 +188,7 @@ class Survey3(db.Model):
 
     def get_id(self):
         return unicode(self.id)
+
 
 class Survey4(db.Model):
     # __tablename__='survey4'
