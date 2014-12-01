@@ -4,6 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, backref
 
 from app import db
+
 ROLE_USER = 0
 ROLE_ADMIN = 1
 
@@ -25,10 +26,10 @@ class User(UserMixin, CRUDMixin,  db.Model):
     survey3 = db.relationship('Survey3', backref=db.backref('user', lazy='joined'))
     survey4 = db.relationship('Survey4', backref=db.backref('user', lazy='joined'))
 
-    role = db.Column(db.SmallInteger, default = ROLE_USER)
+    role = db.Column(db.SmallInteger, default=ROLE_USER)
 
     def __init__(self, email=None, userid=None, password=None, oldPassword = None, changedPass=False,
-        s1=False, s2=False, s3=False, s4=False):
+        s1=False, s2=False, s3=False, s4=False, role=None):
         self.email = email
         self.userid = userid
         self.password = password
@@ -46,7 +47,7 @@ class User(UserMixin, CRUDMixin,  db.Model):
         return unicode(self.id)
 
     def is_admin(self):
-        if self.role > 0:
+        if self.role == 1:
             return True
         else:
             return False
@@ -64,7 +65,7 @@ class Survey1(db.Model):
     language = db.Column(db.String(20))
     userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
     #user = db.relationship('User', backref=db.backref('survey1', lazy='dynamic'))
-    
+
 
     def __init__(self, gender=None,age=None, education=None, language=None, userid=None):
         self.gender=gender
@@ -72,7 +73,7 @@ class Survey1(db.Model):
         self.education=education
         self.language=language
         self.userid = userid
-    
+
 
     def get_id(self):
         return unicode(self.id)
