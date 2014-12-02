@@ -11,13 +11,10 @@
 	{% endif %}
 	<link href="{{ url_for('static', filename='bootswatch/darkly/bootstrap.min.css') }}" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.css">
-  <script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
-  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
 
   <style type="text/css">
     .navbar-default .navbar-nav>li>a:hover {
-      color: gold;
+      color: gold !important;
     }
     table {
       border:1;
@@ -35,11 +32,6 @@
   	overflow:auto;
   	}
 	</style>
-
-	<script type="text/javascript">
-    $(document).ready(function(){$('#example').dataTable();} );
-	</script>
-	<link href="{{url_for('static', filename='bootswatch/darkly/bootstrap.min.css')}}" rel="stylesheet">
 </head>
 
 <body>
@@ -60,6 +52,9 @@
 					<ul class="nav navbar-nav navbar-right">
 						{% if g.user.is_authenticated() %}
             <li class="navbar-text"><span class="muted">{{ current_user.email }}</span></li>
+              {% if g.user.is_admin() %}
+            <li><a href="{{ url_for('logout') }}">Admin</a></li>
+              {% endif %}
 						<li><a href="{{ url_for('logout') }}">Logout</a></li>
 						{% else %}
 						<li><a href="{{ url_for('create_acct') }}">Create Account</a></li>
@@ -80,8 +75,14 @@
 			</div>
 		</div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="{{ url_for('static', filename='bootstrap/dist/js/bootstrap.min.js') }}"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script src="{{ url_for('static', filename='bootstrap/dist/js/bootstrap.min.js') }}"></script>
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){$('table.datatable').dataTable();} );
+  </script>
+
 
 </body>
 </html>

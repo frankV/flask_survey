@@ -38,6 +38,7 @@ class User(UserMixin, CRUDMixin,  db.Model):
         self.s2=s2
         self.s3=s3
         self.s4=s4
+        self.role=role
 
     def is_admin(self):
         if self.role == 1:

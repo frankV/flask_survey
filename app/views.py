@@ -12,6 +12,7 @@ from forms import Survey4Form, NewPass, ForgotPasswordForm
 from email import user_notification, forgot_password
 from config import DATABASE_QUERY_TIMEOUT
 from app import app, db, lm, mail, models
+from decorators import admin_required
 #OTHER
 from  datetime import date, timedelta
 import uuid
@@ -44,7 +45,7 @@ def survey_1():
 
 			return redirect(url_for('logouthtml'))
 
-		return render_template('Survey1.html', title='Survey', form=form)
+		return render_template('survey/Survey1.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
 
@@ -71,7 +72,7 @@ def survey_2():
 
 			return redirect(url_for('logouthtml'))
 
-		return render_template('Survey2.html', title='Survey', form=form)
+		return render_template('survey/Survey2.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
 
@@ -112,7 +113,7 @@ def survey_3():
 
 			return redirect(url_for('logouthtml'))
 
-		return render_template('Survey3.html', title='Survey', form=form)
+		return render_template('survey/Survey3.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
 
@@ -148,7 +149,7 @@ def survey_4():
 
 			return render_template("final.html", title="Thanks!")
 
-		return render_template('Survey4.html', title='Survey', form=form)
+		return render_template('survey/Survey4.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
 
@@ -184,11 +185,13 @@ def login():
 		user = form.get_user()
 		login_user(user)
 		user = g.user
-		if user.s2 is True and user.s3 is False:
+		if current_user.is_admin():
+			return redirect(url_for('admin'))
+		elif user.s2 is True and user.s3 is False:
 			return redirect(request.args.get("next") or url_for("new_pass"))
 		else:
 			return redirect(request.args.get("next") or url_for("index"))
-	return render_template('login.html', title = "Login", form=form)
+	return render_template('login.html', title="Login", form=form)
 
 @app.route('/forgot_passwd', methods=['GET', 'POST'])
 def forgot_passwd():
@@ -211,9 +214,9 @@ def forgot_passwd():
 @login_required
 def index():
 	user = g.user
-	return render_template ("index.html",
-		title = "Home",
-		user = user)
+	if user.is_admin():
+		return redirect(url_for('admin'))
+	return render_template ("index.html", title="Home", user=user)
 	# if user.lastSeen != str(date.today()):
 	# 	return render_template ("index.html",
 	# 		title = "Home",
@@ -265,33 +268,33 @@ def flash_errors(form):
 			getattr(form, field).label.text,error
 		))
 
-# @app.route('/mastersheet/')
-# @login_required
-# def mastersheet():
-# 	e1=models.User.query.all()
-# 	return render_template('mastersheet.html', title='Survey',users=e1)
-# @app.route('/mastersur1/')
-# @login_required
-# def mastersur1():
-# 	e2=db.session.query(User.email,Survey1.gender,Survey1.age,Survey1.education,Survey1.language).join(Survey1)
-# 	return render_template('mastersur1.html', title='Survey-1',users=e2)
-# @app.route('/mastersur2/')
-# @login_required
-# def mastersur2():
-# 	e3=db.session.query(User.email,Survey2.major,Survey2.department,Survey2.count,Survey2.unique).join(Survey2)
-# 	return render_template('mastersur2.html', title='Survey-2',users=e3)
-# @app.route('/mastersur3/')
-# @login_required
-# def mastersur3():
-# 	e4=db.session.query(User.email,Survey3.choose_words,Survey3.choose_mnemonic).join(Survey3)
-# 	return render_template('mastersur3.html', title='Survey-3',users=e4)
-# @app.route('/mastersur4/')
-# @login_required
-# def mastersur4():
-# 	e5=db.session.query(User.email,Survey4.computerTime,Survey4.pass_random,Survey4.pass_reuse,Survey4.pass_modify,Survey4.pass_new,Survey4.pass_substitute,Survey4.pass_multiword,Survey4.pass_phrase,Survey4.pass_O,Survey4.how_regular_file,Survey4.how_encrypted,Survey4.how_software).join(Survey4)
-# 	return render_template('mastersur4.html', title='Survey-4',users=e5)
-# @app.route('/admin/')
-# @login_required
-# def admin():
-# 	return render_template('admin.html', title='admin module')
+
+@app.route('/admin')
+def admin():
+	users = User.query.all()
+	return render_template('admin/index.html', title="Admin", users=users)
+
+@app.route('/admin_survey1/')
+@login_required
+def admin_survey1():
+	e2=db.session.query(User.email,Survey1.gender,Survey1.age,Survey1.education,Survey1.language).join(Survey1)
+	return render_template('admin/partials/survey1.html', title='Admin Survey-1', users=e2)
+
+@app.route('/admin_survey2/')
+@login_required
+def admin_survey2():
+	e3=db.session.query(User.email,Survey2.major,Survey2.department,Survey2.count,Survey2.unique).join(Survey2)
+	return render_template('admin/partials/survey2.html', title='Admin Survey-2', users=e3)
+
+@app.route('/admin_survey3/')
+@login_required
+def admin_survey3():
+	e4=db.session.query(User.email,Survey3.choose_words,Survey3.choose_mnemonic).join(Survey3)
+	return render_template('admin/partials/survey3.html', title='Admin Survey-3', users=e4)
+
+@app.route('/admin_survey4/')
+@login_required
+def admin_survey4():
+	e5=db.session.query(User.email,Survey4.computerTime,Survey4.pass_random,Survey4.pass_reuse,Survey4.pass_modify,Survey4.pass_new,Survey4.pass_substitute,Survey4.pass_multiword,Survey4.pass_phrase,Survey4.pass_O,Survey4.how_regular_file,Survey4.how_encrypted,Survey4.how_software).join(Survey4)
+	return render_template('admin/partials/survey4.html', title='Admin Survey-4', users=e5)
 
