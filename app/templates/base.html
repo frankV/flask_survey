@@ -82,13 +82,19 @@
 
   <script type="text/javascript">
       $(document).ready(function(){
+
+          // standard datatable initialization
           $('table.datatable').dataTable();
-          $('table.scroll').dataTable({
+
+          /* enhanced datatable initialization
+               - enables horizontal scrolling
+               - [TO DO]enables fixed left column (email)
+          */
+          var table = $('table.scroll').dataTable({
               "scrollX": "100%",
-              "scrollCollapse": true,
-              "paging": false
+              "scrollCollapse": false,
           } );
-          new $.fn.dataTable.FixedColumns( table );
+          new $.fn.dataTable.FixedColumns(table);
       });
   </script>
 
