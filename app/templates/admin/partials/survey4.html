@@ -1,56 +1,52 @@
 {% extends "base.html" %}
+
 {% block content%}
-  <h2>Survey-4</h2>
-  <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-  <thead>
-  <tr>
-  <th>email</th>
-  <th>computer_time</th>
-  <th>pass_random</th>
-  <th>pass_reuse</th>
-  <th>pass_modify</th>
-  <th>pass_new</th>
-  <th>pass_substitute</th>
-  <th>pass_multiword</th>
-  <th>pass_phrase</th>
-  <th>How_regular_file</th>
-  <th>How_encrpted</th>
-  <th>How_software</th>
-  </tr>
-  </thead>
-  <tfoot>
-  <tr>
-  <th>email</th>
-  <th>computer_time</th>
-  <th>pass_random</th>
-  <th>pass_reuse</th>
-  <th>pass_modify</th>
-  <th>pass_new</th>
-  <th>pass_substitute</th>
-  <th>pass_multiword</th>
-  <th>pass_phrase</th>
-  <th>How_regular_file</th>
-  <th>How_encrpted</th>
-  <th>How_software</th>
-  </tr>
-  </tfoot>
-  <tbody>
-  {%for user in users%}
-  <tr>
-  <td>{{user.email}}</td>
-  <td>{{user.computerTime}}</td>
-  <td>{{user.pass_random}}</td>
-  <td>{{user.pass_reuse}}</td> 
-  <td>{{user.pass_modify}}</td>  
-  <td>{{user.pass_new}}</td>
-  <td>{{user.pass_substitute}}</td>
-  <td>{{user.pass_multiword}}</td>
-  <td>{{user.pass_phrase}}</td>  
-  <td>{{user.how_regular_file}}</td>
-  <td>{{user.how_encrypted}}</td>  
-  <td>{{user.how_software}}</td>
-  </tr>
-  {%endfor%}
-  </tbody>
-  </table>
+<div class="page-header">
+   <h1>Survey 4
+      <small>User Responses</small>
+   </h1>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+
+    <table class="table table-bordered datatable" cellspacing="0" width="100%">
+      <thead>
+        <tr>
+          <th>email</th>
+          <th>computer_time</th>
+          <th>pass_random</th>
+          <th>pass_reuse</th>
+          <th>pass_modify</th>
+          <th>pass_new</th>
+          <th>pass_substitute</th>
+          <th>pass_multiword</th>
+          <th>pass_phrase</th>
+          <th>How_regular_file</th>
+          <th>How_encrpted</th>
+          <th>How_software</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%for user in users%}
+        <tr>
+          <td>{{user.email}}</td>
+          <td>{{user.computerTime}}</td>
+          <td>{{user.pass_random}}</td>
+          <td>{{user.pass_reuse}}</td>
+          <td>{{user.pass_modify}}</td>
+          <td>{{user.pass_new}}</td>
+          <td>{{user.pass_substitute}}</td>
+          <td>{{user.pass_multiword}}</td>
+          <td>{{user.pass_phrase}}</td>
+          <td>{{user.how_regular_file}}</td>
+          <td>{{user.how_encrypted}}</td>
+          <td>{{user.how_software}}</td>
+        </tr>
+        {%endfor%}
+      </tbody>
+    </table>
+
+  </div>
+</div>
 {% endblock %}

@@ -270,30 +270,36 @@ def flash_errors(form):
 
 
 @app.route('/admin')
+@login_required
+@admin_required
 def admin():
-	users = User.query.all()
+	users = User.query.filter_by(role=0)
 	return render_template('admin/index.html', title="Admin", users=users)
 
 @app.route('/admin_survey1/')
 @login_required
+@admin_required
 def admin_survey1():
 	e2=db.session.query(User.email,Survey1.gender,Survey1.age,Survey1.education,Survey1.language).join(Survey1)
 	return render_template('admin/partials/survey1.html', title='Admin Survey-1', users=e2)
 
 @app.route('/admin_survey2/')
 @login_required
+@admin_required
 def admin_survey2():
 	e3=db.session.query(User.email,Survey2.major,Survey2.department,Survey2.count,Survey2.unique).join(Survey2)
 	return render_template('admin/partials/survey2.html', title='Admin Survey-2', users=e3)
 
 @app.route('/admin_survey3/')
 @login_required
+@admin_required
 def admin_survey3():
 	e4=db.session.query(User.email,Survey3.choose_words,Survey3.choose_mnemonic).join(Survey3)
 	return render_template('admin/partials/survey3.html', title='Admin Survey-3', users=e4)
 
 @app.route('/admin_survey4/')
 @login_required
+@admin_required
 def admin_survey4():
 	e5=db.session.query(User.email,Survey4.computerTime,Survey4.pass_random,Survey4.pass_reuse,Survey4.pass_modify,Survey4.pass_new,Survey4.pass_substitute,Survey4.pass_multiword,Survey4.pass_phrase,Survey4.pass_O,Survey4.how_regular_file,Survey4.how_encrypted,Survey4.how_software).join(Survey4)
 	return render_template('admin/partials/survey4.html', title='Admin Survey-4', users=e5)
