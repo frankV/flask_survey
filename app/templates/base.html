@@ -79,10 +79,18 @@
   <script src="{{ url_for('static', filename='bootstrap/dist/js/bootstrap.min.js') }}"></script>
   <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-  <script type="text/javascript">
-    $(document).ready(function(){$('table.datatable').dataTable();} );
-  </script>
 
+  <script type="text/javascript">
+      $(document).ready(function(){
+          $('table.datatable').dataTable();
+          $('table.scroll').dataTable({
+              "scrollX": "100%",
+              "scrollCollapse": true,
+              "paging": false
+          } );
+          new $.fn.dataTable.FixedColumns( table );
+      });
+  </script>
 
 </body>
 </html>
