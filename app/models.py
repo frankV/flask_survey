@@ -123,7 +123,6 @@ class Survey3(db.Model):
     specify1=db.Column(db.String(255))
     modify = db.Column(db.String(255))
     usedPassword = db.Column(db.String(255))
-    wordPart = db.Column(db.String(255))
     number_N = db.Column(db.Boolean)
     number_changed_slightly=db.Column(db.Boolean)
     number_changed_completely=db.Column(db.Boolean)
@@ -137,6 +136,12 @@ class Survey3(db.Model):
     char_added_symbols = db.Column(db.Boolean)
     char_deleted_symbols = db.Column(db.Boolean)
     char_substituted_symbols = db.Column(db.Boolean)
+    not_changed1=db.Column(db.Boolean)
+    changed_slightly1=db.Column(db.Boolean)
+    changed_completly1=db.Column(db.Boolean)
+    capatalized1=db.Column(db.Boolean)
+    addedwords=db.Column(db.Boolean)
+    deletedwords=db.Column(db.Boolean)
     char_O = db.Column(db.String(255))
     userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey3', lazy='dynamic'))
@@ -145,10 +150,10 @@ class Survey3(db.Model):
         choose_mnemonic=None, choose_sports=None, choose_famous=None, choose_words=None,
         secure_numbers=None, secure_upper_case=None, secure_symbols=None,
         secure_eight_chars=None, secure_no_dict=None, secure_adjacent=None, secure_nothing=None,
-        modify=None, usedPassword=None, wordPart=None, number_N=None, number_added_digits=None,
+        modify=None, usedPassword=None,number_N=None, number_added_digits=None,
         number_deleted_digits=None, number_substituted_digits=None, number_O=None,
         char_N=None, char_added_symbols=None, char_deleted_symbols=None,
-        char_substituted_symbols=None, char_O=None, userid=None,choose_other=None,specify=None,specify1=None,secure_other=None,number_changed_completly=None,number_changed_slightly=None,char_changed_slightly=None,char_changed_completly=None):
+        char_substituted_symbols=None, char_O=None, userid=None,choose_other=None,specify=None,specify1=None,secure_other=None,number_changed_completly=None,number_changed_slightly=None,char_changed_slightly=None,char_changed_completly=None,not_changed1=None, changed_completly1=None, changed_slightly1=None,capatalized1=None,addedwords=None,deletedwords=None):
 
         self.choose_names=choose_names
         self.choose_numbers=choose_numbers
@@ -170,7 +175,12 @@ class Survey3(db.Model):
         self.specify1=specify1
         self.modify=modify
         self.usedPassword=usedPassword
-        self.wordPart=wordPart
+        self.not_changed1=not_changed1
+        self.changed_slightly1=changed_slightly1
+        self.changed_completly1=changed_completly1
+        self.capatalized1=capatalized1
+        self.addedwords=addedwords
+        self.deletedwords=deletedwords
         self.number_N=number_N
         self.number_changed_slightly=number_changed_slightly
         self.number_changed_completly=number_changed_completly

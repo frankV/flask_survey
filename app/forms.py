@@ -91,9 +91,6 @@ class Survey3Form(Form):
     specify1 = fields.TextField('please specify')
     modify = fields.RadioField('Did you create your new password by slightly changing your old password for this website?', choices=[
         ('Y', 'Yes'), ('N', 'No')], validators=[Required()], default=None)
-    wordPart = fields.CheckboxInput('\tIf you created your new password based on one of your old passwords,which of the following changes did you consider',
-        choices=[('N', 'Not Changed'), ('Changed_Completely', 'Changed Completely'), ('Changed_slightly', 'Changed Slightly'),
-        ('Capitalized_letters', 'Capitalized  or lower cased letters'), ('addedwordsorletters', 'added words or letters'),('deletedwordsorletters', 'deleted words or letters')], validators=[Required()], default=None)
     usedPassword = fields.RadioField('Is the password that you have just created one that you have used in the past?', choices=[
         ('Y', 'Yes'), ('N', 'No'), ('O', 'Password has similarities to another password that I have used before')], validators=[Required()], default=None)
     number_N = fields.BooleanField('Not changed')
@@ -106,6 +103,12 @@ class Survey3Form(Form):
     char_changed_completly = fields.BooleanField('Changed Completly')
     char_added_symbols = fields.BooleanField('Added Symbols')
     char_deleted_symbols = fields.BooleanField('Deleted Symbols')
+    not_changed1=fields.BooleanField('Not changed')
+    changed_slightly1=fields.BooleanField('Changed Slightly')
+    changed_completly1=fields.BooleanField('Changed completely')
+    capatalized1=fields.BooleanField('Capatlized or lower case letters')
+    addedwords=fields.BooleanField('Added Words or Letters')
+    deletedwords=fields.BooleanField('Deleted Words or Letters')
 
 class Survey4Form(Form):
     computerTime = fields.RadioField('How long have you been using a computer?', choices=[

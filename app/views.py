@@ -96,12 +96,12 @@ def survey_3():
 				secure_upper_case=form.secure_upper_case.data, secure_symbols=form.secure_symbols.data,
 				secure_eight_chars=form.secure_eight_chars.data, secure_no_dict=form.secure_no_dict.data,
 				secure_adjacent=form.secure_adjacent.data, secure_nothing=form.secure_nothing.data,
-				modify=form.modify.data, wordPart=form.wordPart.data, usedPassword=form.usedPassword.data,
+				modify=form.modify.data,usedPassword=form.usedPassword.data,
 				number_N=form.number_N.data,number_changed_slightly=form.number_changed_slightly.data,number_changed_completly=form.number_changed_completly.data,number_added_digits=form.number_added_digits.data,
 				number_deleted_digits=form.number_deleted_digits.data,
 				char_N = form.char_N.data,char_changed_slightly=form.char_changed_slightly.data,char_changed_completly=form.char_changed_completly.data, char_added_symbols=form.char_added_symbols.data,
 				char_deleted_symbols=form.char_deleted_symbols.data,
-				userid=g.user.userid)
+				userid=g.user.userid,not_changed1=form.not_changed1.data,changed_completly1=form.changed_completly1.data,changed_slightly1=form.changed_slightly1.data,addedwords=form.addedwords.data,deletedwords=form.deletedwords.data,capatalized1=form.capatalized1.data)
 
 			form.populate_obj(model)
 

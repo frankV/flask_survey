@@ -46,8 +46,15 @@
 
             {{ render_field(form.modify ) }}
             {{ render_field(form.usedPassword ) }}
-            {{ render_field(form.wordPart ) }}
-
+            <legend>If you created your new password based on one of your old passwords,which of the following changes did you consider</legend>
+            <ul>
+                {{ render_field(form.not_changed1) }}
+                {{ render_field(form.changed_slightly1)}}
+                {{ render_field(form.changed_completly1)}}
+                {{ render_field(form.capatalized1) }}
+                {{ render_field(form.addedwords) }}
+                {{ render_field(form.deletedwords) }}
+            </ul>
             <legend>If you created your new password based on one of your old passwords, did you consider changing the number part in one of the following ways?</legend>
             <ul>
                 {{ render_field(form.number_N) }}
