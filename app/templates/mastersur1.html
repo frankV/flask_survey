@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content%}
+  <h2>Survey-1</h2>
+  <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+  <thead>
+  <tr>
+  <th>email</th>
+  <th>gender</th>
+  <th>age</th>
+  <th>education</th>
+  <th>language</th>
+  </tr>
+  </thead>
+  <tfoot>
+  <tr>
+  <th>email</th>
+  <th>gender</th>
+  <th>age</th>
+  <th>education</th>
+  <th>language</th>
+  </tr>
+  </tfoot>
+  <tbody>
+  {%for user in users%}
+  <tr>
+  <td>{{user.email}}</td>
+  <td>{{user.gender}}</td>
+  <td>{{user.age}}</td>
+  <td>{{user.education}}</td>
+  <td>{{user.language}}</td>
+  </tr>
+  {%endfor%}
+  </tbody>
+  </table>
+{% endblock %}

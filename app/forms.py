@@ -56,7 +56,7 @@ class Survey1Form(Form):
     education = fields.RadioField('Which of the following best describes your highest education level?', choices=[('Hsg', 'High school graduate'),
         ('Scnd', 'Some college, no degree'), ('Assoc', 'Associates Degree'), ('Bach', 'Bachelors degree'), ('Grad', 'Graduate degree (Masters, Doctorate, etc.)'), ('O', 'Other')],
         validators=[Required()])
-    language = fields.TextField('Native Language', validators=[Required()])
+    language = fields.TextField('What is your native language', validators=[Required()])
 
 class Survey2Form(Form):
     major = fields.RadioField('Are you majoring in or do you have a degree or job in computer science, computer engineering, information technology, or a related field?',
@@ -67,6 +67,8 @@ class Survey2Form(Form):
         ('Y', 'Yes, I create a new password every time I create a new account or every time I have to change my password'),
         ('N', 'No, I use my old passwords that I have already created for my other accounts'),
         ('O', 'I mostly create a new password, but sometimes use old passwords')], validators=[Required()])
+    department = fields.TextField('In what department are you majoring', validators=[Required()])
+
 
 class Survey3Form(Form):
     choose_names = fields.BooleanField('Names of family members, relatives, close friends')
@@ -80,7 +82,7 @@ class Survey3Form(Form):
     specify = fields.TextField('please specify')
     secure_numbers = fields.BooleanField('Include numbers')
     secure_upper_case = fields.BooleanField('Include upper case letters')
-    secure_symbols = fields.BooleanField('Include symbols')
+    secure_symbols = fields.BooleanField('Include symbols(such as "!" or "#")')
     secure_eight_chars = fields.BooleanField('Have 8 or more characters')
     secure_no_dict = fields.BooleanField('Not contain dictionary words')
     secure_adjacent = fields.BooleanField('Not containing a sequence of adjacent or repeated characters on your keyboard (e.g. qwerty)')
@@ -89,21 +91,21 @@ class Survey3Form(Form):
     specify1 = fields.TextField('please specify')
     modify = fields.RadioField('Did you create your new password by slightly changing your old password for this website?', choices=[
         ('Y', 'Yes'), ('N', 'No')], validators=[Required()], default=None)
-    wordPart = fields.RadioField('\tIf you created your new password based on one of your old passwords,which of the following changes did you consider',
-        choices=[('N', 'Not changed'), ('Changed_completely', 'Changed completely'), ('Changed_slightly', 'Changed slightly'),
+    wordPart = fields.CheckboxInput('\tIf you created your new password based on one of your old passwords,which of the following changes did you consider',
+        choices=[('N', 'Not Changed'), ('Changed_Completely', 'Changed Completely'), ('Changed_slightly', 'Changed Slightly'),
         ('Capitalized_letters', 'Capitalized  or lower cased letters'), ('addedwordsorletters', 'added words or letters'),('deletedwordsorletters', 'deleted words or letters')], validators=[Required()], default=None)
     usedPassword = fields.RadioField('Is the password that you have just created one that you have used in the past?', choices=[
         ('Y', 'Yes'), ('N', 'No'), ('O', 'Password has similarities to another password that I have used before')], validators=[Required()], default=None)
     number_N = fields.BooleanField('Not changed')
-    number_changed_slightly = fields.BooleanField('changed slightly')
-    number_changed_completly = fields.BooleanField('changed completely')
-    number_added_digits = fields.BooleanField('Added digits')
-    number_deleted_digits = fields.BooleanField('Deleted digits')
-    char_N = fields.BooleanField('Not changed')
-    char_changed_slightly = fields.BooleanField('changed slightly')
-    char_changed_completly = fields.BooleanField('changed completly')
-    char_added_symbols = fields.BooleanField('Added symbols')
-    char_deleted_symbols = fields.BooleanField('Deleted symbols')
+    number_changed_slightly = fields.BooleanField('Changed Slightly')
+    number_changed_completly = fields.BooleanField('Changed Completely')
+    number_added_digits = fields.BooleanField('Added Digits')
+    number_deleted_digits = fields.BooleanField('Deleted Digits')
+    char_N = fields.BooleanField('Not Changed')
+    char_changed_slightly = fields.BooleanField('Changed Slightly')
+    char_changed_completly = fields.BooleanField('Changed Completly')
+    char_added_symbols = fields.BooleanField('Added Symbols')
+    char_deleted_symbols = fields.BooleanField('Deleted Symbols')
 
 class Survey4Form(Form):
     computerTime = fields.RadioField('How long have you been using a computer?', choices=[
