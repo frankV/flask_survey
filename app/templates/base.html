@@ -52,9 +52,6 @@
 					<ul class="nav navbar-nav navbar-right">
 						{% if g.user.is_authenticated() %}
             <li class="navbar-text"><span class="muted">{{ current_user.email }}</span></li>
-              {% if g.user.is_admin() %}
-            <li><a href="{{ url_for('logout') }}">Admin</a></li>
-              {% endif %}
 						<li><a href="{{ url_for('logout') }}">Logout</a></li>
 						{% else %}
 						<li><a href="{{ url_for('create_acct') }}">Create Account</a></li>
