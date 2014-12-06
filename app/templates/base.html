@@ -16,20 +16,23 @@
     .navbar-default .navbar-nav>li>a:hover {
       color: gold !important;
     }
-    table {
-      border:1;
-     }
-     table td,table th{
-      border: 1px solid white;
+    a.navbar-brand:hover {
+      color: gold !important;
     }
-  	body { font-size: 140%; }
-  	table
-  	{
+    table {
+      border: 1;
+     }
+     table, td, th{
+      border: 1px solid #999 !important;
+    }
+  	body {
+      font-size: 140%;
+    }
+  	table {
   	 table-layout :auto;
   	}
-  	tbody
-  	{
-  	overflow:auto;
+  	tbody {
+  	 overflow:auto;
   	}
 	</style>
 </head>
@@ -52,6 +55,9 @@
 					<ul class="nav navbar-nav navbar-right">
 						{% if g.user.is_authenticated() %}
             <li class="navbar-text"><span class="muted">{{ current_user.email }}</span></li>
+              {% if g.user.is_admin() %}
+            <li><a href="{{ url_for('index') }}">Admin</a></li>
+              {% endif %}
 						<li><a href="{{ url_for('logout') }}">Logout</a></li>
 						{% else %}
 						<li><a href="{{ url_for('create_acct') }}">Create Account</a></li>
