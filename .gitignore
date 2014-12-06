@@ -8,3 +8,5 @@ node_modules
 build
 _site
 *.lock
+
+config.py

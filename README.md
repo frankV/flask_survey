@@ -26,10 +26,11 @@ app
   ├── templates
   │   └── (HTML template files)
   └── views.py
+config.py (not committed)
 ```
 
 ####Application Configuration
- * `config.py` - will hold all configuration values for the application runtime.
+ * `config.py` - will hold all configuration values for the application runtime (sensitive data) **DO NOT COMMIT**.
  * `.bowerrc` - instructs bower to install files in the specified location
  * `bower.json` - the project's Bower configuration file
 
