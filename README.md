@@ -94,6 +94,13 @@ survey start/running, process 1641
 survey stop/waiting
 ```
 
+#####Application Monitoring
+To use `New Relic` for monitoring you need the `newrelic.ini` file. This is also **Not Committed**.
+
+If the `newrelic.ini` file is present, then you may run the application by any of the aforementioned methods with the following prefix:
+```
+$ NEW_RELIC_CONFIG_FILE=newrelic.ini newrelic-admin run-program <command>
+```
 
 
 Tools and Dependencies
