@@ -76,8 +76,24 @@ $ python manage.py runserver
 ```
 
 #####Production
+In production the application uses `gunicorn`. The command to start the server is:
+```
+# <vitualenv>/gunicorn --bind 127.0.0.1:5000 --workers 2 app:app --log-level=debug --log-file=$LOGFILE 2>>$LOGFILE --daemon
+```
+ * this must run from within the project's directory
 
-Documentation for this is coming soon.
+For convenience, an Ubuntu upstart script is used to make starting/stopping the application much easier:
+```
+# service survey start
+survey start/running, process 1641
+
+# service survey status
+survey start/running, process 1641
+
+# service survey stop
+survey stop/waiting
+```
+
 
 
 Tools and Dependencies
@@ -106,3 +122,4 @@ Contributors
 [Ryan Kuhl](https://github.com/rkk09c)<br>
 [Shiva Houshmand](https://github.com/shibba)<br>
 [Frank Valcarcel](https://github.com/frankv)<br>
+[Sai Prasad](https://github.com/saiprasadsetty)<br>
