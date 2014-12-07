@@ -10,32 +10,9 @@
 	<title>ECIT Survey</title>
 	{% endif %}
 	<link href="{{ url_for('static', filename='bootswatch/darkly/bootstrap.min.css') }}" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.css">
-  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/tabletools/2.2.0/css/dataTables.tableTools.min.css">
-
-  <style type="text/css">
-    .navbar-default .navbar-nav>li>a:hover {
-      color: gold !important;
-    }
-    a.navbar-brand:hover {
-      color: gold !important;
-    }
-    table {
-      border: 1;
-     }
-     table, td, th{
-      border: 1px solid #999 !important;
-    }
-  	body {
-      font-size: 140%;
-    }
-  	table {
-  	 table-layout :auto;
-  	}
-  	tbody {
-  	 overflow:auto;
-  	}
-	</style>
+  <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+  {% block extra_css %}
+  {% endblock %}
 </head>
 
 <body>
@@ -81,46 +58,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script src="{{ url_for('static', filename='bootstrap/dist/js/bootstrap.min.js') }}"></script>
-  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
-  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
-  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/tabletools/2.2.0/js/dataTables.tableTools.min.js"></script>
-
-  <script type="text/javascript">
-      $(document).ready(function(){
-
-          // standard datatable initialization
-          $('table.datatable').dataTable({
-            "dom": 'T<"clear">lfrtip',
-              "tableTools": {
-                  "sSwfPath": "{{ url_for('static', filename='datatables-tabletools/swf/copy_csv_xls_pdf.swf') }}",
-                  "aButtons": [
-                    "xls",
-                    "pdf",
-                    "print",
-                  ]
-              }
-          });
-
-          /* enhanced datatable initialization
-               - enables horizontal scrolling
-               - [TO DO]enables fixed left column (email)
-          */
-          var table = $('table.scroll').dataTable({
-              "scrollX": "100%",
-              "scrollCollapse": false,
-              "dom": 'T<"clear">lfrtip',
-              "tableTools": {
-                  "sSwfPath": "{{ url_for('static', filename='datatables-tabletools/swf/copy_csv_xls_pdf.swf') }}",
-                  "aButtons": [
-                    "xls",
-                    "pdf",
-                    "print",
-                  ]
-              }
-          });
-
-    });
-  </script>
-
+  {% block extra_js %}
+  {% endblock %}
 </body>
 </html>

@@ -1,0 +1,29 @@
+
+
+.navbar-default .navbar-nav>li>a:hover {
+  color: gold !important;
+}
+a.navbar-brand:hover {
+  color: gold !important;
+}
+table {
+  border: 1;
+ }
+ table, td, th{
+  border: 1px solid #999 !important;
+}
+body {
+  font-size: 140%;
+}
+table {
+ table-layout :auto;
+}
+tbody {
+ overflow:auto;
+}
+
+.dataTables_filter {
+   width: 100%;
+   float: right;
+   text-align: right;
+}
