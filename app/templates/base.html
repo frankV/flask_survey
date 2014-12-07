@@ -11,6 +11,7 @@
 	{% endif %}
 	<link href="{{ url_for('static', filename='bootswatch/darkly/bootstrap.min.css') }}" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/tabletools/2.2.0/css/dataTables.tableTools.min.css">
 
   <style type="text/css">
     .navbar-default .navbar-nav>li>a:hover {
@@ -82,12 +83,23 @@
   <script src="{{ url_for('static', filename='bootstrap/dist/js/bootstrap.min.js') }}"></script>
   <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.js"></script>
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/tabletools/2.2.0/js/dataTables.tableTools.min.js"></script>
 
   <script type="text/javascript">
       $(document).ready(function(){
 
           // standard datatable initialization
-          $('table.datatable').dataTable();
+          $('table.datatable').dataTable({
+            "dom": 'T<"clear">lfrtip',
+              "tableTools": {
+                  "sSwfPath": "{{ url_for('static', filename='datatables-tabletools/swf/copy_csv_xls_pdf.swf') }}",
+                  "aButtons": [
+                    "xls",
+                    "pdf",
+                    "print",
+                  ]
+              }
+          });
 
           /* enhanced datatable initialization
                - enables horizontal scrolling
@@ -96,9 +108,18 @@
           var table = $('table.scroll').dataTable({
               "scrollX": "100%",
               "scrollCollapse": false,
-          } );
-          new $.fn.dataTable.FixedColumns(table);
-      });
+              "dom": 'T<"clear">lfrtip',
+              "tableTools": {
+                  "sSwfPath": "{{ url_for('static', filename='datatables-tabletools/swf/copy_csv_xls_pdf.swf') }}",
+                  "aButtons": [
+                    "xls",
+                    "pdf",
+                    "print",
+                  ]
+              }
+          });
+
+    });
   </script>
 
 </body>
