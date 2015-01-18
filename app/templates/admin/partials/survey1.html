@@ -43,15 +43,15 @@
     </thead>
 
     <tbody>
-      {%for user in users%}
+      {% for survey in surveys %}
       <tr>
-        <td>{{user.email}}</td>
-        <td>{{user.gender}}</td>
-        <td>{{user.age}}</td>
-        <td>{{user.education}}</td>
-        <td>{{user.language}}</td>
+        <td>{{ survey.user.email }}</td>
+        <td>{{ survey.gender }}</td>
+        <td>{{ survey.age }}</td>
+        <td>{{ survey.education }}</td>
+        <td>{{ survey.language }}</td>
       </tr>
-      {%endfor%}
+      {% endfor %}
     </tbody>
   </table>
 

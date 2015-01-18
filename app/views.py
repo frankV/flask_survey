@@ -18,31 +18,23 @@ from  datetime import date, timedelta
 import uuid
 
 
-@lm.user_loader
-def load_user(id):
-	return User.query.get(int(id))
-
 @app.route('/survey_1/', methods=['GET','POST'])
 @login_required
 def survey_1():
 	g.user = current_user
 	if g.user.s1 is False:
 		form = Survey1Form(request.form)
+
 		if form.validate_on_submit():
+			survey = Survey1()
+			form.populate_obj(survey)
+			survey.user = g.user
+			db.session.add(survey)
 
-			g.user.s1=True
-			g.user.lastSeen=date.today()
-			model = Survey1(gender=form.gender.data, age=form.age.data,
-				education=form.education.data, language=form.language.data, userid=g.user.userid)
-
-			form.populate_obj(model)
-
-			db.session.add(model)
-			db.session.add(g.user)
-
+			g.user.s1 = True
+			g.user.lastSeen = date.today()
 			db.session.commit()
 			logout_user()
-
 			return redirect(url_for('logouthtml'))
 
 		return render_template('survey/Survey1.html', title='Survey', form=form)
@@ -55,105 +47,80 @@ def survey_2():
 	g.user = current_user
 	if g.user.s1 is not False and g.user.s2 is False:
 		form = Survey2Form(request.form)
+
 		if form.validate_on_submit():
+			survey = Survey2()
+			form.populate_obj(survey)
+			survey.user = g.user
+			db.session.add(survey)
 
-			g.user.s2=True
-			g.user.lastSeen=date.today()
-			model=Survey2(major=form.major.data,
-				count=form.count.data, unique=form.unique.data, userid=g.user.userid)
-
-			form.populate_obj(model)
-
-			db.session.add(model)
-			db.session.add(g.user)
-
+			g.user.s2 = True
+			g.user.lastSeen = date.today()
 			db.session.commit()
 			logout_user()
-
 			return redirect(url_for('logouthtml'))
 
 		return render_template('survey/Survey2.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
 
+
 @app.route('/survey_3/', methods=['GET','POST'])
 @login_required
 def survey_3():
 	g.user = current_user
 	if g.user.s2 is not False and g.user.s3 is False:
+
 		if g.user.changedPass is False:
 			return redirect(url_for('new_pass'))
 
 		form = Survey3Form(request.form)
+
 		if form.validate_on_submit():
+			survey = Survey3()
+			form.populate_obj(survey)
+			survey.user = g.user
+			db.session.add(survey)
 
-			g.user.s3=True
-			g.user.lastSeen=date.today()
-
-			model = Survey3(choose_names=form.choose_names.data, choose_numbers=form.choose_numbers.data,
-				choose_songs=form.choose_songs.data, choose_mnemonic=form.choose_mnemonic.data,
-				choose_sports=form.choose_sports.data, choose_famous=form.choose_famous.data,
-				choose_words=form.choose_words.data,choose_other=form.choose_other.data,specify=form.specify.data,secure_other=form.secure_other.data,specify1=form.specify1.data,secure_numbers=form.secure_numbers.data,
-				secure_upper_case=form.secure_upper_case.data, secure_symbols=form.secure_symbols.data,
-				secure_eight_chars=form.secure_eight_chars.data, secure_no_dict=form.secure_no_dict.data,
-				secure_adjacent=form.secure_adjacent.data, secure_nothing=form.secure_nothing.data,
-				modify=form.modify.data,usedPassword=form.usedPassword.data,
-				number_N=form.number_N.data,number_changed_slightly=form.number_changed_slightly.data,number_changed_completly=form.number_changed_completly.data,number_added_digits=form.number_added_digits.data,
-				number_deleted_digits=form.number_deleted_digits.data,
-				char_N = form.char_N.data,char_changed_slightly=form.char_changed_slightly.data,char_changed_completly=form.char_changed_completly.data, char_added_symbols=form.char_added_symbols.data,
-				char_deleted_symbols=form.char_deleted_symbols.data,
-				userid=g.user.userid,not_changed1=form.not_changed1.data,changed_completly1=form.changed_completly1.data,changed_slightly1=form.changed_slightly1.data,addedwords=form.addedwords.data,deletedwords=form.deletedwords.data,capatalized1=form.capatalized1.data)
-
-			form.populate_obj(model)
-
-			db.session.add(g.user)
-			db.session.add(model)
-
+			g.user.s3 = True
+			g.user.lastSeen = date.today()
 			db.session.commit()
 			logout_user()
-
 			return redirect(url_for('logouthtml'))
 
 		return render_template('survey/Survey3.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
 
+
 @app.route('/survey_4/', methods=['GET','POST'])
 @login_required
 def survey_4():
 	g.user = current_user
 	if g.user.s3 is not False and g.user.s4 is False:
+
 		if g.user.changedPass is False:
 			return redirect(url_for('new_pass'))
 
 		form = Survey4Form(request.form)
+
 		if form.validate_on_submit():
 
-			g.user.s4=True
-			g.user.lastSeen=date.today()
-			model = Survey4(computerTime=form.computerTime.data, comments=form.comments.data,
-				pass_random=form.pass_random.data, pass_reuse=form.pass_reuse.data,
-				pass_modify=form.pass_modify.data, pass_new=form.pass_new.data,
-				pass_substitute=form.pass_substitute.data, pass_multiword=form.pass_multiword.data,
-				pass_phrase=form.pass_phrase.data, pass_O=form.pass_O.data,
-				how_regular_file=form.how_regular_file.data, how_encrypted=form.how_encrypted.data,
-				how_software=form.how_software.data, how_cellphone=form.how_cellphone.data,
-				how_browser=form.how_browser.data, how_write_down=form.how_write_down.data,
-				how_no=form.how_no.data, userid=g.user.userid)
+			survey = Survey4()
+			form.populate_obj(survey)
+			survey.user = g.user
+			db.session.add(survey)
 
-			form.populate_obj(model)
-
-			db.session.add(g.user)
-			db.session.add(model)
-
+			g.user.s4 = True
+			g.user.lastSeen = date.today()
 			db.session.commit()
 			logout_user()
-
 			return render_template("final.html", title="Thanks!")
 
 		return render_template('survey/Survey4.html', title='Survey', form=form)
 	else:
 		return redirect(url_for('index'))
+
 
 @app.route('/create_acct/' , methods=['GET','POST'])
 def create_acct():
@@ -288,27 +255,27 @@ def admin():
 @login_required
 @admin_required
 def admin_survey1():
-	e2=db.session.query(User.email,Survey1.gender,Survey1.age,Survey1.education,Survey1.language).join(Survey1)
-	return render_template('admin/partials/survey1.html', title='Admin Survey-1', users=e2)
+	surveys = Survey1.query.all()
+	return render_template('admin/partials/survey1.html', title='Admin Survey-1', surveys=surveys)
 
 @app.route('/admin_survey2/')
 @login_required
 @admin_required
 def admin_survey2():
-	e3=db.session.query(User.email,Survey2.major,Survey2.department,Survey2.count,Survey2.unique).join(Survey2)
-	return render_template('admin/partials/survey2.html', title='Admin Survey-2', users=e3)
+	surveys = Survey2.query.all()
+	return render_template('admin/partials/survey2.html', title='Admin Survey-2', surveys=surveys)
 
 @app.route('/admin_survey3/')
 @login_required
 @admin_required
 def admin_survey3():
-	e4=db.session.query(User.email,Survey3.choose_words,Survey3.choose_mnemonic).join(Survey3)
-	return render_template('admin/partials/survey3.html', title='Admin Survey-3', users=e4)
+	surveys = Survey3.query.all()
+	return render_template('admin/partials/survey3.html', title='Admin Survey-3', surveys=surveys)
 
 @app.route('/admin_survey4/')
 @login_required
 @admin_required
 def admin_survey4():
-	e5=db.session.query(User.email,Survey4.computerTime,Survey4.pass_random,Survey4.pass_reuse,Survey4.pass_modify,Survey4.pass_new,Survey4.pass_substitute,Survey4.pass_multiword,Survey4.pass_phrase,Survey4.pass_O,Survey4.how_regular_file,Survey4.how_encrypted,Survey4.how_software).join(Survey4)
-	return render_template('admin/partials/survey4.html', title='Admin Survey-4', users=e5)
+	surveys = Survey4.query.all()
+	return render_template('admin/partials/survey4.html', title='Admin Survey-4', surveys=surveys)
 

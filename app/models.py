@@ -5,11 +5,12 @@ from sqlalchemy.orm import relationship, backref
 
 from app import db
 
+
+
 ROLE_USER = 0
 ROLE_ADMIN = 1
 
 class User(UserMixin, CRUDMixin,  db.Model):
-    # __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key = True, unique=True)
     userid = db.Column(db.String(255), unique=True)
     email = db.Column(db.String(255), unique=True)
@@ -22,10 +23,6 @@ class User(UserMixin, CRUDMixin,  db.Model):
     s3 = db.Column(db.Boolean)
     s4 = db.Column(db.Boolean)
     lastSeen = db.Column(db.String(255))
-    survey1 = db.relationship('Survey1', backref=db.backref('user', lazy='joined'))
-    survey2 = db.relationship('Survey2', backref=db.backref('user', lazy='joined'))
-    survey3 = db.relationship('Survey3', backref=db.backref('user', lazy='joined'))
-    survey4 = db.relationship('Survey4', backref=db.backref('user', lazy='joined'))
 
     def __init__(self, email=None, userid=None, password=None, oldPassword = None, changedPass=False,
         s1=False, s2=False, s3=False, s4=False, role=None):
@@ -56,53 +53,49 @@ class User(UserMixin, CRUDMixin,  db.Model):
         return '<User %r>' % (self.email)
 
 
+
 class Survey1(db.Model):
-    # __tablename__='survey1'
-    id = db.Column(db.Integer, primary_key = True)
-    userid = db.Column(db.String(255))
+    id = db.Column(db.Integer, primary_key=True)
     gender = db.Column(db.String(255))
     age = db.Column(db.String(255))
     education = db.Column(db.String(255))
     language = db.Column(db.String(20))
-    userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
-    #user = db.relationship('User', backref=db.backref('survey1', lazy='dynamic'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', uselist=False, backref='survey1')
 
-    def __init__(self, gender=None,age=None, education=None, language=None, userid=None):
-        self.gender=gender
-        self.age=age
-        self.education=education
-        self.language=language
-        self.userid = userid
+    def __init__(self, gender=None,age=None, education=None, language=None):
+        self.gender = gender
+        self.age = age
+        self.education = education
+        self.language = language
 
     def get_id(self):
         return unicode(self.id)
+
 
 
 class Survey2(db.Model):
-    # __tablename__='survey2'
-    id = db.Column(db.Integer, primary_key = True)
-    userid = db.Column(db.String(255))
+    id = db.Column(db.Integer, primary_key=True)
     major = db.Column(db.String(255))
-    department = db.Column(db.String(30))
+    department = db.Column(db.String(255))
     count = db.Column(db.String(255))
     unique = db.Column(db.String(255))
-    userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
-    # user = db.relationship('User', backref=db.backref('survey2', lazy='dynamic'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', uselist=False, backref='survey2')
 
-    def __init__(self, major=None, department=None, count=None, unique=None, userid=None):
-        self.major=major
-        # self.department=department
-        self.count=count
-        self.unique=unique
-        self.userid=userid
+    def __init__(self, major=None, department=None, count=None, unique=None):
+        self.major = major
+        self.department = department
+        self.count = count
+        self.unique = unique
 
     def get_id(self):
         return unicode(self.id)
 
+
+
 class Survey3(db.Model):
-    # __tablename__='survey3'
-    id = db.Column(db.Integer, primary_key = True)
-    userid = db.Column(db.String(255))
+    id = db.Column(db.Integer, primary_key=True)
     choose_names = db.Column(db.Boolean)
     choose_numbers = db.Column(db.Boolean)
     choose_songs = db.Column(db.Boolean)
@@ -143,8 +136,8 @@ class Survey3(db.Model):
     addedwords=db.Column(db.Boolean)
     deletedwords=db.Column(db.Boolean)
     char_O = db.Column(db.String(255))
-    userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
-    # user = db.relationship('User', backref=db.backref('survey3', lazy='dynamic'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', uselist=False, backref='survey3')
 
     def __init__(self,
         choose_names=None,
@@ -236,9 +229,7 @@ class Survey3(db.Model):
 
 
 class Survey4(db.Model):
-    # __tablename__='survey4'
     id = db.Column(db.Integer, primary_key = True)
-    userid = db.Column(db.String(255))
     computerTime = db.Column(db.String(255))
     pass_random = db.Column(db.Boolean)
     pass_reuse = db.Column(db.Boolean)
@@ -256,14 +247,28 @@ class Survey4(db.Model):
     how_write_down = db.Column(db.Boolean)
     how_no = db.Column(db.Boolean)
     comments = db.Column(db.String(255))
-    userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
-    # user = db.relationship('User', backref=db.backref('survey4', lazy='dynamic'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship('User', uselist=False, backref='survey4')
 
-    def __init__(self, computerTime=None, pass_random=None, pass_reuse=None,
-        pass_modify=None, pass_new=None, pass_substitute=None, pass_multiword=None,
-        pass_phrase=None, pass_O=None, how_regular_file=None, how_encrypted=None,
-        how_software=None, how_cellphone=None, how_browser=None, how_write_down=None,
-        how_no=None, comments=None, userid=None):
+    def __init__(self,
+        computerTime=None,
+        pass_random=None,
+        pass_reuse=None,
+        pass_modify=None,
+        pass_new=None,
+        pass_substitute=None,
+        pass_multiword=None,
+        pass_phrase=None,
+        pass_O=None,
+        how_regular_file=None,
+        how_encrypted=None,
+        how_software=None,
+        how_cellphone=None,
+        how_browser=None,
+        how_write_down=None,
+        how_no=None,
+        comments=None,
+        userid=None):
 
         self.computerTime=computerTime
         self.pass_random = pass_random

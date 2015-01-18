@@ -49,22 +49,22 @@
         </tr>
       </thead>
       <tbody>
-        {%for user in users%}
+        {% for survey in surveys %}
         <tr>
-          <td>{{user.email}}</td>
-          <td>{{user.computerTime}}</td>
-          <td>{{user.pass_random}}</td>
-          <td>{{user.pass_reuse}}</td>
-          <td>{{user.pass_modify}}</td>
-          <td>{{user.pass_new}}</td>
-          <td>{{user.pass_substitute}}</td>
-          <td>{{user.pass_multiword}}</td>
-          <td>{{user.pass_phrase}}</td>
-          <td>{{user.how_regular_file}}</td>
-          <td>{{user.how_encrypted}}</td>
-          <td>{{user.how_software}}</td>
+          <td>{{ survey.user.email }}</td>
+          <td>{{ survey.computerTime }}</td>
+          <td>{{ survey.pass_random }}</td>
+          <td>{{ survey.pass_reuse }}</td>
+          <td>{{ survey.pass_modify }}</td>
+          <td>{{ survey.pass_new }}</td>
+          <td>{{ survey.pass_substitute }}</td>
+          <td>{{ survey.pass_multiword }}</td>
+          <td>{{ survey.pass_phrase }}</td>
+          <td>{{ survey.how_regular_file }}</td>
+          <td>{{ survey.how_encrypted }}</td>
+          <td>{{ survey.how_software }}</td>
         </tr>
-        {%endfor%}
+        {% endfor %}
       </tbody>
     </table>
 

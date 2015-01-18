@@ -52,25 +52,25 @@
         </tr>
       </thead>
       <tbody>
-        {%for user in users%}
+        {% for survey in surveys %}
         <tr>
-          <td>{{user.email}}</td>
-          <td>{{user.choose_numbers}}</td>
-          <td>{{user.choose_songs}}</td>
-          <td>{{user.choose_mnemonic}}</td>
-          <td>{{user.choose_sports}}</td>
-          <td>{{user.choose_famous}}</td>
-          <td>{{user.choose_words}}</td>
-          <td>{{user.secure_numbers}}</td>
-          <td>{{user.secure_upper_case}}</td>
-          <td>{{user.secure_symbols}}</td>
-          <td>{{user.secure_eight_chars}}</td>
-          <td>{{user.secure_no_dict}}</td>
-          <td>{{user.secure_adjacent}}</td>
-          <td>{{user.secure_nothing}}</td>
-          <td>{{user.modify}}</td>
+          <td>{{ survey.user.email }}</td>
+          <td>{{ survey.choose_numbers }}</td>
+          <td>{{ survey.choose_songs }}</td>
+          <td>{{ survey.choose_mnemonic }}</td>
+          <td>{{ survey.choose_sports }}</td>
+          <td>{{ survey.choose_famous }}</td>
+          <td>{{ survey.choose_words }}</td>
+          <td>{{ survey.secure_numbers }}</td>
+          <td>{{ survey.secure_upper_case }}</td>
+          <td>{{ survey.secure_symbols }}</td>
+          <td>{{ survey.secure_eight_chars }}</td>
+          <td>{{ survey.secure_no_dict }}</td>
+          <td>{{ survey.secure_adjacent }}</td>
+          <td>{{ survey.secure_nothing }}</td>
+          <td>{{ survey.modify }}</td>
         </tr>
-        {%endfor%}
+        {% endfor %}
       </tbody>
     </table>
 

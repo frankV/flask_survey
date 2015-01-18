@@ -42,15 +42,15 @@
         </tr>
       </thead>
       <tbody>
-        {%for user in users%}
+        {% for survey in surveys %}
           <tr>
-            <td>{{user.email}}</td>
-            <td>{{user.major}}</td>
-            <td>{{user.department}}</td>
-            <td>{{user.count}}</td>
-            <td>{{user.unique}}</td>
+            <td>{{ survey.user.email }}</td>
+            <td>{{ survey.major }}</td>
+            <td>{{ survey.department }}</td>
+            <td>{{ survey.count }}</td>
+            <td>{{ survey.unique }}</td>
           </tr>
-        {%endfor%}
+        {% endfor %}
       </tbody>
     </table>
 
