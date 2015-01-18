@@ -83,6 +83,7 @@ def survey_3():
 	if g.user.s2 is not False and g.user.s3 is False:
 		if g.user.changedPass is False:
 			return redirect(url_for('new_pass'))
+
 		form = Survey3Form(request.form)
 		if form.validate_on_submit():
 
@@ -124,6 +125,7 @@ def survey_4():
 	if g.user.s3 is not False and g.user.s4 is False:
 		if g.user.changedPass is False:
 			return redirect(url_for('new_pass'))
+
 		form = Survey4Form(request.form)
 		if form.validate_on_submit():
 
@@ -171,11 +173,17 @@ def new_pass():
 	form = NewPass(request.form)
 	if form.validate_on_submit():
 		user = g.user
-		user.password = form.password.data
-		user.changedPass=True
-		db.session.add(user)
-		db.session.commit()
-		return redirect(url_for('index'))
+		print form.data
+		if user.password == form.data['password']:
+				print 'I should raise a validation error'
+				form.password.errors.append('You\'ve already used this password. Please choose a new password.')
+		else:
+				print 'user picked a different password'
+				user.password = form.password.data
+				user.changedPass = True
+				db.session.commit()
+				return redirect(url_for('index'))
+
 	return render_template('new_pass.html', title='Update Password', form=form)
 
 @app.route('/login/',methods=['GET','POST'])

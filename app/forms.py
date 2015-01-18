@@ -5,10 +5,8 @@ from app import db
 
 def validate_login(form, field):
     user = form.get_user()
-
     if user is None:
         raise validators.ValidationError('Invalid user')
-
     if user.password != form.password.data:
         raise validators.ValidationError('Invalid password')
 
@@ -45,10 +43,6 @@ class NewPass(Form):
     ])
     confirm = fields.PasswordField(validators=[Required()])
 
-    def validate_password(self, field):
-        if db.session.query(User).filter_by(password=self.password.data).count() > 0:   #NOT SURE IF CORRECT
-            raise validators.ValidationError('Duplicate Password')
-
 class Survey1Form(Form):
     gender = fields.RadioField('What is your gender?', choices=[('M', 'Male'), ('F', 'Female'), ('O', 'I prefer not to answer')], validators = [Required()], default=None)
     age = fields.RadioField('What is your age?', choices=[('lt18', 'Younger than 18'), ('18-24', '18 to 24'), ('25-34', '25 to 34'),
@@ -68,7 +62,6 @@ class Survey2Form(Form):
         ('N', 'No, I use my old passwords that I have already created for my other accounts'),
         ('O', 'I mostly create a new password, but sometimes use old passwords')], validators=[Required()])
     department = fields.TextField('In what department are you majoring', validators=[Required()])
-
 
 class Survey3Form(Form):
     choose_names = fields.BooleanField('Names of family members, relatives, close friends')

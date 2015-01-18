@@ -1,6 +1,6 @@
 Dear {{user.email}},
 
-{{user.email}} is now an active user. Click on the following link to return to the Research Survey:
+You are now an active user. Click on the following link to return to the Research Survey:
 
 {{url_for('login', _external = True)}}
 

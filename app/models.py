@@ -12,7 +12,7 @@ class User(UserMixin, CRUDMixin,  db.Model):
     # __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key = True, unique=True)
     userid = db.Column(db.String(255), unique=True)
-    email = db.Column(db.String(255), unique = True)
+    email = db.Column(db.String(255), unique=True)
     password = db.Column(db.String(20))
     oldPassword = db.Column(db.String(20))
     changedPass = db.Column(db.Boolean)
@@ -146,56 +146,90 @@ class Survey3(db.Model):
     userid = db.Column(db.String(255), db.ForeignKey('user.userid'))
     # user = db.relationship('User', backref=db.backref('survey3', lazy='dynamic'))
 
-    def __init__(self, choose_names=None, choose_numbers=None, choose_songs=None,
-        choose_mnemonic=None, choose_sports=None, choose_famous=None, choose_words=None,
-        secure_numbers=None, secure_upper_case=None, secure_symbols=None,
-        secure_eight_chars=None, secure_no_dict=None, secure_adjacent=None, secure_nothing=None,
-        modify=None, usedPassword=None,number_N=None, number_added_digits=None,
-        number_deleted_digits=None, number_substituted_digits=None, number_O=None,
-        char_N=None, char_added_symbols=None, char_deleted_symbols=None,
-        char_substituted_symbols=None, char_O=None, userid=None,choose_other=None,specify=None,specify1=None,secure_other=None,number_changed_completly=None,number_changed_slightly=None,char_changed_slightly=None,char_changed_completly=None,not_changed1=None, changed_completly1=None, changed_slightly1=None,capatalized1=None,addedwords=None,deletedwords=None):
+    def __init__(self,
+        choose_names=None,
+        choose_numbers=None,
+        choose_songs=None,
+        choose_mnemonic=None,
+        choose_sports=None,
+        choose_famous=None,
+        choose_words=None,
+        secure_numbers=None,
+        secure_upper_case=None,
+        secure_symbols=None,
+        secure_eight_chars=None,
+        secure_no_dict=None,
+        secure_adjacent=None,
+        secure_nothing=None,
+        modify=None,
+        usedPassword=None,
+        number_N=None,
+        number_added_digits=None,
+        number_deleted_digits=None,
+        number_substituted_digits=None,
+        number_O=None,
+        char_N=None,
+        char_added_symbols=None,
+        char_deleted_symbols=None,
+        char_substituted_symbols=None,
+        char_O=None,
+        userid=None,
+        choose_other=None,
+        specify=None,
+        specify1=None,
+        secure_other=None,
+        number_changed_completly=None,
+        number_changed_slightly=None,
+        char_changed_slightly=None,
+        char_changed_completly=None,
+        not_changed1=None,
+        changed_completly1=None,
+        changed_slightly1=None,
+        capatalized1=None,
+        addedwords=None,
+        deletedwords=None):
 
-        self.choose_names=choose_names
-        self.choose_numbers=choose_numbers
-        self.choose_songs=choose_songs
-        self.choose_mnemonic=choose_mnemonic
-        self.choose_sports=choose_sports
-        self.choose_famous=choose_famous
-        self.choose_words=choose_words
-        self.choose_other=choose_other
-        self.specify=specify
-        self.secure_numbers=secure_numbers
-        self.secure_upper_case=secure_upper_case
-        self.secure_symbols=secure_symbols
-        self.secure_eight_chars=secure_eight_chars
-        self.secure_no_dict=secure_no_dict
-        self.secure_adjacent=secure_adjacent
-        self.secure_nothing=secure_nothing
-        self.secure_other=secure_other
-        self.specify1=specify1
-        self.modify=modify
-        self.usedPassword=usedPassword
-        self.not_changed1=not_changed1
-        self.changed_slightly1=changed_slightly1
-        self.changed_completly1=changed_completly1
-        self.capatalized1=capatalized1
-        self.addedwords=addedwords
-        self.deletedwords=deletedwords
-        self.number_N=number_N
-        self.number_changed_slightly=number_changed_slightly
-        self.number_changed_completly=number_changed_completly
-        self.number_added_digits=number_added_digits
-        self.number_deleted_digits=number_deleted_digits
-        self.number_substituted_digits=number_substituted_digits
-        self.number_O=number_O
-        self.char_N=char_N
-        self.char_changed_slightly=char_changed_slightly
-        self.char_changed_completly=char_changed_completly
-        self.char_added_symbols=char_added_symbols
-        self.char_deleted_symbols=char_deleted_symbols
-        self.char_substituted_symbols=char_substituted_symbols
-        self.char_O=char_O
-        self.userid=userid
+        self.choose_names = choose_names
+        self.choose_numbers = choose_numbers
+        self.choose_songs = choose_songs
+        self.choose_mnemonic = choose_mnemonic
+        self.choose_sports = choose_sports
+        self.choose_famous = choose_famous
+        self.choose_words = choose_words
+        self.choose_other = choose_other
+        self.specify = specify
+        self.secure_numbers = secure_numbers
+        self.secure_upper_case = secure_upper_case
+        self.secure_symbols = secure_symbols
+        self.secure_eight_chars = secure_eight_chars
+        self.secure_no_dict = secure_no_dict
+        self.secure_adjacent = secure_adjacent
+        self.secure_nothing = secure_nothing
+        self.secure_other = secure_other
+        self.specify1 = specify1
+        self.modify = modify
+        self.usedPassword = usedPassword
+        self.not_changed1 = not_changed1
+        self.changed_slightly1 = changed_slightly1
+        self.changed_completly1 = changed_completly1
+        self.capatalized1 = capatalized1
+        self.addedwords = addedwords
+        self.deletedwords = deletedwords
+        self.number_N = number_N
+        self.number_changed_slightly = number_changed_slightly
+        self.number_changed_completly = number_changed_completly
+        self.number_added_digits = number_added_digits
+        self.number_deleted_digits = number_deleted_digits
+        self.number_substituted_digits = number_substituted_digits
+        self.number_O = number_O
+        self.char_N = char_N
+        self.char_changed_slightly = char_changed_slightly
+        self.char_changed_completly = char_changed_completly
+        self.char_added_symbols = char_added_symbols
+        self.char_deleted_symbols = char_deleted_symbols
+        self.char_substituted_symbols = char_substituted_symbols
+        self.char_O = char_O
+        self.userid = userid
 
     def get_id(self):
         return unicode(self.id)
