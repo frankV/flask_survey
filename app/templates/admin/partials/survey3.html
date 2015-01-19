@@ -35,26 +35,45 @@
       <thead>
         <tr>
           <th>Email</th>
-          <th>Choose Numbers</th>
-          <th>Choose Songs</th>
-          <th>Choose Mnemonic</th>
-          <th>Choose Sports</th>
-          <th>Choose Famous</th>
-          <th>Choose Words</th>
-          <th>Secure Numbers</th>
-          <th>Secure Uppercase</th>
-          <th>Secure Symbols</th>
-          <th>Secure Eightchars</th>
-          <th>Secure No_dict</th>
-          <th>Secure Adjacent</th>
-          <th>Secure Nothing</th>
-          <th>Modify</th>
+          <th>Chose Names</th>
+          <th>Chose Numbers</th>
+          <th>Chose Songs</th>
+          <th>Chose Mnemonic</th>
+          <th>Chose Sports</th>
+          <th>Chose Famous</th>
+          <th>Chose Words</th>
+          <th>Included Numbers</th>
+          <th>Included Uppercase Letters</th>
+          <th>Included Symbols</th>
+          <th>8 > Characters</th>
+          <th>No Dictionary</th>
+          <th>No Repeats or Adjacent</th>
+          <th>Policy not Considered</th>
+          <th>Created New</th>
+          <th>Used Before</th>
+          <th>(Num) Unchanged</th>
+          <th>(Num) Changed Slightly</th>
+          <th>(Num) Changed Completely</th>
+          <th>(Num) Added Digits</th>
+          <th>(Num) Deleted Digits</th>
+          <th>(Char) Unchanged</th>
+          <th>(Char) Changed Slightly</th>
+          <th>(Char) Changed Completely</th>
+          <th>(Char) Added Symbols</th>
+          <th>(Char) Deleted Symbols</th>
+          <th>(Based on Old Password) Unchanged</th>
+          <th>(Based on Old Password) Changed Slightly</th>
+          <th>(Based on Old Password) Changed Completely</th>
+          <th>(Based on Old Password) Changed Capitalization</th>
+          <th>(Based on Old Password) Added Words</th>
+          <th>(Based on Old Password) Deleted Words</th>
         </tr>
       </thead>
       <tbody>
         {% for survey in surveys %}
         <tr>
           <td>{{ survey.user.email }}</td>
+          <td>{{ survey.choose_names }}</td>
           <td>{{ survey.choose_numbers }}</td>
           <td>{{ survey.choose_songs }}</td>
           <td>{{ survey.choose_mnemonic }}</td>
@@ -69,6 +88,23 @@
           <td>{{ survey.secure_adjacent }}</td>
           <td>{{ survey.secure_nothing }}</td>
           <td>{{ survey.modify }}</td>
+          <td>{{ survey.usedPassword }}</td>
+          <td>{{ survey.number_N }}</td>
+          <td>{{ survey.number_changed_slightly }}</td>
+          <td>{{ survey.number_changed_completly }}</td>
+          <td>{{ survey.number_added_digits }}</td>
+          <td>{{ survey.number_deleted_digits }}</td>
+          <td>{{ survey.char_N }}</td>
+          <td>{{ survey.char_changed_slightly }}</td>
+          <td>{{ survey.char_changed_completly }}</td>
+          <td>{{ survey.char_added_symbols }}</td>
+          <td>{{ survey.char_deleted_symbols }}</td>
+          <td>{{ survey.not_changed1 }}</td>
+          <td>{{ survey.changed_slightly1 }}</td>
+          <td>{{ survey.changed_completly1 }}</td>
+          <td>{{ survey.capatalized1 }}</td>
+          <td>{{ survey.addedwords }}</td>
+          <td>{{ survey.deletedwords }}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -80,5 +116,6 @@
 <style type="text/css">
   th, td { white-space: nowrap; }
 </style>
+
 {% endblock %}
 

@@ -3,6 +3,13 @@
 {% block extra_css %}
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/plug-ins/9dcbecd42ad/integration/bootstrap/3/dataTables.bootstrap.css">
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/tabletools/2.2.0/css/dataTables.tableTools.min.css">
+<style type="text/css">
+
+    .popover {
+      z-index: 99999;
+    }
+
+</style>
 {% endblock %}
 
 {% block extra_js %}
@@ -42,7 +49,7 @@
                 ]
             }
         });
+    });
 
-  });
 </script>
 {% endblock %}

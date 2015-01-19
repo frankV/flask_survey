@@ -35,17 +35,24 @@
       <thead>
         <tr>
           <th>email</th>
-          <th>computer_time</th>
+          <th>Time Using a Computer</th>
           <th>Random Password</th>
-          <th>Reused Password</th>
-          <th>Modified Password</th>
-          <th>New Password</th>
-          <th>Substituted Password</th>
-          <th>Multiword Password</th>
-          <th>Phrase</th>
-          <th>How Regular File</th>
-          <th>How Encrpted</th>
-          <th>How Software</th>
+          <th>Reuse a Password</th>
+          <th>Modify a Password</th>
+          <th>Create New Password</th>
+          <th>Choose a Word</th>
+          <th>Passphrase of Several Words</th>
+          <th>Passphrase of Letters</th>
+          <th>Other</th>
+          <th>Store in Regular File</th>
+          <th>Store in Encrpted File</th>
+          <th>Store in Password Mgmt Software</th>
+          <th>Store in Cellphone</th>
+          <th>Store in Browser</th>
+          <th>Write them Down</th>
+          <th>Do not save</th>
+          <th>comments</th>
+
         </tr>
       </thead>
       <tbody>
@@ -60,9 +67,15 @@
           <td>{{ survey.pass_substitute }}</td>
           <td>{{ survey.pass_multiword }}</td>
           <td>{{ survey.pass_phrase }}</td>
+          <td>{{ survey.pass_O }}</td>
           <td>{{ survey.how_regular_file }}</td>
           <td>{{ survey.how_encrypted }}</td>
           <td>{{ survey.how_software }}</td>
+          <td>{{ survey.how_cellphone }}</td>
+          <td>{{ survey.how_browser }}</td>
+          <td>{{ survey.how_write_down }}</td>
+          <td>{{ survey.how_no }}</td>
+          <td>{{ survey.comments }}</td>
         </tr>
         {% endfor %}
       </tbody>
