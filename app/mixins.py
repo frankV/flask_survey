@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
+
 from app import db
+
 
 class CRUDMixin(object):
     __table_args__ = {'extend_existing': True}

@@ -26,11 +26,12 @@ app
   ├── templates
   │   └── (HTML template files)
   └── views.py
-config.py (not committed)
+manage.py
+config.py
 ```
 
 ####Application Configuration
- * `config.py` - will hold all configuration values for the application runtime (sensitive data) **DO NOT COMMIT**.
+ * `config.py` - will hold all configuration values for the application runtime
  * `.bowerrc` - instructs bower to install files in the specified location
  * `bower.json` - the project's Bower configuration file
 
@@ -56,7 +57,7 @@ Whether you use a virtualenv or not your first step is to install your Python de
 Configuration specifications will come in a later update. For now these are the config variables that will be utilized.
  * `SQLALCHEMY_DATABASE_URI`
  * `SQLALCHEMY_ECHO`
- * `SQLALCHEMY_RECORD_QUERIES`
+ * `DATABASE_QUERY_TIMEOUT`
 
 To initialize the database, run:<br>
 `$ python manage.py initdb`
@@ -81,26 +82,7 @@ In production the application uses `gunicorn`. The command to start the server i
 # <vitualenv>/gunicorn --bind 127.0.0.1:5000 --workers 2 app:app --log-level=debug --log-file=$LOGFILE 2>>$LOGFILE --daemon
 ```
  * this must run from within the project's directory
-
-For convenience, an Ubuntu upstart script is used to make starting/stopping the application much easier:
-```
-# service survey start
-survey start/running, process 1641
-
-# service survey status
-survey start/running, process 1641
-
-# service survey stop
-survey stop/waiting
-```
-
-#####Application Monitoring
-To use `New Relic` for monitoring you need the `newrelic.ini` file. This is also **Not Committed**.
-
-If the `newrelic.ini` file is present, then you may run the application by any of the aforementioned methods with the following prefix:
-```
-$ NEW_RELIC_CONFIG_FILE=newrelic.ini newrelic-admin run-program <command>
-```
+ * you can place these options in a config file for gunicorn as well
 
 
 Tools and Dependencies

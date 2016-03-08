@@ -9,6 +9,3 @@ build
 _site
 *.lock
 tmp
-
-config.py
-newrelic.ini
